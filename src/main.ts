@@ -21,9 +21,6 @@ const vuetify = createVuetify({
 // axios 객체 사용
 import { instance } from './api/axios'
 
-import App from './App.vue'
-import router from './router'
-
 const app = createApp(App)
 
 app.provide('axios', instance)
