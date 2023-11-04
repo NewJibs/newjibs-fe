@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NoticesComponent from '@/components/NoticesComponent.vue'
+import NoticesComponent from '@/components/NoticesListComponent.vue'
 </script>
 <template>
   <main>
