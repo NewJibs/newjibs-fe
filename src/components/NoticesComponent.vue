@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import axios from 'axios'
 import { ref, type Ref } from 'vue'
-// import { instance } from './api/axios'
+import { instance } from '@/api/axios';
 
 interface Notice {
   title: string
@@ -12,8 +11,8 @@ interface Notice {
 const data: Ref<Notice[]> = ref([])
 
 const onClickGetData = () => {
-  axios
-    .get('http://localhost:8080/v1/notices', {})
+  instance
+    .get('/notices', {})
     .then((res) => {
       console.log('axios get 성공')
       data.value = res.data
