@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref, onMounted } from 'vue'
 import { instance } from '@/api/axios';
+import { useRouter } from 'vue-router';
 
 interface Notice {
   title: string
@@ -39,6 +40,14 @@ onMounted(() => {
   fetchData()
 })
 
+//클릭하면 noticeId에 해당하는 페이지로 이동
+const router = useRouter();
+
+const viewNotice = (noticeId: number) => {
+  //공지사항의 noticeId를 동적 라우트 매개변수로 넘겨 해당 페이지로 이동
+  router.push({name: 'notice', params: {noticeId: noticeId.toString()}})
+}
+
 </script>
 
 <template>
@@ -54,7 +63,7 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="notice in data" :key="notice.title">
+        <tr v-for="notice in data" :key="notice.title" @click="viewNotice(noticeId)">
           <td>{{ notice.title }}</td>
           <td>{{ notice.author }}</td>
           <td>{{ notice.date }}</td>
