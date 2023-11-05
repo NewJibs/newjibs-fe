@@ -14,7 +14,7 @@ const router = useRouter()
 const route = useRoute()
 
 //noticeId별 정보 fetch 해오기
-const loadNotice = (noticeId: number) => {
+const loadNotice = (notice_id: number) => {
     instance
         .get(`/notices/${noticeId}`)
         .then((res) => {

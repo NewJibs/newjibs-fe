@@ -4,24 +4,13 @@ import { instance } from '@/api/axios';
 import { useRouter } from 'vue-router';
 
 interface Notice {
+  notice_id: number
   title: string
   author: string
   date: string
 }
 
 const data: Ref<Notice[]> = ref([])
-
-// const onClickGetData = () => {
-//   instance
-//     .get('/notices', {})
-//     .then((res) => {
-//       console.log('axios get 성공')
-//       data.value = res.data
-//     })
-//     .catch((res) => {
-//       console.error(res)
-//     })
-// }
 
 const fetchData = () => {
   instance
@@ -43,9 +32,9 @@ onMounted(() => {
 //클릭하면 noticeId에 해당하는 페이지로 이동
 const router = useRouter();
 
-const viewNotice = (noticeId: number) => {
+const viewNotice = (notice_id: number) => {
   //공지사항의 noticeId를 동적 라우트 매개변수로 넘겨 해당 페이지로 이동
-  router.push({name: 'notice', params: {noticeId: noticeId.toString()}})
+  router.push({name: 'notice', params: {noticeId: notice_id.toString()}})
 }
 
 </script>
@@ -63,16 +52,11 @@ const viewNotice = (noticeId: number) => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="notice in data" :key="notice.title" @click="viewNotice(noticeId)">
+        <tr v-for="notice in data" :key="notice.title" @click="viewNotice(notice_id)">
           <td>{{ notice.title }}</td>
           <td>{{ notice.author }}</td>
           <td>{{ notice.date }}</td>
         </tr>
-        <!-- <tr>
-          <td>미리보기</td>
-          <td>미리보기</td>
-          <td>미리보기</td>
-        </tr> -->
       </tbody>
     </table>
   </div>
