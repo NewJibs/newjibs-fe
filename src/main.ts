@@ -4,6 +4,10 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
+//부트스트랩
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap'; //뒤에 확장자 안붙으면 js라고 알고 있기
+
 import App from './App.vue'
 import router from './router'
 
