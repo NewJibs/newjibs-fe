@@ -47,7 +47,6 @@ onMounted(() => {
           <th>제목</th>
           <th>작성자</th>
           <th>날짜</th>
-          <th >미리보기</th>
         </tr>
       </thead>
       <tbody>
