@@ -1,1 +1,8 @@
-<!-- 김건우, 정지원 얼굴 돌아가기 -->
+<script setup lang="ts">
+
+</script>
+
+<template>
+  <main>
+  </main>
+</template>

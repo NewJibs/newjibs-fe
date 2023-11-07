@@ -1,1 +1,8 @@
-<!-- 김건우 얼굴 진동 -->
+<script setup lang="ts">
+
+</script>
+
+<template>
+  <main>
+  </main>
+</template>
