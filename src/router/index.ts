@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import NoticesView from '@/views/NoticesView.vue'
-import NoticeView from '@/views/NoticeView.vue'
+import NoticeListView from '@/views/NoticeView/NoticeListView.vue'
+import NoticeView from '@/views/NoticeView/NoticeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: '/notices',
       name: 'notices',
-      component: NoticesView
+      component: NoticeListView
     },
     {
       path: '/notices/:noticeId', //동적라우트
