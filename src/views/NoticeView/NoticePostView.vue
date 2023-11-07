@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import NoticesComponent from '@/components/notice/NoticeList.vue'
+import NoticeEditor from '@/components/notice/NoticeEditor.vue';
 </script>
-
 <template>
   <main>
-    <NoticesComponent />
+    <NoticeEditor />
   </main>
 </template>
-
 <style scoped></style>

@@ -61,6 +61,7 @@ const viewNotice = (noticeId: number) => {
         </tr>
       </tbody>
     </table>
+    <router-link to="/notices/post">post버튼</router-link>
   </div>
 </template>
 
