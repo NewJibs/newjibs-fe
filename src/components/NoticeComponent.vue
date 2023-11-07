@@ -4,6 +4,7 @@ import { instance } from '@/api/axios';
 import { useRoute, useRouter } from 'vue-router';
 
 interface Notice {
+  notice_id: number
   title: string
   author: string
   date: string
@@ -16,7 +17,7 @@ const route = useRoute()
 //noticeId별 정보 fetch 해오기
 const loadNotice = (notice_id: number) => {
     instance
-        .get(`/notices/${noticeId}`)
+        .get(`/notices/${notice_id}`)
         .then((res) => {
             console.log("axios get 성공")
             data.value = res.data
