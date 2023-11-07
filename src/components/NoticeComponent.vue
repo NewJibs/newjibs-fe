@@ -4,20 +4,20 @@ import { instance } from '@/api/axios';
 import { useRoute, useRouter } from 'vue-router';
 
 interface Notice {
-  notice_id: number
+  noticeId: number
   title: string
   author: string
   date: string
 }
 
-const data = ref<Notice | null>(null)
+const data = ref<Notice>()
 const router = useRouter()
 const route = useRoute()
 
 //noticeId별 정보 fetch 해오기
-const loadNotice = (notice_id: number) => {
+const loadNotice = (noticeId: number) => {
     instance
-        .get(`/notices/${notice_id}`)
+        .get(`/notices/${noticeId}`)
         .then((res) => {
             console.log("axios get 성공")
             data.value = res.data
@@ -41,7 +41,6 @@ onMounted(() => {
 </script>
 <template>
   <div class="container">
-    <!-- <button @click="onClickGetData()">버튼입</button> -->
     <table>
       <thead>
         <tr>
@@ -52,16 +51,14 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="notice in data" :key="notice.title">
-          <td>{{ notice.title }}</td>
-          <td>{{ notice.author }}</td>
-          <td>{{ notice.date }}</td>
+        <tr v-if="data" :key="data.title">
+          <td>{{ data.title }}</td>
+          <td>{{ data.author }}</td>
+          <td>{{ data.date }}</td>
         </tr>
-        <!-- <tr>
-          <td>미리보기</td>
-          <td>미리보기</td>
-          <td>미리보기</td>
-        </tr> -->
+        <tr v-else>
+          <td colspan="3">로딩 중...</td>
+        </tr>
       </tbody>
     </table>
   </div>
