@@ -60,7 +60,7 @@ const submitPost = async (e: any) => {
 <template>
   <div>
     <h1>포스트 페이지</h1>
-    <form >
+    <form>
       <div>
         <label for="title">제목:</label>
         <input v-model="title" type="text" id="title" required />
@@ -77,7 +77,7 @@ const submitPost = async (e: any) => {
         <label for="image">이미지 URL:</label>
         <input v-model="imageUrl" type="text" id="image" />
       </div>
-      <button type="submit" @click="submitPost">게시</button>
+      <a-button type="primary submit" @click="submitPost">게시</a-button>
     </form>
   </div>
 </template>
