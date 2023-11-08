@@ -1,8 +1,8 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import Antd from 'ant-design-vue'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import 'ant-design-vue/dist/reset.css'
 
 //부트스트랩
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,4 +33,4 @@ app.use(createPinia().use(piniaPluginPersistedstate))
 app.use(router)
 app.use(vuetify) // 사용
 
-app.mount('#app')
+app.use(Antd).mount('#app')

@@ -2,11 +2,13 @@
 import { ref } from 'vue';
 import { instance } from '@/api/axios';
 
+//바인딩 변수
 const title = ref('');
 const author = ref('');
 const content = ref('');
 const imageUrl = ref('');
 
+//날짜 형식 바꾸기
 const formatDate = (date: Date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -19,6 +21,7 @@ const formatDate = (date: Date) => {
 };
 console.log(formatDate(new Date()))
 
+//포스트 올리기
 const submitPost = async (e: any) => {
   e.preventDefault();
 
