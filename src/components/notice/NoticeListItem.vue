@@ -7,6 +7,7 @@ interface Notice {
   noticeId: number
   title: string
   author: string
+  content: string
   date: string
 }
 
@@ -32,7 +33,7 @@ const loadNotice = (noticeId: number) => {
 const deletePost = () => {
   instance
     .delete(`/notices/${noticeId}`,{
-      withCredentials: true
+      // withCredentials: true
     })
     .then(() => {
       router.push({ name: 'notices' })})
@@ -46,10 +47,11 @@ const updatePost = async () => {
     const updatedData = { ...data.value }; // 복사해서 수정할 데이터를 생성
     updatedData.title = '새로운 제목'; // 원하는 필드를 수정
     updatedData.author = '새로운 작성자'; // 원하는 필드를 수정
+    updatedData.content = '새로운 나'
 
     // 서버에 수정 요청 보내기
     try {
-      const response = await instance.put(`/notices/${noticeId}`, updatedData, {
+      const response = await instance.patch(`/notices/${noticeId}`, updatedData, {
         withCredentials: true,
       });
 
@@ -58,6 +60,7 @@ const updatePost = async () => {
 
       // 수정한 데이터를 다시 불러오기 (선택적)
       loadNotice(noticeId);
+      console.log(loadNotice)
     } catch (error) {
       // 수정 실패한 경우
       console.error('게시물 수정 실패', error);
