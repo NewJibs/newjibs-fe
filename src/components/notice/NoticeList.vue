@@ -61,19 +61,23 @@ const viewNotice = (noticeId: number) => {
   router.push({name: 'notice', params: {noticeId: noticeId.toString()}})
 }
 
+const postNotice = (e: any) => {
+  router.push({name: 'notice-post'})
+}
+
 </script>
 
 <template>
   <div>
     <a-table  :columns="columns" :data-source="data">
       <template #bodyCell="{ record, text }">
-   
           <a @click="viewNotice(record.noticeId)">{{ text }}</a>
-      
       </template>
     </a-table>
     <div class="container">
-      <router-link to="/notices/post">post버튼</router-link>
+      <a-button type="primary" @click="postNotice">
+        게시글 작성
+      </a-button>
     </div>
   </div>
   <!-- <div class="container">

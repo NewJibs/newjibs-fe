@@ -30,9 +30,15 @@ const loadNotice = (noticeId: number) => {
 
 //noticeId별 delete -> 홈화면으로 라우터 설정
 const deletePost = async (noticeId: number) => {
-    instance
-      .delete(`/notices/${noticeId}`)
-      
+  try {
+    await instance.delete(`/notices/${noticeId}`);
+    router.push({ name: 'notices' }); // 삭제 후 /notices로 리디렉트
+  } catch (error) {
+    console.error('게시물 삭제 실패', error);
+  }
+}
+
+const updatePost = async (noticeId: number) => {
 
 }
 
@@ -42,7 +48,7 @@ onMounted(() => {
         loadNotice(noticeId)
     } else {
         //noticeId가 유효하지 않을 때 처리
-        router.push({path: '/'})
+        router.push({name: 'home'})
     }
 })
 
@@ -68,8 +74,8 @@ onMounted(() => {
         </tr>
       </tbody>
     </table>
-    <a-button type="primary submit" @click="deletePost">게시</a-button>
-
+    <a-button type="primary submit" danger @click="deletePost">삭제</a-button>
+    <a-button @click="updatePost">수정</a-button>
   </div>
 </template>
 
