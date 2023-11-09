@@ -13,6 +13,7 @@ interface Notice {
 const data = ref<Notice>()
 const router = useRouter()
 const route = useRoute()
+const noticeId = Number(route.params.noticeId) //게시글 번호
 
 //noticeId별 정보 fetch 해오기
 const loadNotice = (noticeId: number) => {
@@ -27,9 +28,16 @@ const loadNotice = (noticeId: number) => {
         })
 }
 
+//noticeId별 delete -> 홈화면으로 라우터 설정
+const deletePost = async (noticeId: number) => {
+    instance
+      .delete(`/notices/${noticeId}`)
+      
+
+}
+
 //페이지 로딩하자마자 데이터 fetch 해오기
 onMounted(() => {
-    const noticeId = Number(route.params.noticeId)
     if(!isNaN(noticeId)) {
         loadNotice(noticeId)
     } else {
@@ -60,6 +68,8 @@ onMounted(() => {
         </tr>
       </tbody>
     </table>
+    <a-button type="primary submit" @click="deletePost">게시</a-button>
+
   </div>
 </template>
 

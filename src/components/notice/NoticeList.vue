@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, type Ref, onMounted } from 'vue'
+import { ref, type Ref, onMounted, computed, unref } from 'vue'
+import type { TableProps, TableColumnType } from 'ant-design-vue';
 import { instance } from '@/api/axios';
 import { useRouter } from 'vue-router';
 
@@ -30,6 +31,28 @@ onMounted(() => {
   fetchData()
 })
 
+const columns: TableColumnType<Notice>[] = [
+  {
+    title: '제목',
+    dataIndex: 'title',
+  },
+  {
+    title: '작성자',
+    dataIndex: 'author',
+  },
+  {
+    title: '작성일시',
+    dataIndex: 'date',
+  },
+];
+
+
+// const rowSelection: TableProps['rowSelection'] = {
+//   getCheckboxProps: (record: any) => ({
+//     title: record.title,
+//   }),
+// };
+
 //클릭하면 noticeId에 해당하는 페이지로 이동
 const router = useRouter();
 
@@ -41,8 +64,19 @@ const viewNotice = (noticeId: number) => {
 </script>
 
 <template>
-  <div class="container">
-    <!-- <button @click="onClickGetData()">버튼입</button> -->
+  <div>
+    <a-table  :columns="columns" :data-source="data">
+      <template #bodyCell="{ record, text }">
+   
+          <a @click="viewNotice(record.noticeId)">{{ text }}</a>
+      
+      </template>
+    </a-table>
+    <div class="container">
+      <router-link to="/notices/post">post버튼</router-link>
+    </div>
+  </div>
+  <!-- <div class="container">
     <table>
       <thead>
         <tr>
@@ -62,7 +96,7 @@ const viewNotice = (noticeId: number) => {
       </tbody>
     </table>
     <router-link to="/notices/post">post버튼</router-link>
-  </div>
+  </div> -->
 </template>
 
 <style scoped></style>
