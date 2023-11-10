@@ -6,6 +6,7 @@ export const instance = axios.create({
     baseURL: SERVER_URL + SERVER_VERSION,
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
-
-    }
+    },
+    //cors 설정
+    withCredentials: true
 })
