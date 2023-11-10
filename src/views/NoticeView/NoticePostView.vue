@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import NoticeEditor from '@/components/notice/NoticeEditor.vue';
+import NoticePost from '@/components/notice/NoticePost.vue.js';
 </script>
 <template>
   <main>
-    <NoticeEditor />
+    <NoticePost />
   </main>
 </template>
 <style scoped></style>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import NoticesComponent from '@/components/notice/NoticeList.vue'
+import NoticeList from '@/components/notice/NoticeList.vue'
 </script>
 
 <template>
   <main>
-    <NoticesComponent />
+    <NoticesList />
   </main>
 </template>
 
