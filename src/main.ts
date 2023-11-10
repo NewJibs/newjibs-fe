@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap'; //뒤에 확장자 안붙으면 js라고 알고 있기
 
 import App from './App.vue'
-import router from './router'
+import router from './router/router'
 
 //vuetify 기본 세팅
 import 'vuetify/styles'
@@ -23,7 +23,7 @@ const vuetify = createVuetify({
 })
 
 // axios 객체 사용
-import { instance } from './api/axios'
+import { instance } from './api/notice'
 
 const app = createApp(App)
 

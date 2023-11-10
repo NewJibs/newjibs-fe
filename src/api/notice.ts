@@ -1,23 +1,34 @@
-import { ref } from 'vue'
-import axios from 'axios'
+import { instance } from "@/util/http-common";
 
-const SERVER_URL = ref('https://newjibs.shop')
-const VERSION = ref('/v1')
+const url = '/notices'
 
-export const instance = axios.create({
-  baseURL: SERVER_URL.value + VERSION.value
-})
+const listNotice = (param: string, success: any, fail: any) => {
+  instance.get(`${url}`, { params: param }).then(success).catch(fail)
+}
 
-instance.interceptors.request.use((config: any) => {
-  return config
-}),
-  (error: any) => {
-    return Promise.reject(error)
-  }
+const detailNotice = (noticeId: number, success: any, fail: any) => {
+  instance.get(`${url}/${noticeId}`).then(success).catch(fail)
+}
 
-instance.interceptors.request.use((response: any) => {
-  return response
-}),
-  (error: any) => {
-    return Promise.reject(error)
-  }
+const postNotice = (notice: Object, success: any, fail: any) => {
+  instance.post(`${url}`, JSON.stringify(notice)).then(success).catch(fail)
+}
+
+// const getModifyNotice = (noticeId: number, success, fail) => {
+//   instance.get(`${url}/`)
+// }
+
+// const modifyNotice = ()
+
+const deleteNotice = (noticeId: number, success: any, fail: any) => {
+  instance.delete(`${url}/${noticeId}`).then(success).catch(fail)
+}
+
+export {
+  listNotice,
+  detailNotice,
+  postNotice,
+  // getModifyNotice,
+  // modifyNotice,
+  deleteNotice
+}

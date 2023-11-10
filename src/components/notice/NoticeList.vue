@@ -61,7 +61,7 @@ const viewNotice = (noticeId: number) => {
   router.push({name: 'notice', params: {noticeId: noticeId.toString()}})
 }
 
-const postNotice = (e: any) => {
+const postNotice = () => {
   router.push({name: 'notice-post'})
 }
 
