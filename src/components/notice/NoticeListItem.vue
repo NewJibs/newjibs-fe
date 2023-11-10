@@ -51,7 +51,7 @@ const updatePost = async () => {
 
     // 서버에 수정 요청 보내기
     try {
-      const response = await instance.put(`/notices/${noticeId}`, updatedData, {
+      const response = await instance.patch(`/notices/${noticeId}`, updatedData, {
         withCredentials: true,
       });
 
