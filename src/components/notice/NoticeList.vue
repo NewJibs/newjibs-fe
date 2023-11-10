@@ -31,6 +31,7 @@ onMounted(() => {
   fetchData()
 })
 
+//and design용
 const columns: TableColumnType<Notice>[] = [
   {
     title: '제목',
@@ -45,7 +46,6 @@ const columns: TableColumnType<Notice>[] = [
     dataIndex: 'date',
   },
 ];
-
 
 // const rowSelection: TableProps['rowSelection'] = {
 //   getCheckboxProps: (record: any) => ({
