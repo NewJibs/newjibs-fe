@@ -18,6 +18,12 @@ import * as directives from 'vuetify/directives'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap' //뒤에 확장자 안붙으면 js라고 알고 있기
 
+//fontawesome - 여기 이상해
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faS } from '@fortawesome/free-solid-svg-icons'
+import { faR } from '@fortawesome/free-solid-svg-icons'
+// import { fontawesome } from '@fortawesome/vue-fontawesome'
+
 // axios 객체 사용
 import { instance } from './util/http-common'
 
