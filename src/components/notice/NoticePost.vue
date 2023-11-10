@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { instance } from '@/util/http-common';
+import { ref } from 'vue'
+import { instance } from '@/util/http-common'
 
 //바인딩 변수
-const title = ref('');
-const author = ref('');
-const content = ref('');
-const imageUrl = ref('');
+const title = ref('')
+const author = ref('')
+const content = ref('')
+const imageUrl = ref('')
 
 //날짜 형식 바꾸기
 const formatDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
 
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
 console.log(formatDate(new Date()))
 
 //포스트 올리기
 const submitPost = async (e: any) => {
-  e.preventDefault();
+  e.preventDefault()
 
   const currentDate = new Date()
-  const formattedDate = formatDate(currentDate);
+  const formattedDate = formatDate(currentDate)
 
   const postData = {
     title: title.value,
@@ -34,27 +34,27 @@ const submitPost = async (e: any) => {
     content: content.value,
     image: imageUrl.value,
     date: formattedDate
-  };
+  }
 
   console.log(postData.date)
 
   try {
     // POST 요청 보내기
-    const response = await instance.post('/notices', postData);
+    const response = await instance.post('/notices', postData)
 
     // 요청이 성공한 경우 처리
-    console.log('게시 성공', response.data);
+    console.log('게시 성공', response.data)
 
     // 입력 필드 초기화
-    title.value = '';
-    author.value = '';
-    content.value = '';
-    imageUrl.value = '';
+    title.value = ''
+    author.value = ''
+    content.value = ''
+    imageUrl.value = ''
   } catch (error) {
     // 요청이 실패한 경우 처리
-    console.error('게시 실패', error);
+    console.error('게시 실패', error)
   }
-};
+}
 </script>
 
 <template>

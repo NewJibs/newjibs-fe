@@ -71,7 +71,12 @@ const postNotice = () => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="notice in data" :key="notice.noticeId" class="text-center">
+        <tr
+          v-for="notice in data"
+          :key="notice.noticeId"
+          class="text-center"
+          @click="viewNotice(notice.noticeId)"
+        >
           <td>{{ notice.title }}</td>
           <td>{{ notice.author }}</td>
           <td>{{ notice.date }}</td>

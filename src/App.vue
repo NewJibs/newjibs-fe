@@ -7,10 +7,6 @@ import TheNavBar from './components/common/TheNavBar.vue'
   <header></header>
   <TheNavBar />
   <RouterView />
-  <div class="root">
-    <h1>안녕</h1>
-    <h2>dkssud</h2>
-  </div>
 </template>
 
 <style scoped lang="scss">
