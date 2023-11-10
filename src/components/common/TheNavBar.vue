@@ -1,17 +1,17 @@
 <script setup lang="ts"></script>
 <template>
-  <div>
-    <!-- <v-app-bar dense color="#ddffee">
-      <template v-slot:extension>
-        <v-tabs>
-          <v-tab>NewJibs</v-tab>
-          <v-tab>지도</v-tab>
-          <v-tab>공지사항</v-tab>
-          <v-tab>뉴스</v-tab>
-        </v-tabs>
-      </template>
-    </v-app-bar> -->
-    화이팅
-  </div>
+  <v-app ref="app">
+    <v-app-bar> newjibs</v-app-bar>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+    <v-btn icon>
+      <v-icon>mdi-heart</v-icon>
+    </v-btn>
+    <v-btn icon>
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
+    <v-main></v-main>
+    <v-footer></v-footer>
+  </v-app>
 </template>
 <style scoped></style>

@@ -15,8 +15,8 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
 //부트스트랩
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap'; //뒤에 확장자 안붙으면 js라고 알고 있기
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap' //뒤에 확장자 안붙으면 js라고 알고 있기
 
 // axios 객체 사용
 import { instance } from './util/http-common'
