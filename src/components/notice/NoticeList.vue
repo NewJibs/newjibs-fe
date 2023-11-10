@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref, onMounted, computed, unref } from 'vue'
 import type { TableProps, TableColumnType } from 'ant-design-vue';
-import { instance } from '@/api/axios';
+import { instance } from '@/api/notice.js';
 import { useRouter } from 'vue-router';
 
 interface Notice {
@@ -104,3 +104,4 @@ const postNotice = (e: any) => {
 </template>
 
 <style scoped></style>
+@/api/notice

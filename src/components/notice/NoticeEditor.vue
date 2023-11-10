@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { instance } from '@/api/axios';
+import { instance } from '@/api/notice.js';
 
 //바인딩 변수
 const title = ref('');
@@ -82,3 +82,4 @@ const submitPost = async (e: any) => {
   </div>
 </template>
 
+@/api/notice

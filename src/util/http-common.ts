@@ -10,3 +10,18 @@ export const instance = axios.create({
     //cors 설정
     withCredentials: true
 })
+
+//인터셉터
+instance.interceptors.request.use((config: any) => {
+  return config
+}),
+  (error: any) => {
+    return Promise.reject(error)
+  }
+
+instance.interceptors.request.use((response: any) => {
+  return response
+}),
+  (error: any) => {
+    return Promise.reject(error)
+  }

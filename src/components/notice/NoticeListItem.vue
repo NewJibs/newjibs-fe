@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, type Ref, onMounted } from 'vue'
-import { instance } from '@/api/axios';
+import { instance } from '@/api/notice.js';
 import { useRoute, useRouter } from 'vue-router';
 
 interface Notice {
@@ -106,3 +106,4 @@ onMounted(() => {
 </template>
 
 <style scoped></style>
+@/api/notice
