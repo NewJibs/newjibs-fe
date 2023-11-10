@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: '/notices',
       name: 'notices',
-      component: () => NoticeListView
+      component: NoticeListView
     },
     {
       path: '/notices/post',
@@ -26,7 +26,7 @@ const router = createRouter({
       path: '/notices/:noticeId', //동적라우트
       name: 'notice', //라우트 이름
       component: () => NoticeDetailView
-    },
+    }
     // {
     //   path: '*',
     //   name: 'error',

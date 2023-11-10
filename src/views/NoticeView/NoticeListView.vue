@@ -4,7 +4,7 @@ import NoticeList from '@/components/notice/NoticeList.vue'
 
 <template>
   <main>
-    <NoticesList />
+    <NoticeList />
   </main>
 </template>
 
