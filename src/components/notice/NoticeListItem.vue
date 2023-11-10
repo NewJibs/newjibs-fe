@@ -46,12 +46,12 @@ const updatePost = async () => {
   if (!isNaN(noticeId) && data.value) {
     const updatedData = { ...data.value }; // 복사해서 수정할 데이터를 생성
     updatedData.title = '새로운 제목'; // 원하는 필드를 수정
-    updatedData.author = '새로운 작성자'; // 원하는 필드를 수정
+    updatedData.author = 'admin'; // 원하는 필드를 수정
     updatedData.content = '새로운 나'
 
     // 서버에 수정 요청 보내기
     try {
-      const response = await instance.patch(`/notices/${noticeId}`, updatedData, {
+      const response = await instance.put(`/notices/${noticeId}`, updatedData, {
         withCredentials: true,
       });
 
