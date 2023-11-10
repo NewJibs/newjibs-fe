@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { instance } from '@/api/notice.js';
+import { instance } from '@/util/http-common';
 
 //바인딩 변수
 const title = ref('');

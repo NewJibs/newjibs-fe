@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, type Ref, onMounted } from 'vue'
-import { instance } from '@/api/notice.js';
+import { instance } from '@/util/http-common';
 import { useRoute, useRouter } from 'vue-router';
 
 interface Notice {

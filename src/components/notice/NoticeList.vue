@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref, onMounted, computed, unref } from 'vue'
 import type { TableProps, TableColumnType } from 'ant-design-vue';
-import { instance } from '@/api/notice.js';
+import { instance } from '@/util/http-common';
 import { useRouter } from 'vue-router';
 
 interface Notice {
