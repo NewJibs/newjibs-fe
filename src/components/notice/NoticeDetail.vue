@@ -44,7 +44,7 @@ const deletePost = () => {
 }
 
 const updatePost = async () => {
-  router.push()
+  router.push({ name: 'notice-modify', params: { noticeId: noticeId.toString() } })
   // if (!isNaN(noticeId) && data.value) {
   //   const updatedData = { ...data.value } // 복사해서 수정할 데이터를 생성
   //   updatedData.title = '새로운 제목' // 원하는 필드를 수정

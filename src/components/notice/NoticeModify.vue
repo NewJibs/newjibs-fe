@@ -38,7 +38,7 @@ const updateNotice = async () => {
       console.log('게시물 수정 성공', response.data)
 
       // Redirect to NoticeDetail after update
-      router.push({ name: 'notice-detail', params: { noticeId: noticeId.toString() } })
+      router.push({ name: 'notice', params: { noticeId: noticeId.toString() } })
     } catch (error) {
       console.error('게시물 수정 실패', error)
     }
