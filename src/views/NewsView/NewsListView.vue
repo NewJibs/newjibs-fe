@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import NoticesComponent from '@/components/NoticesComponent.vue'
+import NewsDetail from '@/components/news/NewsList.vue'
 </script>
 <template>
   <main>
-    <NoticesComponent />
+    <NewsDetail />
   </main>
 </template>
 <style scoped></style>

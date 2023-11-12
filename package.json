@@ -12,9 +12,17 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@toast-ui/editor": "^3.2.2",
+    "ant-design-vue": "^4.0.6",
     "axios": "^1.6.0",
+    "bootstrap": "^5.3.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "sass": "^1.69.5",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
     "vuetify": "^3.3.23"
@@ -28,7 +36,9 @@
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/tsconfig": "^0.4.0",
-    "eslint": "^8.49.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-vue": "^9.17.0",
     "npm-run-all2": "^6.1.1",
     "prettier": "^3.0.3",
