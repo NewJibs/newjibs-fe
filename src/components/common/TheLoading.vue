@@ -11,7 +11,7 @@
 <style scoped>
 .loading {
   /* 배경을 불투명하게 설정 */
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.8);
   /* 중앙에 위치시키기 위한 설정 */
   position: fixed;
   top: 0;
