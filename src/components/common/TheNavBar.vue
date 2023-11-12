@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const tab = ref(null)
+</script>
+
 <template>
   <v-app ref="app">
     <v-app-bar class="app-bar">
@@ -22,12 +28,6 @@
     </v-footer>
   </v-app>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const tab = ref(null)
-</script>
 
 <style scoped>
 .routerLink {
