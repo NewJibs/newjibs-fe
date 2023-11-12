@@ -58,7 +58,7 @@ const postNotice = () => {
         <tr
           v-for="notice in data"
           :key="notice.noticeId"
-          class="text-center"
+          class="table-body"
           @click="viewNotice(notice.noticeId)"
         >
           <td>{{ notice.title }}</td>
@@ -71,13 +71,21 @@ const postNotice = () => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .notice-table {
   margin-top: 3rem;
 }
 
 .table-head {
   background-color: lightblue;
+}
+
+.table-body {
+  text-align: center;
+  :hover {
+    cursor: pointer;
+    /* background-color: gainsboro; */
+  }
 }
 </style>
 @/api/notice

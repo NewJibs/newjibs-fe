@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { instance } from '@/util/http-common'
-import router from '@/router';
+import router from '@/router'
 
 //바인딩 변수
 const title = ref('')
@@ -52,6 +52,7 @@ const submitPost = async (e: any) => {
     content.value = ''
     imageUrl.value = ''
 
+    //다시 notices 페이지로 이동
     router.push('/notices')
   } catch (error) {
     // 요청이 실패한 경우 처리
