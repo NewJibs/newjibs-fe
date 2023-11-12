@@ -62,7 +62,7 @@ const viewNews = (articleId: string) => {
           <td>{{ news.pressCorporationName }}</td>
           <td>{{ news.publishDateTime }}</td>
           <td>{{ news.summaryContent }}</td>
-          <td>{{ news.thumbnail }}</td>
+          <td><img :src="news.thumbnail" /></td>
         </tr>
       </tbody>
     </v-table>
