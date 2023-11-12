@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { instance } from '@/util/http-common'
+import router from '@/router';
 
 //바인딩 변수
 const title = ref('')
@@ -50,6 +51,8 @@ const submitPost = async (e: any) => {
     author.value = ''
     content.value = ''
     imageUrl.value = ''
+
+    router.push('/notices')
   } catch (error) {
     // 요청이 실패한 경우 처리
     console.error('게시 실패', error)
