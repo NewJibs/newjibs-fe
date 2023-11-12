@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: '/notices',
       name: 'notices',
-      component: NoticeListView
+      component: () => NoticeListView
     },
     {
       path: '/notices/post',

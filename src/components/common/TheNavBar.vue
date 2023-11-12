@@ -29,21 +29,18 @@ import { ref } from 'vue'
 const tab = ref(null)
 </script>
 
-<style lang="scss">
+<style scoped>
 .routerLink {
   color: black;
 }
 
 .app-bar {
-  height: 6rem;
   display: flex;
   align-items: center;
 }
 
 .app-bar-tab {
   display: flex;
-  align-items: center;
-  height: 6rem;
 }
 
 .app-tab {

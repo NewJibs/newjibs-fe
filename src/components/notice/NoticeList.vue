@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref, onMounted, computed, unref } from 'vue'
-import type { TableProps, TableColumnType } from 'ant-design-vue'
+import { ref, type Ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRouter } from 'vue-router'
 
@@ -31,22 +30,6 @@ onMounted(() => {
   fetchData()
 })
 
-//and design용
-// const columns: TableColumnType<Notice>[] = [
-//   {
-//     title: '제목',
-//     dataIndex: 'title'
-//   },
-//   {
-//     title: '작성자',
-//     dataIndex: 'author'
-//   },
-//   {
-//     title: '작성일시',
-//     dataIndex: 'date'
-//   }
-// ]
-
 //클릭하면 noticeId에 해당하는 페이지로 이동
 const router = useRouter()
 
@@ -62,9 +45,10 @@ const postNotice = () => {
 
 <template>
   <div class="container">
-    <v-table>
+    <h1>공 지 사 항</h1>
+    <v-table class="notice-table">
       <thead>
-        <tr>
+        <tr class="table-head">
           <th class="text-center">제목</th>
           <th class="text-center">작성자</th>
           <th class="text-center">작성일</th>
@@ -87,5 +71,13 @@ const postNotice = () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.notice-table {
+  margin-top: 3rem;
+}
+
+.table-head {
+  background-color: lightblue;
+}
+</style>
 @/api/notice
