@@ -70,12 +70,12 @@ const viewNews = (articleId: string) => {
     <div class="notice-detail-container">
       <v-container @click="viewNews">
         <v-card class="news-card" v-for="news in data" :key="news.articleId" hover>
-          <v-card-item><img :src="news.thumbnail" /></v-card-item>
+          <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
           <v-card-title class="card-title">{{ news.title }}</v-card-title>
           <v-card-subtitle
             >{{ news.pressCorporationName }} - {{ news.publishDateTime }}</v-card-subtitle
           >
-          <v-card-text>{{ news.summaryContent }}</v-card-text>
+          <v-card-text>{{ news.summaryContent }}...</v-card-text>
         </v-card>
       </v-container>
     </div>
