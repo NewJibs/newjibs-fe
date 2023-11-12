@@ -1,5 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main></main>
+  <main>
+    <div class="loading">
+      <img src="@/assets/loading.png" />
+    </div>
+  </main>
 </template>
+
+<style scoped></style>
