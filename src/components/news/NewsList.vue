@@ -1,5 +1,35 @@
 <script setup lang="ts">
+import { ref, type Ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
+import { useRouter } from 'vue-router'
+
+interface News {
+  articleId: string
+  pressCorporationName: string
+  title: string
+  summaryContent: string
+  thumbnail: string
+  publishDateTime: string
+}
+
+const data: Ref<News[]> = ref([])
+
+const fetchData = () => {
+  instance
+    .get('/news')
+    .then((res) => {
+      console.log('axios get 성공')
+      console.log(res)
+      data.value = res.data
+    })
+    .catch((res) => {
+      console.error(res)
+    })
+}
+
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 <template>
