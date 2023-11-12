@@ -68,8 +68,14 @@ const viewNews = (articleId: string) => {
     </v-table>
   </div> -->
     <div class="notice-detail-container">
-      <v-container @click="viewNews">
-        <v-card class="news-card" v-for="news in data" :key="news.articleId" hover>
+      <v-container>
+        <v-card
+          class="news-card"
+          v-for="news in data"
+          :key="news.articleId"
+          @click.prevent="viewNews(news.articleId)"
+          hover
+        >
           <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
           <v-card-title class="card-title">{{ news.title }}</v-card-title>
           <v-card-subtitle

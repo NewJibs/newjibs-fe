@@ -33,7 +33,7 @@ const loadNews = (articleId: string) => {
 }
 
 onMounted(() => {
-  if (articleId !== null) {
+  if (articleId) {
     loadNews(articleId)
   } else {
     //noticeId가 유효하지 않을 때 처리
