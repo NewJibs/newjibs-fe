@@ -25,7 +25,7 @@
 
 .loading-img {
   /* 이미지를 시계방향으로 돌리는 애니메이션 적용 */
-  animation: spin 2s linear infinite;
+  animation: spin 3s linear infinite;
 }
 
 /* 시계방향으로 돌리는 애니메이션 정의 */
