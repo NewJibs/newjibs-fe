@@ -30,10 +30,43 @@ const fetchData = () => {
 onMounted(() => {
   fetchData()
 })
+
+const router = useRouter()
+
+const viewNews = (articleId: string) => {
+  router.push({ name: 'news-detail', params: { articleId: articleId.toString() } })
+}
 </script>
 
 <template>
-  <div></div>
+  <div class="container">
+    <h1>부동산 뉴스</h1>
+    <v-table class="notice-table">
+      <thead>
+        <tr class="table-head">
+          <th class="text-center">제목</th>
+          <th class="text-center">매체</th>
+          <th class="text-center">작성일</th>
+          <th class="text-center">요약</th>
+          <th class="text-center">썸네일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="news in data"
+          :key="news.articleId"
+          class="table-body"
+          @click="viewNews(news.articleId)"
+        >
+          <td>{{ news.title }}</td>
+          <td>{{ news.pressCorporationName }}</td>
+          <td>{{ news.publishDateTime }}</td>
+          <td>{{ news.summaryContent }}</td>
+          <td>{{ news.thumbnail }}</td>
+        </tr>
+      </tbody>
+    </v-table>
+  </div>
   <!-- <div class="notice-detail-container">
     <v-container>
       <v-card class="notice-card" v-if="data">
