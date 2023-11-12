@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TheError from '@/components/common/TheError.vue';
+import TheError from '@/components/common/TheError.vue'
 </script>
 <template>
-    <TheError />
+  <TheError />
 </template>
 <style scoped></style>
