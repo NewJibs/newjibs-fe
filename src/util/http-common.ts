@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const { SERVER_URL, SERVER_VERSION } = import.meta.env
+const { VITE_SERVER_URL, VITE_SERVER_VERSION } = import.meta.env
 
 export const instance = axios.create({
-  baseURL: 'https://newjibs.shop/v1',
+  baseURL: VITE_SERVER_URL + VITE_SERVER_VERSION,
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   },
