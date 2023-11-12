@@ -34,7 +34,10 @@ onMounted(() => {
 const router = useRouter()
 
 const viewNews = (articleId: string) => {
-  router.push({ name: 'news-detail', params: { articleId: articleId.toString() } })
+  router.push({
+    name: 'news-detail',
+    params: { articleId: articleId.toString() }
+  })
 }
 </script>
 
