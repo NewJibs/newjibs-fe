@@ -8,7 +8,7 @@ interface News {
   pressCorporationName: string
   title: string
   summaryContent: string
-  thumbnail: string
+  thumbnail?: string
   publishDateTime: string
 }
 
