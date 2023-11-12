@@ -81,30 +81,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>날짜</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-if="data" :key="data.title">
-          <td>{{ data.title }}</td>
-          <td>{{ data.author }}</td>
-          <td>{{ data.date }}</td>
-        </tr>
-        <tr v-else>
-          <td colspan="3">로딩 중...</td>
-        </tr>
-      </tbody>
-    </table>
-    <a-button type="primary submit" danger @click="deletePost">삭제</a-button>
-    <a-button @click="updatePost">수정</a-button>
+  <div class="notice-detail-container">
+    <v-container>
+      <div class="notice-details" v-if="data">
+        <h1>{{ data.title }}</h1>
+        <p>{{ data.author }} - {{ data.date }}</p>
+        <div v-html="data.content"></div>
+        <div class="actions">
+          <v-btn @click="deletePost" color="red" dark>Delete</v-btn>
+          <v-btn @click="updatePost" color="primary">Edit</v-btn>
+        </div>
+      </div>
+      <v-alert v-else> Loading... </v-alert>
+    </v-container>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.notice-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice-details {
+  max-width: 800px;
+  margin: 0 auto;
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  p {
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .actions {
+    margin-top: 1rem;
+    v-btn {
+      margin-right: 4rem;
+    }
+  }
+}
+</style>
 @/api/notice
