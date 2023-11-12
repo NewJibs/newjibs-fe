@@ -33,10 +33,4 @@ const tab = ref(null)
 .routerLink {
   color: black;
 }
-.routerLink:visited {
-  color: blue;
-}
-.routerLink:hover {
-  color: blue;
-}
 </style>
