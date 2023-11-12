@@ -29,6 +29,7 @@ import { instance } from './util/http-common'
 
 import App from './App.vue'
 import router from './router'
+import TheLoading from './components/common/TheLoading.vue'
 
 const vuetify = createVuetify({
   components,
@@ -38,8 +39,11 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 app.provide('axios', instance)
+//loading창 전역설정
+// eslint-disable-next-line vue/multi-word-component-names
+app.component('loading', TheLoading)
 
 app.use(createPinia().use(piniaPluginPersistedstate))
 app.use(router)
 app.use(vuetify) // 사용
-app.use(Antd).mount('#app')
+app.mount('#app')
