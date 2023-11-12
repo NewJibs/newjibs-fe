@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -25,9 +25,11 @@ const loadNotice = (noticeId: number) => {
     .then((res) => {
       console.log('axios get 성공')
       data.value = res.data
+      isLoading.value = false //데이터 로딩이 완료되면 로딩 상태를 false로 변경
     })
     .catch((res) => {
       console.error(res)
+      isLoading.value = false //에러가 발생하면 로딩 상태를 false로 변경
     })
 }
 
