@@ -8,6 +8,8 @@ import NoticePostView from '@/views/NoticeView/NoticePostView.vue'
 import NoticeModifyView from '@/views/NoticeView/NoticeModifyView.vue'
 
 // 뉴스
+import NewsListView from '@/views/NewsView/NewsListView.vue'
+import NewsDetailView from '@/views/NewsView/NewsDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,7 +40,14 @@ const router = createRouter({
       component: () => NoticeModifyView
     },
     {
-
+      path: '/news',
+      name: 'news',
+      component: () => NewsListView
+    },
+    {
+      path: '/news/:articleId',
+      name: 'news-detail',
+      component: () => NewsDetailView
     }
     // {
     //   path: '*',
