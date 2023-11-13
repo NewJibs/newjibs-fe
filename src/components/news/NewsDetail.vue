@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref, onMounted, withDefaults, defineProps } from 'vue'
+import { ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -47,7 +47,10 @@ onMounted(() => {
     <v-container>
       <div class="news-details" v-if="data">
         <h1>{{ data.title }}</h1>
-        <p>{{ data.pressCorporationName }} - {{ data.publishDateTime }}</p>
+        <p>
+          {{ data.pressCorporationName }} |
+          {{ new Date(data.publishDateTime).toLocaleDateString() }}
+        </p>
         <p>{{ data.writer }}</p>
         <img :src="data.imageUrl" alt="news-image" class="news-image" />
         <p>{{ data.imageDesc }}</p>
