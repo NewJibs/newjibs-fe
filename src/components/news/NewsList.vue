@@ -83,7 +83,8 @@ const viewNews = (news: News) => {
           <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
           <v-card-title class="card-title">{{ news.title }}</v-card-title>
           <v-card-subtitle
-            >{{ news.pressCorporationName }} - {{ news.publishDateTime }}</v-card-subtitle
+            >{{ news.pressCorporationName }} |
+            {{ new Date(news.publishDateTime).toLocaleDateString() }}</v-card-subtitle
           >
           <v-card-text>{{ news.summaryContent }}...</v-card-text>
         </v-card>
