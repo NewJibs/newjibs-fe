@@ -11,15 +11,4 @@ import TheNavBar from './components/common/TheNavBar.vue'
   <RouterView />
 </template>
 
-<style scoped lang="scss">
-.root {
-  $red-color: red;
-  $blue-color: blue;
-  h1 {
-    color: $red-color;
-  }
-  h2 {
-    color: $blue-color;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

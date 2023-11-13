@@ -33,10 +33,11 @@ onMounted(() => {
 
 const router = useRouter()
 
-const viewNews = (articleId: string) => {
+const viewNews = (news: News) => {
+  console.log()
   router.push({
     name: 'news-detail',
-    params: { articleId: articleId.toString() }
+    params: { articleId: news.articleId }
   })
 }
 </script>
@@ -76,7 +77,7 @@ const viewNews = (articleId: string) => {
           class="news-card"
           v-for="news in data"
           :key="news.articleId"
-          @click.prevent="viewNews(news.articleId)"
+          @click.prevent="viewNews(news)"
           hover
         >
           <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
