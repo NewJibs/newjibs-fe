@@ -5,7 +5,7 @@ const tab = ref(null)
 </script>
 
 <template>
-  <v-app ref="app">
+  <v-app>
     <v-app-bar class="app-bar">
       <v-tabs v-model="tab" background-color="primary" class="app-bar-tab">
         <router-link :to="{ name: 'home' }" class="routerLink">
@@ -18,14 +18,6 @@ const tab = ref(null)
         <v-tab class="app-tab" to="/news">뉴스</v-tab>
       </v-tabs>
     </v-app-bar>
-
-    <v-main>
-      <router-view></router-view>
-    </v-main>
-
-    <v-footer>
-      <!-- Your footer content goes here -->
-    </v-footer>
   </v-app>
 </template>
 
