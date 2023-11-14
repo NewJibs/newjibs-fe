@@ -32,6 +32,7 @@ const router = createRouter({
     {
       path: '/notices/:noticeId', //동적라우트
       name: 'notice', //라우트 이름
+      props: true,
       component: () => NoticeDetailView
     },
     {
@@ -47,6 +48,7 @@ const router = createRouter({
     {
       path: '/news/:articleId',
       name: 'news-detail',
+      props: true,
       component: () => NewsDetailView
     }
     // {
