@@ -66,6 +66,23 @@ const router = createRouter({
           component: () => import('@/components/map/KakaoMap.vue')
         }
       ]
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: () => import('@/views/UserView.vue'),
+      children: [
+        {
+          path: 'login',
+          name: 'user-login',
+          component: () => import('@/components/user/SignIn.vue')
+        },
+        {
+          path: 'signup',
+          name: 'user-signup',
+          component: () => import('@/components/user/SignUp.vue')
+        }
+      ]
     }
     // {
     //   path: '*',
