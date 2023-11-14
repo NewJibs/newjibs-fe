@@ -43,7 +43,7 @@ const router = createRouter({
       redirect: { name: 'news-list' },
       children: [
         {
-          path: 'list',
+          path: '',
           name: 'news-list',
           component: () => import('@/components/news/NewsList.vue')
         },
@@ -58,11 +58,10 @@ const router = createRouter({
       path: '/maps',
       name: 'maps',
       component: () => import('@/views/MapView.vue'),
-      // redirect: { name: 'house' },
-      redirect: '/maps/house',
+      redirect: { name: 'house' },
       children: [
         {
-          path: 'house',
+          path: '',
           name: 'house',
           component: () => import('@/components/map/KakaoMap.vue')
         }

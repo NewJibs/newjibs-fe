@@ -19,7 +19,12 @@ const tab = ref(null)
 
         <v-spacer />
 
-        
+        <!-- <router-link :to="{ name: 'signup' }" class="routerLink">
+          <v-tab class="app-tab">회원가입</v-tab>
+        </router-link>
+        <router-link :to="{ name: 'login' }" class="routerLink">
+          <v-tab class="app-tab">로그인</v-tab>
+        </router-link> -->
       </v-tabs>
     </v-app-bar>
   </v-app>
