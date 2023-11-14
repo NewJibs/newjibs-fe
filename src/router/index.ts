@@ -53,6 +53,19 @@ const router = createRouter({
           component: () => import('@/components/news/NewsDetail.vue')
         }
       ]
+    },
+    {
+      path: '/maps',
+      name: 'maps',
+      component: () => import('@/views/MapView.vue'),
+      redirect: { name: 'house' },
+      children: [
+        {
+          path: 'house',
+          name: 'house',
+          component: () => import('@/components/map/KakaoMap.vue')
+        }
+      ]
     }
     // {
     //   path: '*',
