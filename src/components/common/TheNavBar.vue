@@ -7,24 +7,16 @@ const tab = ref(null)
 <template>
   <v-app class="all-app">
     <v-app-bar class="app-bar">
-      <v-tabs v-model="tab" background-color="primary" class="app-bar-tab">
-        <router-link :to="{ name: 'home' }" class="routerLink">
-          <v-tab class="app-tab">newjibs</v-tab>
-        </router-link>
+      <v-tabs background-color="primary" slider-color="yellow" class="app-bar-tab">
+        <v-tab class="app-tab" :to="{ name: 'home' }">newjibs</v-tab>
         <v-tab class="app-tab" :to="{ name: 'maps' }">지도</v-tab>
-        <router-link :to="{ name: 'notices' }" class="routerLink">
-          <v-tab class="app-tab">공지사항</v-tab>
-        </router-link>
+        <v-tab class="app-tab" :to="{ name: 'notices' }">공지사항</v-tab>
         <v-tab class="app-tab" :to="{ name: 'news' }">뉴스</v-tab>
-
-        <v-spacer />
-
-        <!-- <router-link :to="{ name: 'signup' }" class="routerLink">
-          <v-tab class="app-tab">회원가입</v-tab>
-        </router-link>
-        <router-link :to="{ name: 'login' }" class="routerLink">
-          <v-tab class="app-tab">로그인</v-tab>
-        </router-link> -->
+      </v-tabs>
+      <v-spacer></v-spacer>
+      <v-tabs background-color="primary" slider-color="yellow" class="app-bar-tab">
+        <v-tab class="app-tab" :to="{ name: 'user-signup' }">회원가입</v-tab>
+        <v-tab class="app-tab" :to="{ name: 'user-login' }">로그인</v-tab>
       </v-tabs>
     </v-app-bar>
   </v-app>
