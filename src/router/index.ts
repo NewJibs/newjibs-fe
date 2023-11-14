@@ -7,10 +7,6 @@ import NoticeDetailView from '@/views/NoticeView/NoticeDetailView.vue'
 import NoticePostView from '@/views/NoticeView/NoticePostView.vue'
 import NoticeModifyView from '@/views/NoticeView/NoticeModifyView.vue'
 
-// 뉴스
-import NewsListView from '@/views/NewsView/NewsListView.vue'
-import NewsDetailView from '@/views/NewsView/NewsDetailView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -43,13 +39,20 @@ const router = createRouter({
     {
       path: '/news',
       name: 'news',
-      component: () => NewsListView
-    },
-    {
-      path: '/news/:articleId',
-      name: 'news-detail',
-      props: true,
-      component: () => NewsDetailView
+      component: () => import('@/views/NewsView.vue'),
+      redirect: { name: 'news-list' },
+      children: [
+        {
+          path: 'list',
+          name: 'news-list',
+          component: () => import('@/components/news/NewsList.vue')
+        },
+        {
+          path: ':articleId',
+          name: 'news-detail',
+          component: () => import('@/components/news/NewsDetail.vue')
+        }
+      ]
     }
     // {
     //   path: '*',
