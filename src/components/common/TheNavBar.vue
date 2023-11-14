@@ -1,8 +1,4 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const tab = ref(null)
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <v-app class="all-app">
