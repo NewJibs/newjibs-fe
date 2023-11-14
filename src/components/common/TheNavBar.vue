@@ -11,11 +11,11 @@ const tab = ref(null)
         <router-link :to="{ name: 'home' }" class="routerLink">
           <v-tab class="app-tab">newjibs</v-tab>
         </router-link>
-        <v-tab class="app-tab" to="/map">지도</v-tab>
+        <v-tab class="app-tab" :to="{ name: 'maps' }">지도</v-tab>
         <router-link :to="{ name: 'notices' }" class="routerLink">
           <v-tab class="app-tab">공지사항</v-tab>
         </router-link>
-        <v-tab class="app-tab" to="/news">뉴스</v-tab>
+        <v-tab class="app-tab" :to="{ name: 'news' }">뉴스</v-tab>
       </v-tabs>
     </v-app-bar>
   </v-app>
