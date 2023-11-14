@@ -5,7 +5,7 @@ let map
 const positions = ref([])
 const markers = ref([])
 
-const props = defineProps({ stations: Array, selectStation: Object })
+// const props = defineProps({ stations: Array, selectStation: Object })
 
 //이렇게 map import 해오는거다 강조!
 onMounted(() => {
@@ -86,6 +86,6 @@ const deleteMarkers = () => {
 <style>
 #map {
   width: 100%;
-  height: 700px;
+  height: 80vh;
 }
 </style>

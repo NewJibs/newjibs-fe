@@ -16,6 +16,10 @@ const tab = ref(null)
           <v-tab class="app-tab">공지사항</v-tab>
         </router-link>
         <v-tab class="app-tab" :to="{ name: 'news' }">뉴스</v-tab>
+
+        <v-spacer />
+
+        
       </v-tabs>
     </v-app-bar>
   </v-app>
@@ -32,6 +36,7 @@ const tab = ref(null)
 }
 
 .app-bar {
+  /* height: 9vh; */
   display: flex;
   align-items: center;
 }
