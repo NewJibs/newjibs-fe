@@ -48,7 +48,6 @@ const viewNews = (articleId: string) => {
       <v-carousel height="800" hide-delimiter-background show-arrows cover>
         <v-container>
           <v-card
-            class="news-card"
             v-for="news in data"
             :key="news.articleId"
             @click.prevent="viewNews(news.articleId)"
@@ -74,11 +73,7 @@ const viewNews = (articleId: string) => {
 </template>
 
 <style scoped>
-/* .news-card {
-  margin: 2rem 0;
+.news-card:hover {
+  cursor: pointer;
 }
-
-.card-title {
-  margin-top: 1rem;
-} */
 </style>
