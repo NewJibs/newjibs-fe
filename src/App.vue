@@ -4,7 +4,7 @@ import TheNavBar from './components/common/TheNavBar.vue'
 </script>
 
 <template>
-  <header>
+  <header style="height: 12vh">
     <TheNavBar />
   </header>
 

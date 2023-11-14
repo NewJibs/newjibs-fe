@@ -1,8 +1,8 @@
-<script setup></script>
+<script setup lang="ts"></script>
 
 <template>
-  <div></div>
-  <router-link></router-link>
+  <div>지도</div>
+  <router-view></router-view>
 </template>
 
 <style scoped></style>

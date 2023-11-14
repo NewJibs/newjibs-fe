@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref, type Ref, onMounted } from 'vue'
+import { ref, type Ref, onBeforeMount, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRouter } from 'vue-router'
+import { VCarousel } from 'vuetify/components'
+import { toRefs } from 'vue'
+import { reactive } from 'vue'
 
 interface News {
   articleId: string
@@ -14,21 +17,27 @@ interface News {
 
 const data: Ref<News[]> = ref([])
 
-const fetchData = () => {
-  instance
-    .get('/news')
-    .then((res) => {
-      console.log('axios get 성공')
-      console.log(res)
-      data.value = res.data
-    })
-    .catch((res) => {
-      console.error(res)
-    })
+const fetchData = async () => {
+  return await instance.get('/news')
+  // .then((res) => {
+  //   console.log('axios get 성공')
+  // })
+  // .catch((res) => {
+  //   console.error(res)
+  // })
 }
 
-onMounted(() => {
-  fetchData()
+onBeforeMount(async () => {
+  console.log('before mount')
+  // await fetchData()
+  console.log('data fetched')
+})
+
+onMounted(async () => {
+  const articles = await fetchData()
+  console.log(articles)
+  data.value = reactive(articles.data)
+  console.log('Mounted')
 })
 
 const router = useRouter()
@@ -45,16 +54,16 @@ const viewNews = (articleId: string) => {
   <div class="container">
     <!-- <v-carousel> -->
     <div class="notice-detail-container">
-      <v-carousel height="800" hide-delimiter-background show-arrows cover>
+      <v-carousel height="800" hide-delimiter-background cover>
         <v-container>
-          <v-card
+          <v-carousel-item
             v-for="news in data"
             :key="news.articleId"
             @click.prevent="viewNews(news.articleId)"
             hover
           >
-            <v-carousel-item>
-              <v-sheet height="100%">
+            <v-sheet height="100%">
+              <v-card>
                 <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
                 <v-card-title class="card-title">{{ news.title }}</v-card-title>
                 <v-card-subtitle
@@ -62,9 +71,9 @@ const viewNews = (articleId: string) => {
                   {{ new Date(news.publishDateTime).toLocaleDateString() }}</v-card-subtitle
                 >
                 <v-card-text>{{ news.summaryContent }}...</v-card-text>
-              </v-sheet>
-            </v-carousel-item>
-          </v-card>
+              </v-card>
+            </v-sheet>
+          </v-carousel-item>
         </v-container>
       </v-carousel>
     </div>

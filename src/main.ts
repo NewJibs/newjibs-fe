@@ -9,6 +9,7 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 
 //vuetify
+import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
