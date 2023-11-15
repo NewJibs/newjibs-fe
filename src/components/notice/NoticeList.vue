@@ -45,7 +45,6 @@ const postNotice = () => {
 
 <template>
   <div class="container">
-    <h1>공 지 사 항</h1>
     <v-table class="notice-table">
       <thead>
         <tr class="table-head">

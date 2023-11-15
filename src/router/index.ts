@@ -3,9 +3,6 @@ import HomeView from '@/views/HomeView.vue'
 
 // 공지사항
 import NoticeListView from '@/views/NoticeView/NoticeListView.vue'
-import NoticeDetailView from '@/views/NoticeView/NoticeDetailView.vue'
-import NoticePostView from '@/views/NoticeView/NoticePostView.vue'
-import NoticeModifyView from '@/views/NoticeView/NoticeModifyView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,23 +15,30 @@ const router = createRouter({
     {
       path: '/notices',
       name: 'notices',
-      component: () => NoticeListView
-    },
-    {
-      path: '/notices/post',
-      name: 'notice-post',
-      component: () => NoticePostView
-    },
-    {
-      path: '/notices/:noticeId', //동적라우트
-      name: 'notice', //라우트 이름
-      props: true,
-      component: () => NoticeDetailView
-    },
-    {
-      path: '/notices/:noticeId/modify',
-      name: 'notice-modify',
-      component: () => NoticeModifyView
+      component: () => NoticeListView,
+      redirect: { name: 'notice-list' },
+      children: [
+        {
+          path: '',
+          name: 'notice-list',
+          component: () => import('@/components/notice/NoticeList.vue')
+        },
+        {
+          path: '/notices/post',
+          name: 'notice-post',
+          component: () => import('@/components/notice/NoticePost.vue')
+        },
+        {
+          path: '/notices/:noticeId', //동적라우트
+          name: 'notice', //라우트 이름
+          component: () => import('@/components/notice/NoticeDetail.vue')
+        },
+        {
+          path: '/notices/:noticeId/modify',
+          name: 'notice-modify',
+          component: () => import('@/components/notice/NoticeModify.vue')
+        }
+      ]
     },
     {
       path: '/news',

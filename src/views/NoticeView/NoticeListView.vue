@@ -4,7 +4,8 @@ import NoticeList from '@/components/notice/NoticeList.vue'
 
 <template>
   <main>
-    <NoticeList />
+    <h1>공지사항</h1>
+    <router-view></router-view>
   </main>
 </template>
 
