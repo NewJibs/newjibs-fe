@@ -43,7 +43,7 @@ const initMap = () => {
 const searchCategory = () => {
   //지도에 idle 이벤트 등록
   kakao.maps.event.addListener(map, 'idle', searchPlaces)
-  
+
   //커스텀 오버레이의 콘텐츠 노드에 css class 추가
   // contentNode.className = 'placeinfo_wrap'
 
@@ -68,10 +68,10 @@ const loadMarkers = () => {
   deleteMarkers()
 
   // 마커 이미지를 생성합니다
-  //   const imgSrc = require("@/assets/map/markerStar.png");
+    const imgSrc = import("@/assets/marker.png");
   // 마커 이미지의 이미지 크기 입니다
-  //   const imgSize = new kakao.maps.Size(24, 35);
-  //   const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
+    const imgSize = new kakao.maps.Size(24, 35);
+    const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
   // 마커를 생성합니다
   markers.value = []
@@ -97,10 +97,46 @@ const loadMarkers = () => {
   map.setBounds(bounds)
 }
 
-//배열읰 크기가 0보다 크면 배열을 지워라
+//배열의 크기가 0보다 크면 배열을 지워라
 const deleteMarkers = () => {
   if (markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null))
+  }
+}
+
+//엘리먼트에 이벤트 핸들러를 등록하는 함수
+const addEventHandle = (target, type, callback) => {
+  if (target.addEventListener) {
+    target.addEventListener(type, callback)
+  } else {
+    target.attachEvent('on' + type, callback)
+  }
+}
+
+//카테고리 검색을 요청하는 함수
+const searchPlaces = () => {
+  if (!curCategory) {
+    return
+  }
+
+  //커스텀 오버레이 숨기기
+  placeOverlay.setMap(null)
+
+  //지도에 표시되고 있는 마커를 제거
+  deleteMarkers()
+
+  ps.categorySearch(curCategory, placesSearchCB, { useMapBounds: true })
+}
+
+//장소 검색이 완료되었을 때 호출되는 콜백함수
+const placesSearchCB = (data, status, pagination) => {
+  if (status === kakao.maps.services.Status.OK) {
+    //정상적으로 검색이 완료되면 지도에 마커 표출
+    loadMarkers(data)
+  } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+    //검색 결과가 없는 경우 해야할 처리는 여기
+  } else if (status === kakao.maps.services.Status.ERROR) {
+    // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
   }
 }
 </script>
