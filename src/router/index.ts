@@ -1,8 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-
-// 공지사항
-import NoticeListView from '@/views/NoticeListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,12 +6,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: import('@/views/HomeView.vue')
     },
     {
       path: '/notices',
       name: 'notices',
-      component: () => NoticeListView,
+      component: () => import('@/views/NoticeListView.vue'),
       redirect: { name: 'notice-list' },
       children: [
         {
@@ -85,6 +81,19 @@ const router = createRouter({
           path: 'signup',
           name: 'user-signup',
           component: () => import('@/components/user/SignUp.vue')
+        }
+      ]
+    },
+    {
+      path: '/ranking',
+      name: 'ranking',
+      component: () => import('@/views/RankingView.vue'),
+      redirect: { name: 'ranking-list' },
+      children: [
+        {
+          path: '',
+          name: 'ranking-list',
+          component: () => import('@/components/ranking/RankingList.vue')
         }
       ]
     }
