@@ -90,33 +90,20 @@ const changeSelector = (e) => {
 <template>
   <div class="map_wrap">
     <div id="map"></div>
-    <div style="position: absolute; z-index: 9999999; top: 64px">
-      <select id="category" @change="changeSelector">
-        <option id="MT1" value="MT1" data-order="0">
-          <span>대형마트</span>
-        </option>
-        <option id="CS2" value="편의점" data-order="1">
-          <span>편의점</span>
-        </option>
-        <option id="PS3" value="유치원" data-order="2">
-          <span>유치원</span>
-        </option>
-        <option id="SC4" value="학교" data-order="3">
-          <span>학교</span>
-        </option>
-        <option id="CT1" value="문화시설" data-order="4">
-          <span>문화시설</span>
-        </option>
-        <option id="HP8" value="병원" data-order="5">
-          <span>대형마트</span>
-        </option>
-        <option id="FD6" value="음식점" data-order="6">
-          <span>음식점</span>
-        </option>
-        <option id="CE7" value="카페" data-order="7">
-          <span>카페</span>
-        </option>
-      </select>
+    <div class="dropdown" style="position: absolute; z-index: 9999999; top: 4vh">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        주변 시설 선택
+      </button>
+      <ul class="dropdown-menu" id="category" @click="changeSelector">
+        <li class="dropdown-item" id="MT1" value="MT1" data-order="0">대형마트</li>
+        <li class="dropdown-item" id="CS2" value="CS2" data-order="1">편의점</li>
+        <li class="dropdown-item" id="PS3" value="PS3" data-order="2">유치원</li>
+        <li class="dropdown-item" id="SC4" value="SC4" data-order="3">학교</li>
+        <li class="dropdown-item" id="CT1" value="CT1" data-order="4">문화시설</li>
+        <li class="dropdown-item" id="HP8" value="HP8" data-order="5">병원</li>
+        <li class="dropdown-item" id="FD6" value="FD6" data-order="6">음식점</li>
+        <li class="dropdown-item" id="CE7" value="CE7" data-order="7">카페</li>
+      </ul>
     </div>
   </div>
 </template>
@@ -125,6 +112,6 @@ const changeSelector = (e) => {
 <style>
 #map {
   width: 100%;
-  height: 96vh;
+  height: 94vh;
 }
 </style>
