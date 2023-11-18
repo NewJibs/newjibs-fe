@@ -73,17 +73,32 @@ const loadMarkers = () => {
   map.setBounds(bounds)
 }
 
-//배열읰 크기가 0보다 크면 배열을 지워라
+//배열의 크기가 0보다 크면 배열을 지워라
 const deleteMarkers = () => {
   if (markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null))
   }
 }
 
-``
+//드롭다운의 카테고리 선택하는 함수
 const changeSelector = (e) => {
   console.log(ps.value)
-  ps.value.categorySearch(e.target.value, console.log, { useMapBounds: true })
+  ps.value.categorySearch(
+    e.target.value,
+    (data, status, pagination) => {
+      if (status === kakao.maps.services.Status.OK) {
+        positions.value = data.map((item) => ({
+          latlng: new kakao.maps.LatLng(item.y, item.x),
+          title: item.place_name
+        }))
+        loadMarkers()
+      } else {
+        console.log('데이터를 가져오는데 실패했습니다.')
+      }
+    },
+    { useMapBounds: true }
+  )
+  //이거 결과값이 배열로 오는데 이거를 positions.value.push 한다음에 console.log 부분에 loadMarkers해주면됨
 }
 </script>
 
@@ -91,19 +106,24 @@ const changeSelector = (e) => {
   <div class="map_wrap">
     <div id="map"></div>
     <div class="dropdown" style="position: absolute; z-index: 9999999; top: 4vh">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
         주변 시설 선택
       </button>
-      <ul class="dropdown-menu" id="category" @click="changeSelector">
-        <li class="dropdown-item" id="MT1" value="MT1" data-order="0">대형마트</li>
-        <li class="dropdown-item" id="CS2" value="CS2" data-order="1">편의점</li>
-        <li class="dropdown-item" id="PS3" value="PS3" data-order="2">유치원</li>
-        <li class="dropdown-item" id="SC4" value="SC4" data-order="3">학교</li>
-        <li class="dropdown-item" id="CT1" value="CT1" data-order="4">문화시설</li>
-        <li class="dropdown-item" id="HP8" value="HP8" data-order="5">병원</li>
-        <li class="dropdown-item" id="FD6" value="FD6" data-order="6">음식점</li>
-        <li class="dropdown-item" id="CE7" value="CE7" data-order="7">카페</li>
-      </ul>
+      <select class="dropdown-menu" id="category" @click="changeSelector">
+        <option class="dropdown-item" id="MT1" value="MT1" data-order="0">대형마트</option>
+        <option class="dropdown-item" id="CS2" value="CS2" data-order="1">편의점</option>
+        <option class="dropdown-item" id="PS3" value="PS3" data-order="2">유치원</option>
+        <option class="dropdown-item" id="SC4" value="SC4" data-order="3">학교</option>
+        <option class="dropdown-item" id="CT1" value="CT1" data-order="4">문화시설</option>
+        <option class="dropdown-item" id="HP8" value="HP8" data-order="5">병원</option>
+        <option class="dropdown-item" id="FD6" value="FD6" data-order="6">음식점</option>
+        <option class="dropdown-item" id="CE7" value="CE7" data-order="7">카페</option>
+      </select>
     </div>
   </div>
 </template>
