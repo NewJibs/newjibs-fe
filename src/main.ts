@@ -4,10 +4,6 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
-//ant design
-import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/reset.css'
-
 //vuetify
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
