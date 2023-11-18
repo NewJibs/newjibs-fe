@@ -83,7 +83,7 @@ const viewNews = (articleId: string) => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .card-fixed-size {
   width: 300px;
   height: 430px;
@@ -93,6 +93,23 @@ const viewNews = (articleId: string) => {
   object-fit: cover;
   width: 100%;
   height: 200px;
+}
+
+.v-window__next {
+  display: none;
+}
+
+.v-window__prev {
+  display: none;
+}
+
+.v-window__container:hover {
+  .v-window__prev {
+    display: block;
+  }
+  .v-window__next {
+    display: block;
+  }
 }
 
 .news-card:hover {
