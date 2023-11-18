@@ -38,9 +38,11 @@ const initMap = () => {
 
   kakao.maps.event.addListener(map, 'idle', searchPlaces)
 
+  //각 카테고리에 클릭 이벤트 등록
   addCategoryClickEvent()
 }
 
+//엘리먼트에 이벤트 핸들러 등록하는 함수
 const addEventHandle = (target, type, callback) => {
   if (target.addEventListener) {
     target.addEventListener(type, callback)
@@ -49,19 +51,24 @@ const addEventHandle = (target, type, callback) => {
   }
 }
 
+//카테고리 검색을 요청하는 함수
 const searchPlaces = () => {
   if (!currCategory) {
     return
   }
 
+  //커스텀 오버레이 숨기기
   placeOverlay.setMap(null)
+  //지도에 표시되는 마커 지우기
   removeMarker()
 
   ps.value.categorySearch(currCategory, placesSearchCB, { useMapBounds: true })
 }
 
+//장소 검색이 완료됐을 때 호출되는 콜백함수
 const placesSearchCB = (data, status, pagination) => {
   if (status === kakao.maps.services.Status.OK) {
+    //정상적으로 검색이 완료되었으면 지도에 마커 표시
     displayPlaces(data)
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
     // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
@@ -70,10 +77,20 @@ const placesSearchCB = (data, status, pagination) => {
   }
 }
 
+//지도에 마커를 표시하는 함수
 const displayPlaces = (places) => {
-  for (let i = 0; i < places.length; i++) {
-    const marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), places[i].order)
 
+  //몇번째 카테고리가 선택되어 있는지 얻어옴
+  //스프라이트 이미지 위치를 계산하는데 사용
+  const order = document.getElementById(currCategory)?.dataset.order
+
+  for (let i = 0; i < places.length; i++) {
+    
+    //마커 생성하고 지도에 표시
+    const marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order)
+
+    //마커와 검색결과 항목을 클릭했을 때
+    //장소정보를 표출하도록 클릭 이벤트 등록
     ;(function (marker, place) {
       kakao.maps.event.addListener(marker, 'click', function () {
         displayPlaceInfo(place)
@@ -82,26 +99,28 @@ const displayPlaces = (places) => {
   }
 }
 
+//마커 생성하고 지도 위에 마커를 표시하는 함수
 const addMarker = (position, order) => {
   const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png'
-  const imageSize = new kakao.maps.Size(27, 28)
+  const imageSize = new kakao.maps.Size(40, 40) //마커 이미지의 크기
   const imgOptions = {
-    spriteSize: new kakao.maps.Size(72, 208),
-    spriteOrigin: new kakao.maps.Point(46, order * 36),
-    offset: new kakao.maps.Point(11, 28)
+    spriteSize: new kakao.maps.Size(72, 208), //스프라이트 이미지의 크기
+    spriteOrigin: new kakao.maps.Point(46, order * 36), //스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+    offset: new kakao.maps.Point(11, 28) //마커 좌표에 일치시킬 이미지 내에서의 좌표
   }
   const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions)
   const marker = new kakao.maps.Marker({
-    position: position,
+    position: position, //마커의 위치
     image: markerImage
   })
 
-  marker.setMap(map)
-  markers.push(marker)
+  marker.setMap(map) //지도 위에 마커 표시
+  markers.push(marker) //배열에 생성된 마커 추가
 
   return marker
 }
 
+//지도 위에 표시되고 있는 마커 모두 제거
 const removeMarker = () => {
   for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null)
@@ -109,6 +128,7 @@ const removeMarker = () => {
   markers = []
 }
 
+//클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수
 const displayPlaceInfo = (place) => {
   let content =
     '<div class="placeinfo">' +
@@ -144,6 +164,7 @@ const displayPlaceInfo = (place) => {
   placeOverlay.setMap(map)
 }
 
+//각 카테고리에 클릭 이벤트 등록
 const addCategoryClickEvent = () => {
   const category = document.getElementById('category')
   const children = category.children
@@ -153,6 +174,7 @@ const addCategoryClickEvent = () => {
   }
 }
 
+//카테고리를 클릭했을 때 호출되는 함수
 const onClickCategory = (e) => {
   const id = e.currentTarget.id
   const className = e.currentTarget.className
@@ -170,6 +192,7 @@ const onClickCategory = (e) => {
   }
 }
 
+//클릭된 카테고리에만 클릭된 스타일을 적용하는 함수
 const changeCategoryClass = (el) => {
   const category = document.getElementById('category')
   const children = category.children
