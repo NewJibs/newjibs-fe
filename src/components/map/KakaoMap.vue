@@ -1,11 +1,10 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 
-let map, ps
+let map
 const positions = ref([])
 const markers = ref([])
-const curCategory = ref('') //현재 선택된 카테고리 담을 변수
-let placeOverlay, contentNode
+const ps = ref()
 
 // const props = defineProps({ stations: Array, selectStation: Object })
 
@@ -13,7 +12,6 @@ let placeOverlay, contentNode
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap()
-    searchCategory()
   } else {
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
@@ -29,6 +27,8 @@ onMounted(() => {
 
 //초기 카카오맵의 위치
 const initMap = () => {
+  ps.value = new kakao.maps.services.Places(map)
+
   const container = document.getElementById('map')
   const options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -39,39 +39,15 @@ const initMap = () => {
   // loadMarkers();
 }
 
-//카테고리 검색 메서드
-const searchCategory = () => {
-  //지도에 idle 이벤트 등록
-  kakao.maps.event.addListener(map, 'idle', searchPlaces)
-
-  //커스텀 오버레이의 콘텐츠 노드에 css class 추가
-  // contentNode.className = 'placeinfo_wrap'
-
-  //커스텀 오버레이의 콘텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
-  //지도 객체에 이벤트가 전달되지 않도록
-  addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap)
-  addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap)
-
-  //커스텀 오버레이 콘텐츠 설정
-  placeOverlay.setContent(contentNode)
-
-  //각 카테고리에 클릭 이벤트 등록
-  addCategoryClickEvent()
-
-  //장소 검색 객체 생성
-  ps = new kakao.maps.services.Places(map)
-}
-
-//마커 표시하는 메서드
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
   deleteMarkers()
 
   // 마커 이미지를 생성합니다
-    const imgSrc = import("@/assets/marker.png");
+  //   const imgSrc = require("@/assets/map/markerStar.png");
   // 마커 이미지의 이미지 크기 입니다
-    const imgSize = new kakao.maps.Size(24, 35);
-    const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
+  //   const imgSize = new kakao.maps.Size(24, 35);
+  //   const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
   // 마커를 생성합니다
   markers.value = []
@@ -97,56 +73,26 @@ const loadMarkers = () => {
   map.setBounds(bounds)
 }
 
-//배열의 크기가 0보다 크면 배열을 지워라
+//배열읰 크기가 0보다 크면 배열을 지워라
 const deleteMarkers = () => {
   if (markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null))
   }
 }
 
-//엘리먼트에 이벤트 핸들러를 등록하는 함수
-const addEventHandle = (target, type, callback) => {
-  if (target.addEventListener) {
-    target.addEventListener(type, callback)
-  } else {
-    target.attachEvent('on' + type, callback)
-  }
-}
-
-//카테고리 검색을 요청하는 함수
-const searchPlaces = () => {
-  if (!curCategory) {
-    return
-  }
-
-  //커스텀 오버레이 숨기기
-  placeOverlay.setMap(null)
-
-  //지도에 표시되고 있는 마커를 제거
-  deleteMarkers()
-
-  ps.categorySearch(curCategory, placesSearchCB, { useMapBounds: true })
-}
-
-//장소 검색이 완료되었을 때 호출되는 콜백함수
-const placesSearchCB = (data, status, pagination) => {
-  if (status === kakao.maps.services.Status.OK) {
-    //정상적으로 검색이 완료되면 지도에 마커 표출
-    loadMarkers(data)
-  } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-    //검색 결과가 없는 경우 해야할 처리는 여기
-  } else if (status === kakao.maps.services.Status.ERROR) {
-    // 에러로 인해 검색결과가 나오지 않은 경우 해야할 처리가 있다면 이곳에 작성해 주세요
-  }
+``
+const changeSelector = (e) => {
+  console.log(ps.value)
+  ps.value.categorySearch(e.target.value, console.log, { useMapBounds: true })
 }
 </script>
 
 <template>
   <div class="map_wrap">
     <div id="map"></div>
-    <div>
-      <select>
-        <option id="MT1" value="대형마트" data-order="0">
+    <div style="position: absolute; z-index: 9999999; top: 64px">
+      <select id="category" @change="changeSelector">
+        <option id="MT1" value="MT1" data-order="0">
           <span>대형마트</span>
         </option>
         <option id="CS2" value="편의점" data-order="1">
