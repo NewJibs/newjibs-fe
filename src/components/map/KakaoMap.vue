@@ -242,7 +242,7 @@ const changeCategoryClass = (el) => {
 <style>
 #map {
   width: 100%;
-  height: 94vh;
+  height: 100vh;
 }
 .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap {position:relative;width:100%;height:350px;}
