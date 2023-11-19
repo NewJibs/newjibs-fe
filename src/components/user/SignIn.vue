@@ -245,7 +245,9 @@ form.sign-up-form {
   text-align: center;
   line-height: 44px;
   color: #aaa;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+  margin-top: 0.9rem;
+  margin-left: 1rem;
 }
 
 .input-field input {
