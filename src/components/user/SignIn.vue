@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { instance } from '@/util/http-common'
 
+//모드 전환을 위한 변수
 const signUpMode = ref(false)
 
 //로그인 폼과 회원가입 폼의 데이터 관리
@@ -12,14 +14,14 @@ const signupPassword = ref('')
 const signupBirth = ref('')
 
 //로그인 버튼 클릭 시 실행되는 함수
-const login = () => {
+const login = async() => {
   //로그인 로직
-  
+
   console.log('login')
 }
 
 //회원가입 버튼 클릭 시 실행되는 함수
-const signup = () => {
+const signup = (e) => {
   //회원가입 로직
   console.log('signup')
 }
@@ -66,7 +68,7 @@ onMounted(() => {
             <i class="fas fa-lock"></i>
             <input type="password" placeholder="Password" v-model="loginPassword" />
           </div>
-          <input type="submit" value="login" class="btn solid" @click="login" />
+          <input type="submit" value="login" class="btn solid" @click.prevent="login" />
         </form>
 
         <!-- 회원가입 form -->
@@ -89,7 +91,7 @@ onMounted(() => {
             <!-- 1999-10-04형태로 줘야함 -->
             <input type="text" placeholder="Birth" v-model="signupBirth" />
           </div>
-          <input type="submit" value="signup" class="btn solid" @click="signup" />
+          <input type="submit" value="signup" class="btn solid" @click.prevent="signup" />
         </form>
       </div>
     </div>
