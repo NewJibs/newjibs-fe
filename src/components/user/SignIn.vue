@@ -35,11 +35,17 @@ const switchToLogin = () => {
 
 onMounted(() => {
   const sign_up_btn = document.querySelector('#sign-up-btn')
+  const sign_in_btn = document.querySelector('#sign-in-btn')
   const container = document.querySelector('.container')
 
   sign_up_btn.addEventListener('click', () => {
     container.classList.add('sign-up-mode')
     switchToSignup()
+  })
+
+  sign_in_btn.addEventListener('click', () => {
+    container.classList.remove('sign-up-mode')
+    switchToLogin()
   })
 })
 </script>
@@ -302,7 +308,7 @@ form.sign-up-form {
 }
 
 /* animation */
-.container .sign-up-mode:before {
+.container.sign-up-mode:before {
   transform: translate(100%, -50%);
   right: 52%;
 }
