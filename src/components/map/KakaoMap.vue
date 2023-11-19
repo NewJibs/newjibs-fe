@@ -7,6 +7,7 @@ let placeOverlay,
 let currCategory = ''
 let mapContainer, mapOption, map
 const ps = ref()
+const infowindow = ref()
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -30,6 +31,7 @@ const initMap = () => {
   }
   map = new kakao.maps.Map(mapContainer, mapOption)
   ps.value = new kakao.maps.services.Places(map)
+  infowindow.value = new kakao.maps.InfoWindow({zIndex:1})
 
   contentNode = document.createElement('div')
   contentNode.className = 'placeinfo_wrap'
@@ -210,6 +212,16 @@ const changeCategoryClass = (el) => {
 <template>
   <div class="map_wrap">
     <div id="map"></div>
+    <div id="menu_wrap">
+      <div class="option">
+        <div>
+          <form @submit="searchPlaces">
+            키워드 : <input type="text" placeholder="검색어를 입력하세요" id="keyword" size="15">
+            <button type="submit">검색</button>
+          </form>
+        </div>
+      </div>
+    </div>
     <ul id="category">
         <li id="BK9" data-order="0"> 
             <span class="category_bg bank"></span>

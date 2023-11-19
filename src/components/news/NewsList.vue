@@ -95,7 +95,7 @@ const viewNews = (articleId: string) => {
   height: 200px;
 }
 
-.v-window__next {
+/* .v-window__next {
   display: none;
 }
 
@@ -110,7 +110,7 @@ const viewNews = (articleId: string) => {
   .v-window__next {
     display: block;
   }
-}
+} */
 
 .news-card:hover {
   cursor: pointer;
