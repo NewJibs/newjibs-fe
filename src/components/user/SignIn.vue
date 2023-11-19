@@ -85,6 +85,7 @@ onMounted(() => {
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
+            <!-- 1999-10-04형태로 줘야함 -->
             <input type="text" placeholder="Birth" v-model="signupBirth" />
           </div>
           <input type="submit" value="signup" class="btn solid" @click="signup" />

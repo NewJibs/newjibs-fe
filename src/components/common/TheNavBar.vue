@@ -11,9 +11,9 @@
         <v-tab class="app-tab" :to="{ name: 'news' }">뉴스</v-tab>
       </v-tabs>
       <v-spacer></v-spacer>
-      <v-tabs background-color="primary" slider-color="yellow" class="app-bar-tab">
-        <v-tab class="app-tab" :to="{ name: 'user-signup' }">회원가입</v-tab>
-        <v-tab class="app-tab" :to="{ name: 'user-login' }">로그인</v-tab>
+      <v-tabs background-color="primary" slider-color="transparent" class="app-bar-tab">
+        <!-- <v-tab class="app-tab" :to="{ name: 'user-signup' }">회원가입</v-tab> -->
+        <v-tab class="app-tab" :to="{ name: 'user-login' }">회원가입 / 로그인</v-tab>
       </v-tabs>
     </v-app-bar>
   </v-app>
