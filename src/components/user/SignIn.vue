@@ -85,7 +85,7 @@ onMounted(() => {
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="date" placeholder="birth" v-model="signupBirth" />
+            <input type="text" placeholder="Birth" v-model="signupBirth" />
           </div>
           <input type="submit" value="signup" class="btn solid" @click="signup" />
         </form>
