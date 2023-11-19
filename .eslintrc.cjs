@@ -15,5 +15,11 @@ module.exports = {
   rules: {
     //prettier와 관련된 eslint 규칙 비활성화
     'prettier/prettier': 'error'
-  }
+  },
+  'vue/no-parsing-error': [
+    'error',
+    {
+      'invalid-first-character-of-tag-name': false
+    }
+  ]
 }

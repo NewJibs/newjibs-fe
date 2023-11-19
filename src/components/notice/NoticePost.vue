@@ -66,34 +66,43 @@ const submitPost = async (e: any) => {
     <h1>포스트 페이지</h1>
     <form>
       <v-container>
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-text-field v-model="title" label="제목" required></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-text-field v-model="author" label="작성자" required></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-textarea v-model="content" label="내용" required></v-textarea>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-text-field v-model="imageUrl" label="이미지 URL"></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-btn type="submit" @click="submitPost">게시</v-btn>
-          </v-col>
-        </v-row>
+        <v-form class="form-gradient">
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="title" label="제목" required></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="author" label="작성자" required></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-textarea v-model="content" label="내용" required></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field v-model="imageUrl" label="이미지 URL"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-btn type="submit" @click="submitPost">게시</v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-container>
     </form>
   </div>
 </template>
 
+<style scoped>
+.form-gradient {
+  background: linear-gradient(to right, pink, skyblue);
+  padding: 20px;
+  border-radius: 10px;
+}
+</style>
 @/api/notice

@@ -69,11 +69,11 @@ onMounted(() => {
       <!-- 로딩 중이 아닐 때만 내용 표시 -->
       <div class="notice-details" v-if="data && !isLoading">
         <h1>{{ data.title }}</h1>
-        <p>{{ data.author }} - {{ data.date }}</p>
-        <div v-html="data.content"></div>
+        <p class="author-date">{{ data.author }} - {{ data.date }}</p>
+        <div class="content" v-html="data.content"></div>
         <div class="actions">
-          <v-btn @click="deletePost" color="red" dark>Delete</v-btn>
-          <v-btn @click="updatePost" color="primary">Edit</v-btn>
+          <v-btn size="large" variant="tonal" rounded="lg" @click="deletePost" color="red" dark class="delete-btn">Delete</v-btn>
+          <v-btn size="large" variant="tonal" rounded="lg" @click="updatePost" color="primary">Edit</v-btn>
         </div>
       </div>
     </v-container>
@@ -81,29 +81,56 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.notice-detail-container {
+notice-detail-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .notice-details {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 1000px;
+  margin: 3rem auto;
+
   h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
   }
-  p {
+
+  .author-date {
     font-style: italic;
     margin-bottom: 1rem;
   }
-  .actions {
-    margin-top: 1rem;
-    v-btn {
-      margin-right: 4rem;
+
+  .content {
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    font-size: 1.5rem;
+    font-weight: 350;
+
+    p {
+      margin-bottom: 1rem;
     }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+
+    v-btn {
+      margin-left: 1rem;
+      margin-right: 2rem;
+    }
+  }
+
+  .delete-btn {
+    margin-right: 1rem;
   }
 }
 </style>
-@/api/notice
