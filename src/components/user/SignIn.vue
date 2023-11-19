@@ -18,6 +18,19 @@
           </div>
           <input type="submit" value="login" class="btn solid" />
         </form>
+
+        <form action="" class="sign-in-form">
+          <h2 class="title">Login</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Name" />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" />
+          </div>
+          <input type="submit" value="login" class="btn solid" />
+        </form>
       </div>
     </div>
     <div class="panels-container"></div>
@@ -75,7 +88,7 @@ form {
 .input-field i {
   text-align: center;
   line-height: 55px;
-  color: #acacac;
+  color: blue;
   font-size: 1.1rem;
 }
 
