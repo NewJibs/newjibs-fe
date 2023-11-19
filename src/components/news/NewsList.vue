@@ -55,27 +55,35 @@ const viewNews = (articleId: string) => {
     <!-- <v-carousel> -->
     <h1>부동산 뉴스</h1>
     <div class="notice-detail-container">
-      <v-carousel height="800" hide-delimiters cover show-arrows-on-hover cycle interval="3000" hover>
+      <v-carousel
+        height="800"
+        hide-delimiters
+        cover
+        show-arrows-on-hover
+        cycle
+        interval="3000"
+        hover
+      >
         <!-- <v-container> -->
-          <v-carousel-item
-            v-for="news in data"
-            :key="news.articleId"
-            @click.prevent="viewNews(news.articleId)"
-          >
-            <v-sheet height="100%">
-              <v-container>
-                <v-card class="card-fixed-size">
-                  <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
-                  <v-card-title class="card-title">{{ news.title }}</v-card-title>
-                  <v-card-subtitle
-                    >{{ news.pressCorporationName }} |
-                    {{ new Date(news.publishDateTime).toLocaleDateString() }}</v-card-subtitle
-                  >
-                  <v-card-text>{{ news.summaryContent }}...</v-card-text>
-                </v-card>
-              </v-container>
-            </v-sheet>
-          </v-carousel-item>
+        <v-carousel-item
+          v-for="news in data"
+          :key="news.articleId"
+          @click.prevent="viewNews(news.articleId)"
+        >
+          <v-sheet height="100%">
+            <v-container>
+              <v-card class="card-fixed-size">
+                <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
+                <v-card-title class="card-title">{{ news.title }}</v-card-title>
+                <v-card-subtitle
+                  >{{ news.pressCorporationName }} |
+                  {{ new Date(news.publishDateTime).toLocaleDateString() }}</v-card-subtitle
+                >
+                <v-card-text>{{ news.summaryContent }}...</v-card-text>
+              </v-card>
+            </v-container>
+          </v-sheet>
+        </v-carousel-item>
         <!-- </v-container> -->
       </v-carousel>
     </div>

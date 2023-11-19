@@ -14,6 +14,7 @@ const signupBirth = ref('')
 //로그인 버튼 클릭 시 실행되는 함수
 const login = () => {
   //로그인 로직
+  
   console.log('login')
 }
 
