@@ -2,8 +2,10 @@
 import { ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user-store'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 //모드 전환을 위한 변수
 const signUpMode = ref(false)
@@ -19,17 +21,16 @@ const signupBirth = ref('')
 //로그인 버튼 클릭 시 실행되는 함수
 const login = async (e) => {
   //로그인 로직
-  const postData = {
+  const userInfo = {
     email: loginEmail.value,
     password: loginPassword.value
   }
 
-  //로그인 시, 홈 화면으로 라우팅
-  router.push({ name: 'home' })
-
   try {
     //post 요청 보내기
-    const response = await instance.post('/members/login', postData)
+    await userStore.login(userInfo.value)
+    //로그인 시, 홈 화면으로 라우팅
+    router.push({ name: 'home' })
   } catch (error) {
     console.error('로그인 실패', error)
   }
@@ -37,8 +38,23 @@ const login = async (e) => {
 }
 
 //회원가입 버튼 클릭 시 실행되는 함수
-const signup = (e) => {
+const signup = async (e) => {
   //회원가입 로직
+  const userInfo = {
+    email: signupEmail.value,
+    password: signupPassword.value,
+    name: signupName.value,
+    birth: signupBirth.value
+  }
+
+  try {
+    await instance.post('/members/register', userInfo.value).then((response) => {
+      console.log(response.data.message)
+      router.push({ name: 'user-login' })
+    })
+  } catch (error) {
+    console.error('signup 실패', error)
+  }
   console.log('signup')
 }
 
