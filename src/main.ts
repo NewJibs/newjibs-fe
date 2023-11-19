@@ -17,10 +17,9 @@ import 'bootstrap' //뒤에 확장자 안붙으면 js라고 알고 있기
 
 //fontawesome - 여기 이상해
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faS } from '@fortawesome/free-solid-svg-icons'
-import { faR } from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
 
 // axios 객체 사용
 import { instance } from './util/http-common'
@@ -37,7 +36,8 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 //font awesome 아이콘 라이브러리에 아이콘 추가
-library.add(faUser, faLock)
+library.add(fas)
+library.add(far)
 
 //font awesome 아이콘 컴포넌트를 전역으로 등록
 app.component('font-awesome-icon', FontAwesomeIcon)

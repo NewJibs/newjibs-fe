@@ -93,11 +93,11 @@ onMounted(() => {
         <form action="" class="sign-in-form">
           <h2 class="title">Log In</h2>
           <div class="input-field">
-            <i class="fas fa-user"></i>
+            <font-awesome-icon class="icon" icon="user"></font-awesome-icon>
             <input type="text" placeholder="Email" v-model="loginEmail" />
           </div>
           <div class="input-field">
-            <i class="fas fa-lock"></i>
+            <font-awesome-icon class="icon" icon="lock"></font-awesome-icon>
             <input type="password" placeholder="Password" v-model="loginPassword" />
           </div>
           <input type="submit" value="login" class="btn solid" @click.prevent="login" />
@@ -107,19 +107,19 @@ onMounted(() => {
         <form action="" class="sign-up-form">
           <h2 class="title">Sign Up</h2>
           <div class="input-field">
-            <i class="fas fa-envelope"></i>
+            <font-awesome-icon class="icon" icon="envelope"></font-awesome-icon>
             <input type="text" placeholder="Email" v-model="signupEmail" />
           </div>
           <div class="input-field">
-            <i class="fas fa-user"></i>
+            <font-awesome-icon class="icon" icon="user"></font-awesome-icon>
             <input type="text" placeholder="Name" v-model="signupName" />
           </div>
           <div class="input-field">
-            <i class="fas fa-lock"></i>
+            <font-awesome-icon class="icon" icon="lock"></font-awesome-icon>
             <input type="password" placeholder="Password" v-model="signupPassword" />
           </div>
           <div class="input-field">
-            <i class="fas fa-lock"></i>
+            <font-awesome-icon class="icon" icon="calendar-days"></font-awesome-icon>
             <!-- 1999-10-04형태로 줘야함 -->
             <input type="text" placeholder="Birth" v-model="signupBirth" />
           </div>
@@ -241,11 +241,11 @@ form.sign-up-form {
   padding: 0 0.4rem;
 }
 
-.input-field i {
+.input-field .icon {
   text-align: center;
-  line-height: 55px;
-  color: blue;
-  font-size: 1.1rem;
+  line-height: 44px;
+  color: #aaa;
+  font-size: 1.4rem;
 }
 
 .input-field input {
