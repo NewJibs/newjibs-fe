@@ -1,9 +1,51 @@
 <script setup>
-// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+import { ref, onMounted } from 'vue'
+
+const signUpMode = ref(false)
+
+//로그인 폼과 회원가입 폼의 데이터 관리
+const loginEmail = ref('')
+const loginPassword = ref('')
+const signupEmail = ref('')
+const signupName = ref('')
+const signupPassword = ref('')
+const signupBirth = ref('')
+
+//로그인 버튼 클릭 시 실행되는 함수
+const login = () => {
+  //로그인 로직
+  console.log('login')
+}
+
+//회원가입 버튼 클릭 시 실행되는 함수
+const signup = () => {
+  //회원가입 로직
+  console.log('signup')
+}
+
+//signup 버튼 클릭 시 실행되는 함수
+const switchToSignup = () => {
+  signUpMode.value = true
+}
+
+//login 버튼 클릭 시 실행되는 함수
+const switchToLogin = () => {
+  signUpMode.value = false
+}
+
+onMounted(() => {
+  const sign_up_btn = document.querySelector('#sign-up-btn')
+  const container = document.querySelector('.container')
+
+  sign_up_btn.addEventListener('click', () => {
+    container.classList.add('sign-up-mode')
+    switchToSignup()
+  })
+})
 </script>
 
 <template>
-  <div class="container" style="z-index: 100">
+  <div class="container" :class="{ 'sign-up-mode': signUpMode }">
     <div class="forms-container">
       <div class="signin-signup">
         <!-- 로그인 form -->
@@ -11,13 +53,13 @@
           <h2 class="title">Log In</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Email" />
+            <input type="text" placeholder="Email" v-model="loginEmail" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password" v-model="loginPassword" />
           </div>
-          <input type="submit" value="login" class="btn solid" />
+          <input type="submit" value="login" class="btn solid" @click="login" />
         </form>
 
         <!-- 회원가입 form -->
@@ -25,21 +67,21 @@
           <h2 class="title">Sign Up</h2>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="text" placeholder="Email" />
+            <input type="text" placeholder="Email" v-model="signupEmail" />
           </div>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Name" />
+            <input type="text" placeholder="Name" v-model="signupName" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password" v-model="signupPassword" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="date" placeholder="birth" />
+            <input type="date" placeholder="birth" v-model="signupBirth" />
           </div>
-          <input type="submit" value="signup" class="btn solid" />
+          <input type="submit" value="signup" class="btn solid" @click="signup" />
         </form>
       </div>
     </div>
@@ -47,7 +89,7 @@
       <div class="panel left-panel">
         <div class="content">
           <h3>처음 방문하셨나요?</h3>
-          <button class="btn transparent" id="sign-up-btn">Sign Up</button>
+          <button class="btn transparent" id="sign-up-btn" @click="switchToSignup">Sign Up</button>
         </div>
 
         <img src="@/assets/signup.png" class="image" alt="" />
@@ -56,7 +98,7 @@
       <div class="panel right-panel">
         <div class="content">
           <h3>이미 회원이신가요?</h3>
-          <button class="btn transparent" id="sign-in-btn">Log In</button>
+          <button class="btn transparent" id="sign-in-btn" @click="switchToLogin">Log In</button>
         </div>
 
         <img src="@/assets/loading.png" class="image" alt="" />
@@ -91,6 +133,7 @@
   right: 48%;
   transform: translateY(-50%);
   z-index: 6;
+  transition: 1.8s ease-in-out;
 }
 
 .forms-container {
@@ -110,6 +153,7 @@
   display: grid;
   grid-template-columns: 1fr;
   z-index: 5;
+  transition: 1s 0.7s ease-in-out;
 }
 
 form {
@@ -121,6 +165,7 @@ form {
   overflow: hidden;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
+  transition: 0.2s 0.7s ease-in-out;
 }
 
 form.sign-in-form {
@@ -222,6 +267,7 @@ form.sign-up-form {
 
 .panel .content {
   color: #fff;
+  transition: 0.9s 0.6s ease-in-out;
 }
 
 .panel h3 {
@@ -247,9 +293,49 @@ form.sign-up-form {
 
 .image {
   width: 100%;
+  transition: 1.1s 0.4s ease-in-out;
 }
 
-.right-panel .content, .right-panel .image {
+.right-panel .content,
+.right-panel .image {
   transform: translateX(800px);
+}
+
+/* animation */
+.container .sign-up-mode:before {
+  transform: translate(100%, -50%);
+  right: 52%;
+}
+
+.container.sign-up-mode .left-panel .image,
+.container.sign-up-mode .left-panel .content {
+  transform: translateX(-800px);
+}
+
+.container.sign-up-mode .right-panel .content,
+.container.sign-up-mode .right-panel .image {
+  transform: translateX(0px);
+}
+
+.container.sign-up-mode .left-panel {
+  pointer-events: none;
+}
+
+.container.sign-up-mode .right-panel {
+  pointer-events: all;
+}
+
+.container.sign-up-mode .signin-signup {
+  left: 25%;
+}
+
+.container.sign-up-mode form.sign-in-form {
+  z-index: 1;
+  opacity: 0;
+}
+
+.container.sign-up-mode form.sign-up-form {
+  z-index: 2;
+  opacity: 1;
 }
 </style>
