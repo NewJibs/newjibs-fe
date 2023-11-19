@@ -50,7 +50,16 @@
           <button class="btn transparent" id="sign-up-btn">Sign Up</button>
         </div>
 
-        <!-- <img src="" -->
+        <img src="@/assets/signup.png" class="image" alt="" />
+      </div>
+
+      <div class="panel right-panel">
+        <div class="content">
+          <h3>이미 회원이신가요?</h3>
+          <button class="btn transparent" id="sign-in-btn">Log In</button>
+        </div>
+
+        <img src="@/assets/loading.png" class="image" alt="" />
       </div>
     </div>
   </div>
@@ -81,6 +90,7 @@
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
+  z-index: 6;
 }
 
 .forms-container {
@@ -99,6 +109,7 @@
   width: 50%;
   display: grid;
   grid-template-columns: 1fr;
+  z-index: 5;
 }
 
 form {
@@ -178,5 +189,67 @@ form.sign-up-form {
 
 .btn:hover {
   background-color: #4d84e2;
+}
+
+.panels-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  text-align: center;
+  z-index: 7;
+}
+
+.left-panel {
+  pointer-events: all;
+  padding: 3rem 17% 2rem 12%;
+}
+
+.right-panel {
+  pointer-events: none;
+  padding: 3rem 12% 2rem 17%;
+}
+
+.panel .content {
+  color: #fff;
+}
+
+.panel h3 {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+.panel p {
+  font-size: 0.95rem;
+  padding: 0.7rem 0;
+}
+
+.btn.transparent {
+  margin: 0;
+  background: none;
+  border: 2px solid #fff;
+  width: 130px;
+  height: 41px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.image {
+  width: 100%;
+}
+
+.right-panel .content, .right-panel .image {
+  transform: translateX(800px);
 }
 </style>
