@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 //모드 전환을 위한 변수
 const signUpMode = ref(false)
@@ -14,9 +17,22 @@ const signupPassword = ref('')
 const signupBirth = ref('')
 
 //로그인 버튼 클릭 시 실행되는 함수
-const login = async() => {
+const login = async (e) => {
   //로그인 로직
+  const postData = {
+    email: loginEmail.value,
+    password: loginPassword.value
+  }
 
+  //로그인 시, 홈 화면으로 라우팅
+  router.push({ name: 'home' })
+
+  try {
+    //post 요청 보내기
+    const response = await instance.post('/members/login', postData)
+  } catch (error) {
+    console.error('로그인 실패', error)
+  }
   console.log('login')
 }
 
