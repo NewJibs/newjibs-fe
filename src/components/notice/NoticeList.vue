@@ -45,7 +45,9 @@ const postNotice = () => {
 
 <template>
   <div class="container">
-    <h1 style="text-center">공 지 사 항</h1>
+    <div class="title">공 지 사 항</div>
+    <v-btn class="post-btn" type="submit" @click="postNotice"> 게시글 작성 </v-btn>
+
     <v-table class="notice-table">
       <thead>
         <tr class="table-head">
@@ -70,13 +72,35 @@ const postNotice = () => {
         </tr>
       </tbody>
     </v-table>
-    <v-btn type="submit" @click="postNotice"> 게시글 작성 </v-btn>
   </div>
 </template>
 
 <style scoped lang="scss">
-.notice-table {
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 500;
   margin-top: 3rem;
+}
+
+.post-btn {
+  width: 10rem;
+  height: 2.5rem;
+  margin-top: 3rem;
+  right: 0;
+}
+
+.notice-table {
+  margin-top: 1rem;
+  display: flex;
+  width: 100%;
+  z-index: 10;
 }
 
 .table-head {
