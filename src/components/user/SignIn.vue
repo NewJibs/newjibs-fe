@@ -121,7 +121,11 @@ onMounted(() => {
 }
 
 .container {
-  position: relative;
+  position: inherit;
+  /* top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; */
   width: 100%;
   min-height: 100vh;
   background-color: #fff;
@@ -190,7 +194,7 @@ form.sign-up-form {
 }
 
 .input-field {
-  max-width: 380px;
+  max-width: 390px;
   width: 100%;
   height: 55px;
   background-color: #f0f0f0;
@@ -234,7 +238,7 @@ form.sign-up-form {
   color: #fff;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 10px 0;
+  margin-top: 30px;
   transition: 0.5s;
 }
 
@@ -272,6 +276,7 @@ form.sign-up-form {
 }
 
 .panel .content {
+  margin-top: 30px;
   color: #fff;
   transition: 0.9s 0.6s ease-in-out;
 }
@@ -279,7 +284,8 @@ form.sign-up-form {
 .panel h3 {
   font-weight: 600;
   line-height: 1;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
 }
 
 .panel p {
@@ -291,10 +297,10 @@ form.sign-up-form {
   margin: 0;
   background: none;
   border: 2px solid #fff;
-  width: 130px;
-  height: 41px;
+  width: 200px;
+  height: 50px;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 1.3rem;
 }
 
 .image {
@@ -304,7 +310,7 @@ form.sign-up-form {
 
 .right-panel .content,
 .right-panel .image {
-  transform: translateX(800px);
+  transform: translateX(1500px);
 }
 
 /* animation */
@@ -315,7 +321,7 @@ form.sign-up-form {
 
 .container.sign-up-mode .left-panel .image,
 .container.sign-up-mode .left-panel .content {
-  transform: translateX(-800px);
+  transform: translateX(-1000px);
 }
 
 .container.sign-up-mode .right-panel .content,
