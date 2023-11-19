@@ -11,6 +11,9 @@ export const instance = axios.create({
   withCredentials: true
 })
 
+//요청 발생 시 적용할 내용
+instance.defaults.headers.common['Authorization'] = ''
+
 //인터셉터
 instance.interceptors.request.use((config: any) => {
   return config

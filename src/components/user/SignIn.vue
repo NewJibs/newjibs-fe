@@ -1,6 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { instance } from '@/util/http-common'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user-store'
 
+const router = useRouter()
+const userStore = useUserStore()
+
+//모드 전환을 위한 변수
 const signUpMode = ref(false)
 
 //로그인 폼과 회원가입 폼의 데이터 관리
@@ -12,15 +19,42 @@ const signupPassword = ref('')
 const signupBirth = ref('')
 
 //로그인 버튼 클릭 시 실행되는 함수
-const login = () => {
+const login = async (e) => {
   //로그인 로직
-  
+  const userInfo = {
+    email: loginEmail.value,
+    password: loginPassword.value
+  }
+
+  try {
+    //post 요청 보내기
+    await userStore.login(userInfo.value)
+    //로그인 시, 홈 화면으로 라우팅
+    router.push({ name: 'home' })
+  } catch (error) {
+    console.error('로그인 실패', error)
+  }
   console.log('login')
 }
 
 //회원가입 버튼 클릭 시 실행되는 함수
-const signup = () => {
+const signup = async (e) => {
   //회원가입 로직
+  const userInfo = {
+    email: signupEmail.value,
+    password: signupPassword.value,
+    name: signupName.value,
+    birth: signupBirth.value
+  }
+
+  try {
+    await instance.post('/members/register', userInfo.value).then((response) => {
+      console.log(response.data.message)
+      router.push({ name: 'user-login' })
+    })
+  } catch (error) {
+    console.error('signup 실패', error)
+  }
   console.log('signup')
 }
 
@@ -59,37 +93,37 @@ onMounted(() => {
         <form action="" class="sign-in-form">
           <h2 class="title">Log In</h2>
           <div class="input-field">
-            <i class="fas fa-user"></i>
+            <font-awesome-icon class="icon" icon="user"></font-awesome-icon>
             <input type="text" placeholder="Email" v-model="loginEmail" />
           </div>
           <div class="input-field">
-            <i class="fas fa-lock"></i>
+            <font-awesome-icon class="icon" icon="lock"></font-awesome-icon>
             <input type="password" placeholder="Password" v-model="loginPassword" />
           </div>
-          <input type="submit" value="login" class="btn solid" @click="login" />
+          <input type="submit" value="login" class="btn solid" @click.prevent="login" />
         </form>
 
         <!-- 회원가입 form -->
         <form action="" class="sign-up-form">
           <h2 class="title">Sign Up</h2>
           <div class="input-field">
-            <i class="fas fa-envelope"></i>
+            <font-awesome-icon class="icon" icon="envelope"></font-awesome-icon>
             <input type="text" placeholder="Email" v-model="signupEmail" />
           </div>
           <div class="input-field">
-            <i class="fas fa-user"></i>
+            <font-awesome-icon class="icon" icon="user"></font-awesome-icon>
             <input type="text" placeholder="Name" v-model="signupName" />
           </div>
           <div class="input-field">
-            <i class="fas fa-lock"></i>
+            <font-awesome-icon class="icon" icon="lock"></font-awesome-icon>
             <input type="password" placeholder="Password" v-model="signupPassword" />
           </div>
           <div class="input-field">
-            <i class="fas fa-lock"></i>
+            <font-awesome-icon class="icon" icon="calendar-days"></font-awesome-icon>
             <!-- 1999-10-04형태로 줘야함 -->
             <input type="text" placeholder="Birth" v-model="signupBirth" />
           </div>
-          <input type="submit" value="signup" class="btn solid" @click="signup" />
+          <input type="submit" value="signup" class="btn solid" @click.prevent="signup" />
         </form>
       </div>
     </div>
@@ -207,11 +241,13 @@ form.sign-up-form {
   padding: 0 0.4rem;
 }
 
-.input-field i {
+.input-field .icon {
   text-align: center;
-  line-height: 55px;
-  color: blue;
-  font-size: 1.1rem;
+  line-height: 44px;
+  color: #aaa;
+  font-size: 1.3rem;
+  margin-top: 0.9rem;
+  margin-left: 1rem;
 }
 
 .input-field input {
