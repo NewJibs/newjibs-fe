@@ -6,11 +6,12 @@
   <div class="container" style="z-index: 100">
     <div class="forms-container">
       <div class="signin-signup">
+        <!-- 로그인 form -->
         <form action="" class="sign-in-form">
-          <h2 class="title">Login</h2>
+          <h2 class="title">Log In</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Name" />
+            <input type="text" placeholder="Email" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
@@ -19,8 +20,13 @@
           <input type="submit" value="login" class="btn solid" />
         </form>
 
-        <form action="" class="sign-in-form">
-          <h2 class="title">Login</h2>
+        <!-- 회원가입 form -->
+        <form action="" class="sign-up-form">
+          <h2 class="title">Sign Up</h2>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="text" placeholder="Email" />
+          </div>
           <div class="input-field">
             <i class="fas fa-user"></i>
             <input type="text" placeholder="Name" />
@@ -29,11 +35,24 @@
             <i class="fas fa-lock"></i>
             <input type="password" placeholder="Password" />
           </div>
-          <input type="submit" value="login" class="btn solid" />
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="date" placeholder="birth" />
+          </div>
+          <input type="submit" value="signup" class="btn solid" />
         </form>
       </div>
     </div>
-    <div class="panels-container"></div>
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>처음 방문하셨나요?</h3>
+          <button class="btn transparent" id="sign-up-btn">Sign Up</button>
+        </div>
+
+        <!-- <img src="" -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,6 +71,18 @@
   overflow: hidden;
 }
 
+.container:before {
+  content: '';
+  position: absolute;
+  width: 2000px;
+  height: 2000px;
+  border-radius: 50%;
+  background: linear-gradient(-45deg, #4481eb, #04befe);
+  top: -10%;
+  right: 48%;
+  transform: translateY(-50%);
+}
+
 .forms-container {
   position: absolute;
   width: 100%;
@@ -60,11 +91,34 @@
   left: 0;
 }
 
+.signin-signup {
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 0 5rem;
+  overflow: hidden;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+form.sign-in-form {
+  z-index: 2;
+}
+
+form.sign-up-form {
+  z-index: 1;
+  opacity: 0;
 }
 
 .title {
