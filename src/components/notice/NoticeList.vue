@@ -45,9 +45,11 @@ const postNotice = () => {
 
 <template>
   <div class="container">
+    <h1 style="text-center">공 지 사 항</h1>
     <v-table class="notice-table">
       <thead>
         <tr class="table-head">
+          <th class="text-center">No</th>
           <th class="text-center">제목</th>
           <th class="text-center">작성자</th>
           <th class="text-center">작성일</th>
@@ -59,7 +61,9 @@ const postNotice = () => {
           :key="notice.noticeId"
           class="table-body"
           @click="viewNotice(notice.noticeId)"
+          style="cursor: pointer"
         >
+          <td>{{ notice.noticeId }}</td>
           <td>{{ notice.title }}</td>
           <td>{{ notice.author }}</td>
           <td>{{ notice.date }}</td>
@@ -81,10 +85,6 @@ const postNotice = () => {
 
 .table-body {
   text-align: center;
-  :hover {
-    cursor: pointer;
-    /* background-color: gainsboro; */
-  }
 }
 </style>
 @/api/notice
