@@ -5,8 +5,6 @@ import { instance } from '@/util/http-common'
 export const useUserStore = defineStore(
   'userStore',
   () => {
-    // const axios = inject('axios')
-
     //로그인
     const login = async (userInfo: any) => {
       //서버로 요청
@@ -20,12 +18,12 @@ export const useUserStore = defineStore(
     }
 
     //로그아웃
-    // const logout = async () => {
-    //   await instance.delete('/members/logout').then(() => {
-    //     instance.defaults.headers.common['Authorization'] = ''
-    //     //네브바 바꾸기
-    //   })
-    // }
+    const logout = async () => {
+      await instance.post('/members/logout').then(() => {
+        instance.defaults.headers.common['Authorization'] = ''
+        //네브바 바꾸기
+      })
+    }
 
     //회원정보 수정
     // const modify = async (userInfo) => {

@@ -2,8 +2,8 @@
 
 <template>
   <v-app class="all-app">
-    <v-app-bar class="app-bar">
-      <v-tabs background-color="primary" slider-color="#5995fd" class="app-bar-tab">
+    <v-app-bar scroll-behavior="elevate" class="app-bar">
+      <v-tabs  background-color="primary" slider-color="#5995fd" class="app-bar-tab">
         <v-tab class="app-tab" :to="{ name: 'home' }">newjibs</v-tab>
         <v-tab class="app-tab" :to="{ name: 'maps' }">지도</v-tab>
         <v-tab class="app-tab" :to="{ name: 'ranking' }">랭킹</v-tab>
