@@ -27,8 +27,8 @@ onMounted(() => {
 const initMap = () => {
   mapContainer = document.getElementById('map')
   mapOption = {
-    center: new kakao.maps.LatLng(37.566826, 126.9786567),
-    level: 5
+    center: new kakao.maps.LatLng(35.566826, 125.90786567),
+    level: 12
   }
   map = new kakao.maps.Map(mapContainer, mapOption)
   ps.value = new kakao.maps.services.Places(map)
@@ -241,7 +241,9 @@ const displayMarker = (place) => {
   //마커에 클릭이벤트를 등록
   kakao.maps.event.addListener(marker, 'click', () => {
     //마커를 클릭하면 장소명이 인포윈도우에 표출
-    infowindow.value.setContent('<div style="5px; font-size:12px;">' + place.place_name + '</div>')
+    let content = '<div class="keywordInfo">' + place.place_name + '</div>'
+
+    infowindow.value.setContent(content)
     infowindow.value.open(map, marker)
   })
 }
@@ -297,6 +299,16 @@ const displayMarker = (place) => {
 </template>
 
 <style>
+.keywordInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+  height: 2rem;
+  font-size: 3rem;
+  border: none;
+}
+
 #map {
   width: 100%;
   height: 100vh;
