@@ -28,7 +28,7 @@ const login = async (e) => {
 
   try {
     //post 요청 보내기
-    await userStore.login(userInfo.value)
+    await userStore.login(userInfo)
     //로그인 시, 홈 화면으로 라우팅
     router.push({ name: 'home' })
   } catch (error) {
@@ -48,12 +48,14 @@ const signup = async (e) => {
   }
 
   try {
-    await instance.post('/members/register', userInfo.value).then((response) => {
+    await instance.post('/members/register', userInfo).then((response) => {
       console.log(response.data.message)
       router.push({ name: 'user-login' })
     })
   } catch (error) {
-    console.error('signup 실패', error)
+    // if(error.errorCode === 409) {
+    //   console.log(error.errorMsg)
+    //   alert(error.errorMsg)
   }
   console.log('signup')
 }
@@ -134,7 +136,7 @@ onMounted(() => {
           <button class="btn transparent" id="sign-up-btn" @click="switchToSignup">Sign Up</button>
         </div>
 
-        <img src="@/assets/signup.png" class="image" alt="" />
+        <img src="@/assets/loading.png" class="image" alt="" />
       </div>
 
       <div class="panel right-panel">
@@ -150,12 +152,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
 .container {
   position: inherit;
   /* top: 0;
@@ -359,7 +355,7 @@ form.sign-up-form {
 
 .container.sign-up-mode .left-panel .image,
 .container.sign-up-mode .left-panel .content {
-  transform: translateX(-1000px);
+  transform: translateX(-1200px);
 }
 
 .container.sign-up-mode .right-panel .content,

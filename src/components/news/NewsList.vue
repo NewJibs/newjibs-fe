@@ -56,7 +56,7 @@ const viewNews = (articleId: string) => {
     <h1>부동산 뉴스</h1>
     <div class="notice-detail-container">
       <v-carousel
-        height="800"
+        height="300"
         hide-delimiters
         cover
         show-arrows-on-hover
@@ -92,6 +92,11 @@ const viewNews = (articleId: string) => {
 </template>
 
 <style scoped lang="scss">
+.container {
+  background-image: url('@/assets/news-back.png');
+  background-size: cover;
+}
+
 .card-fixed-size {
   width: 300px;
   height: 430px;
