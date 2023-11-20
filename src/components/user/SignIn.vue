@@ -28,7 +28,7 @@ const login = async (e) => {
 
   try {
     //post 요청 보내기
-    await userStore.login(userInfo.value)
+    await userStore.login(userInfo)
     //로그인 시, 홈 화면으로 라우팅
     router.push({ name: 'home' })
   } catch (error) {
@@ -48,7 +48,7 @@ const signup = async (e) => {
   }
 
   try {
-    await instance.post('/members/register', userInfo.value).then((response) => {
+    await instance.post('/members/register', userInfo).then((response) => {
       console.log(response.data.message)
       router.push({ name: 'user-login' })
     })

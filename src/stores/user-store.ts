@@ -20,12 +20,12 @@ export const useUserStore = defineStore(
     }
 
     //로그아웃
-    const logout = async () => {
-      await instance.delete('/members/logout').then(() => {
-        instance.defaults.headers.common['Authorization'] = ''
-        //네브바 바꾸기
-      })
-    }
+    // const logout = async () => {
+    //   await instance.delete('/members/logout').then(() => {
+    //     instance.defaults.headers.common['Authorization'] = ''
+    //     //네브바 바꾸기
+    //   })
+    // }
 
     //회원정보 수정
     // const modify = async (userInfo) => {
@@ -45,7 +45,7 @@ export const useUserStore = defineStore(
 
     return {
       login,
-      logout,
+      // logout,
     //   modify,
     //   withdrawal
     }
