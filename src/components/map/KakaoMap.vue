@@ -11,6 +11,11 @@ const ps = ref()
 const infowindow = ref()
 const keyword = ref('') //키워드 검색
 
+//axios
+const isLoading = ref(false) //로딩 상태 관리하는 속성
+const aptAllData = ref()
+const aptDetailData = ref()
+
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap()
@@ -46,8 +51,36 @@ const initMap = () => {
   addCategoryClickEvent()
 }
 
-//axios - 지도에 뿌려줄 아파트 정보 받아오기
+//axios
+//지도에 뿌려줄 아파트 정보 받아오기
+const markAllApt = () => {
+  isLoading.value = true //데이터 불러올때
+  instance
+    .get(`/houses/coordinates`)
+    .then((res) => {
+      console.log(aptAllData.value)
+      aptAllData.value = res.data
+      isLoading.value = false
+    })
+    .catch((res) => {
+      console.error(res)
+      isLoading.value = false
+    })
+}
 
+//loading을 한번에 줄지 생각
+//요청한 아파트 정보에 대한 상세정보 받아오기
+const markAptDetail = (aptCode) => {
+  instance
+    .get(`/houses/${aptCode}`)
+    .then((res) => {
+      console.log(res)
+      aptDetailData.value = res.data
+    })
+    .catch((res) => {
+      console.error(res)
+    })
+}
 
 //엘리먼트에 이벤트 핸들러 등록하는 함수
 const addEventHandle = (target, type, callback) => {
