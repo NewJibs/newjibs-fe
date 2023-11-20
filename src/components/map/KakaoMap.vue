@@ -19,6 +19,7 @@ const aptDetailData = ref()
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap()
+    markAllApt()
   } else {
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
@@ -61,6 +62,7 @@ const markAllApt = () => {
       console.log(aptAllData.value)
       aptAllData.value = res.data
       isLoading.value = false
+      keywordPlacesSearchCB(aptAllData.value)
     })
     .catch((res) => {
       console.error(res)
@@ -257,8 +259,10 @@ const keywordPlacesSearchCB = (data, status, pagination) => {
     //LatLngBounds 객체에 좌표 추가
     let bounds = new kakao.maps.LatLngBounds()
 
+    console.log('data') //배열
     for (let i = 0; i < data.length; i++) {
-      displayMarker(data[i])
+      displayMarker(data[i]) //data[i]는 객체로 옴
+      console.log(data[i])
       bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x))
     }
 
