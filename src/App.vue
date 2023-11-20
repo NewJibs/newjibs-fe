@@ -7,8 +7,9 @@ import TheNavBar from './components/common/TheNavBar.vue'
   <header class="navbar">
     <TheNavBar />
   </header>
-
-  <RouterView />
+  <div class="content-app">
+    <RouterView />
+  </div>
 </template>
 
 <style lang="scss">
@@ -19,7 +20,7 @@ import TheNavBar from './components/common/TheNavBar.vue'
 }
 
 .navbar {
-  height: 4rem;
+  height: 3.8rem;
 }
 
 @font-face {
