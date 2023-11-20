@@ -10,6 +10,5 @@
   height: 100vh;
   background-image: url('@/assets/home-img/7.png');
   background-size: cover;
-  z-index: 100;
 }
 </style>

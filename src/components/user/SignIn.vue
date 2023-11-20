@@ -136,7 +136,7 @@ onMounted(() => {
           <button class="btn transparent" id="sign-up-btn" @click="switchToSignup">Sign Up</button>
         </div>
 
-        <img src="@/assets/signup.png" class="image" alt="" />
+        <img src="@/assets/loading.png" class="image" alt="" />
       </div>
 
       <div class="panel right-panel">
