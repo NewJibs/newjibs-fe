@@ -20,7 +20,7 @@ import TheNavBar from './components/common/TheNavBar.vue'
 }
 
 .navbar {
-  height: 3.8rem;
+  height: 3.9rem;
 }
 
 @font-face {

@@ -29,7 +29,6 @@
 .app-bar {
   display: flex;
   align-items: center;
-  height: 3.8rem;
   background-color: rgb(255,255,255,0.3);
 }
 
