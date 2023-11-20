@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
+import { instance } from '@/util/http-common'
 
 let placeOverlay,
   contentNode,
@@ -44,6 +45,9 @@ const initMap = () => {
   //각 카테고리에 클릭 이벤트 등록
   addCategoryClickEvent()
 }
+
+//axios - 지도에 뿌려줄 아파트 정보 받아오기
+
 
 //엘리먼트에 이벤트 핸들러 등록하는 함수
 const addEventHandle = (target, type, callback) => {
