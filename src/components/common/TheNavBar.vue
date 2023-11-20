@@ -27,9 +27,9 @@
 }
 
 .app-bar {
-  /* height: 9vh; */
   display: flex;
   align-items: center;
+  background-color: rgb(255,255,255,0.3);
 }
 
 .app-bar-tab {
