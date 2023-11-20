@@ -1,7 +1,5 @@
-import { instance } from '@/util/http-common'
-
 //모든 집의 정보가 맵에 찍히는 interface
-interface AptAll {
+export interface AptAll {
   aptCode: number //모든 매물의 아파트 번호
   lat: string //위도
   lng: string //경도
@@ -10,7 +8,7 @@ interface AptAll {
 }
 
 //해당 아파트의 상세 정보
-interface AptAllDetail {
+export interface AptAllDetail {
   aptCode: number //아파트번호
   no: number //매물번호
   dealYear: number //거래년도
