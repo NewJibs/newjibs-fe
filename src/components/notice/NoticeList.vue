@@ -2,6 +2,7 @@
 import { ref, type Ref, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRouter } from 'vue-router'
+import TheNavBar from '../common/TheNavBar.vue';
 
 interface Notice {
   noticeId: number
@@ -44,6 +45,9 @@ const postNotice = () => {
 </script>
 
 <template>
+  <header class="navbar" style="3.9rem">
+    <TheNavBar />
+  </header>
   <div class="container">
     <div class="title">공 지 사 항</div>
     <v-btn class="post-btn" type="submit" @click="postNotice"> 게시글 작성 </v-btn>

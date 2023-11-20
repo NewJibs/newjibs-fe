@@ -92,7 +92,7 @@ const viewNews = (articleId: string) => {
 </template>
 
 <style scoped lang="scss">
-.container { 
+.container {
   background-image: url('@/assets/news-back.png');
   background-size: cover;
 }
