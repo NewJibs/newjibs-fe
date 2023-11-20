@@ -92,11 +92,6 @@ const router = createRouter({
         }
       ]
     }
-    // {
-    //   path: '*',
-    //   name: 'error',
-    //   component: ErrorViewVue
-    // },
   ]
 })
 
