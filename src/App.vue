@@ -11,4 +11,13 @@ import TheNavBar from './components/common/TheNavBar.vue'
   <RouterView />
 </template>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+@font-face {
+  font-family: 'NeoDunggeunmoPro';
+  src: url('@/fonts/NeoDunggeunmoPro-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NeoDunggeunmoPro';
+  src: url('@/fonts/NeoDunggeunmoPro-Regular.woff') format('truetype');
+}
+</style>
