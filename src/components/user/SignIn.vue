@@ -359,7 +359,7 @@ form.sign-up-form {
 
 .container.sign-up-mode .left-panel .image,
 .container.sign-up-mode .left-panel .content {
-  transform: translateX(-1000px);
+  transform: translateX(-1200px);
 }
 
 .container.sign-up-mode .right-panel .content,
