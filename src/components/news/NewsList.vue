@@ -51,8 +51,7 @@ const viewNews = (articleId: string) => {
 </script>
 
 <template>
-  <div>
-    <!-- <v-carousel> -->
+  <div class="back">
     <h1>부동산 뉴스</h1>
     <div class="notice-detail-container">
       <v-carousel
@@ -64,7 +63,6 @@ const viewNews = (articleId: string) => {
         interval="3000"
         hover
       >
-        <!-- <v-container> -->
         <v-carousel-item
           v-for="news in data"
           :key="news.articleId"
@@ -84,15 +82,13 @@ const viewNews = (articleId: string) => {
             </v-container>
           </v-sheet>
         </v-carousel-item>
-        <!-- </v-container> -->
       </v-carousel>
     </div>
-    <!-- </v-carousel> -->
   </div>
 </template>
 
 <style scoped lang="scss">
-.container {
+.back {
   background-image: url('@/assets/news-back.png');
   background-size: cover;
 }
