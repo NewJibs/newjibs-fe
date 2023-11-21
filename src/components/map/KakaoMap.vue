@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
-import markerImageSrc from '@/assets/marker.png'
+import markerImageSrc from '@/assets/home-img/marker.png'
 
 let placeOverlay,
   contentNode,
@@ -34,10 +34,10 @@ onMounted(async () => {
 const initMap = () => {
   mapContainer = document.getElementById('map')
   mapOption = {
-    center: new kakao.maps.LatLng(36.2683, 127.6358),
-    level: 13,
+    center: new kakao.maps.LatLng(37.5642135, 127.0016985),
+    level: 8,
     minLevel: 2,
-    maxLevel: 13
+    maxLevel: 10
   }
   map = new kakao.maps.Map(mapContainer, mapOption)
   ps.value = new kakao.maps.services.Places(map)
