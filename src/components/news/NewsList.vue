@@ -151,19 +151,21 @@ const viewNews = (articleId: string) => {
     <v-row align="center" justify="center">
       <v-col cols="auto" v-for="(news, index) in data" :key="index">
         <v-hover v-slot="{ isHovering }">
-          <v-card
-            @click.prevent="viewNews(news.articleId)"
-            class="mx-auto"
-            max-width="500"
-            :title="news.title"
-            :subtitle="news.pressCorporationName"
-            :elevation="isHovering ? 12 : 2"
-          >
-            <template v-slot:prepend>
-              <img :src="news.thumbnail" style="width: 150px; height: 100px" />
-            </template>
-            <v-card-text>{{ news.summaryContent }}...</v-card-text>
-          </v-card>
+          <v-lazy :min-height="200" :options="{ threshold: 0.2 }" transition="fade-transition">
+            <v-card
+              @click.prevent="viewNews(news.articleId)"
+              class="mx-auto"
+              max-width="500"
+              :title="news.title"
+              :subtitle="news.pressCorporationName"
+              :elevation="isHovering ? 12 : 2"
+            >
+              <template v-slot:prepend>
+                <img :src="news.thumbnail" style="width: 150px; height: 100px" />
+              </template>
+              <v-card-text>{{ news.summaryContent }}...</v-card-text>
+            </v-card>
+          </v-lazy>
         </v-hover>
       </v-col>
     </v-row>
