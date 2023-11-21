@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
+import markerImageSrc from '@/assets/marker.png'
 
 let placeOverlay,
   contentNode,
@@ -13,12 +14,12 @@ const keyword = ref('') //키워드 검색
 
 //axios
 const isLoading = ref(false) //로딩 상태 관리하는 속성
-const aptAllData = ref()
+// const aptAllData = ref()
 const aptDetailData = ref()
 
-onMounted(() => {
+onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
-    initMap()
+    await initMap()
     markAllApt()
   } else {
     const script = document.createElement('script')
@@ -50,24 +51,45 @@ const initMap = () => {
 
   //각 카테고리에 클릭 이벤트 등록
   addCategoryClickEvent()
+  // markAllApt()
 }
 
+//=====================================
 //axios
 //지도에 뿌려줄 아파트 정보 받아오기
 const markAllApt = () => {
   isLoading.value = true //데이터 불러올때
   instance
-    .get(`/houses/coordinates`)
+    .get('/houses/coordinates')
     .then((res) => {
-      console.log(aptAllData.value)
-      aptAllData.value = res.data
+      const aptAllData = res.data
       isLoading.value = false
-      keywordPlacesSearchCB(aptAllData.value)
+      markAptMarker(aptAllData)
     })
     .catch((res) => {
       console.error(res)
       isLoading.value = false
     })
+}
+
+//아파트 마커 생성하고 지도 위에 마커를 표시하는 함수 - markApt : []
+const markAptMarker = (markApt) => {
+  const imageSrc = markerImageSrc
+  const imageSize = new kakao.maps.Size(40, 45) //마커 이미지의 크기
+
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+
+  markApt.forEach((value) => {
+    const marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(value.lat, value.lng), //
+      image: markerImage
+    })
+
+    markers.push(marker) //배열에 생성된 마커 추가
+    marker.setMap(map) //지도 위에 마커 표시
+  })
+
+  return markers
 }
 
 //loading을 한번에 줄지 생각
@@ -84,6 +106,7 @@ const markAptDetail = (aptCode) => {
     })
 }
 
+//==============================
 //엘리먼트에 이벤트 핸들러 등록하는 함수
 const addEventHandle = (target, type, callback) => {
   if (target.addEventListener) {
@@ -153,6 +176,8 @@ const addMarker = (position, order) => {
     position: position, //마커의 위치
     image: markerImage
   })
+
+  console.log(marker)
 
   marker.setMap(map) //지도 위에 마커 표시
   markers.push(marker) //배열에 생성된 마커 추가
