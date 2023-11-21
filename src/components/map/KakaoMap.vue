@@ -80,7 +80,7 @@ const markAllApt = () => {
 }
 
 //아파트 마커 생성하고 지도 위에 마커를 표시하는 함수 - markApt : []
-const markAptMarker = async (markApt) => {
+const markAptMarker = (markApt) => {
   const imageSrc = markerImageSrc
   const imageSize = new kakao.maps.Size(40, 40) //마커 이미지의 크기
 
@@ -98,10 +98,10 @@ const markAptMarker = async (markApt) => {
 
   console.log(map.getLevel())
   //then이 안먹는거 같음
-  if (map.getLevel() <= 8) {
-    clusterer.addMarkers(markers)
-    addCategoryClickEvent()
-  }
+  // if (map.getLevel() <= 8) {
+  clusterer.addMarkers(markers)
+  addClustererClickEvent()
+  // }
 }
 
 //마커 클러스터러에 클릭이벤트 등록
@@ -110,8 +110,17 @@ const addClustererClickEvent = () => {
     //현재 지도 레벨에서 1레벨 확대한 레벨
     let level = map.getLevel() - 1
 
-    //지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
-    map.setLevel(level, { anchor: cluster.getCenter() })
+    //클러스터의 중심 좌표를 얻어오기
+    const clusterCenter = cluster.getCenter()
+
+    //클러스터의 중심으로 지도를 부드럽게 이동
+    map.panTo(clusterCenter)
+
+    //일정 지연 시간 후에 확대
+    setTimeout(() => {
+      // 지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
+      map.setLevel(level, { anchor: clusterCenter })
+    }, 500) // 지연 시간을 500ms로 설정
   })
 }
 
@@ -339,21 +348,19 @@ const displayMarker = (place) => {
 <template>
   <div class="map_wrap">
     <div id="map"></div>
-    <div id="menu_wrap">
+    <div id="option_wrap">
       <div class="option">
-        <div class="">
-          <form>
-            키워드 :
-            <input
-              type="text"
-              v-model="keyword"
-              placeholder="검색어를 입력하세요"
-              id="keyword"
-              size="15"
-            />
-            <button type="submit" @click="searchKeyword">검색</button>
-          </form>
-        </div>
+        <form>
+          키워드 :
+          <input
+            type="text"
+            v-model="keyword"
+            placeholder="검색어를 입력하세요"
+            id="keyword"
+            size="15"
+          />
+          <button type="submit" @click="searchKeyword">검색</button>
+        </form>
       </div>
     </div>
     <ul id="category">
@@ -412,15 +419,27 @@ const displayMarker = (place) => {
   width: 100%;
   height: 350px;
 }
+/* id=category 부분 */
 #category {
   position: absolute;
   top: 10px;
-  left: 10px;
-  border-radius: 5px;
-  border: 1px solid #909090;
+  left: 300px;
+  border-radius: 10px;
+  border: 0.5px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
   background: #fff;
   overflow: hidden;
+  z-index: 2;
+}
+#option_wrap {
+  position: absolute;
+  top: 10px;
+  left: 7px; /* category의 너비에 따라 조정 */
+  border-radius: 10px;
+  border: 1px solid #909090;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  background: red;
+  padding: 10px;
   z-index: 2;
 }
 #category li {
