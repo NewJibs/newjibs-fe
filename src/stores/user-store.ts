@@ -12,8 +12,6 @@ export const useUserStore = defineStore(
         const { accessToken } = response.data
 
         instance.defaults.headers.common['Authorization'] = accessToken
-
-        //로그인을 성공하여 토큰이 정상적으로 저장된 경우 - 네브바 바꾸기
       })
     }
 
@@ -21,7 +19,6 @@ export const useUserStore = defineStore(
     const logout = async () => {
       await instance.post('/members/logout').then(() => {
         instance.defaults.headers.common['Authorization'] = ''
-        //네브바 바꾸기
       })
     }
 
@@ -34,18 +31,17 @@ export const useUserStore = defineStore(
     // }
 
     //회원 탈퇴 시 axios header에 저장된 accessToken 삭제
-    // const withdrawal = async (userInfo) => {
-    //   await instance.delete('/members/', userInfo).then(() => {
-    //     instance.defaults.headers.common['Authorization'] = ''
-    //     //메뉴 바꾸기
-    //   })
-    // }
+    const withdrawal = async (userInfo: any) => {
+      await instance.delete('/members/', userInfo).then(() => {
+        instance.defaults.headers.common['Authorization'] = ''
+      })
+    }
 
     return {
       login,
-      // logout,
-    //   modify,
-    //   withdrawal
+      logout,
+      //   modify,
+      withdrawal
     }
   },
   {
