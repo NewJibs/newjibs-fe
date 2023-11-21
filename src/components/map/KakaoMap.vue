@@ -1,24 +1,24 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
+import markerImageSrc from '@/assets/marker.png'
 
 let placeOverlay,
   contentNode,
   markers = []
 let currCategory = ''
-let mapContainer, mapOption, map
+let mapContainer, mapOption, map, clusterer
 const ps = ref()
 const infowindow = ref()
 const keyword = ref('') //키워드 검색
 
 //axios
 const isLoading = ref(false) //로딩 상태 관리하는 속성
-const aptAllData = ref()
 const aptDetailData = ref()
 
-onMounted(() => {
+onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
-    initMap()
+    await initMap()
     markAllApt()
   } else {
     const script = document.createElement('script')
@@ -34,8 +34,10 @@ onMounted(() => {
 const initMap = () => {
   mapContainer = document.getElementById('map')
   mapOption = {
-    center: new kakao.maps.LatLng(35.566826, 125.90786567),
-    level: 12
+    center: new kakao.maps.LatLng(36.2683, 127.6358),
+    level: 13,
+    minLevel: 2,
+    maxLevel: 13
   }
   map = new kakao.maps.Map(mapContainer, mapOption)
   ps.value = new kakao.maps.services.Places(map)
@@ -46,28 +48,68 @@ const initMap = () => {
 
   placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1, content: contentNode })
 
+  clusterer = new kakao.maps.MarkerClusterer({
+    map: map, //마커들을 클러스터로 관리하고 표시할 지도 객체
+    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+    minLevel: 6, // 클러스터 할 최소 지도 레벨
+    disableClickZoom: true //// 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+  })
+
   kakao.maps.event.addListener(map, 'idle', searchPlaces)
 
   //각 카테고리에 클릭 이벤트 등록
   addCategoryClickEvent()
 }
 
+//=====================================
 //axios
 //지도에 뿌려줄 아파트 정보 받아오기
 const markAllApt = () => {
   isLoading.value = true //데이터 불러올때
   instance
-    .get(`/houses/coordinates`)
+    .get('/houses/coordinates')
     .then((res) => {
-      console.log(aptAllData.value)
-      aptAllData.value = res.data
+      const aptAllData = res.data
       isLoading.value = false
-      keywordPlacesSearchCB(aptAllData.value)
+      markAptMarker(aptAllData)
     })
     .catch((res) => {
       console.error(res)
       isLoading.value = false
     })
+}
+
+//아파트 마커 생성하고 지도 위에 마커를 표시하는 함수 - markApt : []
+const markAptMarker = (markApt) => {
+  const imageSrc = markerImageSrc
+  const imageSize = new kakao.maps.Size(40, 45) //마커 이미지의 크기
+
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+
+  markApt.forEach((value) => {
+    const marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(value.lat, value.lng), //
+      image: markerImage
+    })
+
+    markers.push(marker) //배열에 생성된 마커 추가
+    // marker.setMap(map) //지도 위에 마커 표시
+    //클러스터러에 마커들을 추가
+  })
+
+  //then이 안먹는거 같음
+  clusterer.addMarkers(markers).then(addCategoryClickEvent)
+}
+
+//마커 클러스터러에 클릭이벤트 등록
+const addClustererClickEvent = () => {
+  kakao.maps.event.addListener(clusterer, 'clusterclick', (cluster) => {
+    //현재 지도 레벨에서 1레벨 확대한 레벨
+    let level = map.getLevel() - 1
+
+    //지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
+    map.setLevel(level, { anchor: cluster.getCenter() })
+  })
 }
 
 //loading을 한번에 줄지 생각
@@ -84,6 +126,7 @@ const markAptDetail = (aptCode) => {
     })
 }
 
+//==============================
 //엘리먼트에 이벤트 핸들러 등록하는 함수
 const addEventHandle = (target, type, callback) => {
   if (target.addEventListener) {
