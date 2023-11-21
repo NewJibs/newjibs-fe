@@ -49,10 +49,11 @@ const signup = async (e) => {
 
   try {
     await instance.post('/members/register', userInfo).then((response) => {
-      console.log(response.data.message)
-      router.push({ name: 'user-login' })
+      switchToLogin()
     })
-  } catch (error) {}
+  } catch (error) {
+    console.error('회원가입 실패', error)
+  }
   console.log('signup')
 }
 
