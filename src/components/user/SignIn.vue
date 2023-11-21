@@ -52,11 +52,7 @@ const signup = async (e) => {
       console.log(response.data.message)
       router.push({ name: 'user-login' })
     })
-  } catch (error) {
-    // if(error.errorCode === 409) {
-    //   console.log(error.errorMsg)
-    //   alert(error.errorMsg)
-  }
+  } catch (error) {}
   console.log('signup')
 }
 

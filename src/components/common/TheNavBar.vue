@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUserStore } from '@/stores/user-store'
+
+const userStore = useUserStore()
+</script>
 
 <template>
   <v-app class="all-app">
@@ -14,7 +18,19 @@
       </v-tabs>
       <v-spacer></v-spacer>
       <v-tabs background-color="primary" slider-color="transparent" class="app-bar-tab">
-        <v-tab class="app-tab" :to="{ name: 'user-login' }">회원가입 / 로그인</v-tab>
+        <v-tab class="app-tab" v-if="!userStore.accessToken" :to="{ name: 'user-login' }"
+          >회원가입 / 로그인</v-tab
+        >
+        <v-tab class="app-tab" v-if="userStore.accessToken" :to="{ name: 'user-login' }"
+          >마이페이지</v-tab
+        >
+        <v-tab
+          class="app-tab"
+          v-if="userStore.accessToken"
+          :to="{ name: 'user-login' }"
+          @click.prevent="userStore.logout"
+          >로그아웃</v-tab
+        >
       </v-tabs>
     </v-app-bar>
   </v-app>
@@ -29,7 +45,7 @@
 .app-bar {
   display: flex;
   align-items: center;
-  background-color: rgb(255,255,255,0.3);
+  background-color: rgb(255, 255, 255, 0.3);
 }
 
 .app-bar-tab {
