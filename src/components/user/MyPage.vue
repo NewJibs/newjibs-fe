@@ -1,5 +1,8 @@
 <script setup lang="ts"></script>
 
-<template>안녕하세여</template>
+<template>
+    <div>
+    </div>
+</template>
 
 <style scoped></style>

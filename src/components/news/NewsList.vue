@@ -51,12 +51,12 @@ const viewNews = (articleId: string) => {
 </script>
 
 <template>
-  <div class="container">
+  <div>
     <!-- <v-carousel> -->
     <h1>부동산 뉴스</h1>
     <div class="notice-detail-container">
       <v-carousel
-        height="300"
+        height="500"
         hide-delimiters
         cover
         show-arrows-on-hover

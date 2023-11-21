@@ -41,7 +41,7 @@ const userStore = useUserStore()
 .app-bar {
   display: flex;
   align-items: center;
-  background-color: rgb(255, 255, 255, 0.3);
+  background-color: rgb(255, 255, 255, 1);
 }
 
 .app-bar-tab {
