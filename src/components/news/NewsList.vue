@@ -15,7 +15,8 @@ interface News {
   publishDateTime: string
 }
 
-const data: Ref<News[][]> = ref([])
+const chunkData: Ref<News[][]> = ref([])
+const data: Ref<News[]> = ref([])
 
 const fetchData = async () => {
   return await instance.get('/news')
@@ -41,13 +42,17 @@ onBeforeMount(async () => {
 // })
 
 onMounted(async () => {
+  //전체 데이터
   const articles = await fetchData()
+  data.value = reactive(articles.data)
+
+  //청크된 데이터
   const chunkedData = chunkArray(articles.data, 3)
-  data.value = reactive(chunkedData)
+  chunkData.value = reactive(chunkedData)
 })
 
-// Function to chunk an array
-function chunkArray(array: any[], chunkSize: number) {
+//3개씩 자른 chunk array
+const chunkArray = (array: any[], chunkSize: number) => {
   let index = 0
   let arrayLength = array.length
   let tempArray = []
@@ -108,14 +113,14 @@ const viewNews = (articleId: string) => {
         height="500"
         hide-delimiters
         cover
-        show-arrows-on-hover
+        show-arrows="hover"
         cycle
         interval="5000"
         hover
         transition="slide-x-transition"
       >
         <v-carousel-item
-          v-for="(news, index) in data"
+          v-for="(news, index) in chunkData"
           :key="index"
           @click.prevent="viewNews(news[index].articleId)"
         >
@@ -135,6 +140,28 @@ const viewNews = (articleId: string) => {
         </v-carousel-item>
       </v-carousel>
     </div>
+
+    <!-- 뉴스 보드형식 -->
+    <v-row align="center" justify="center">
+      <v-col cols="auto" v-for="(news, index) in data" :key="index">
+        <v-hover v-slot="{ isHovering }">
+          <v-card
+            @click.prevent="viewNews(news.articleId)"
+            class="mx-auto"
+            max-width="500"
+            :title="news.title"
+            :subtitle="news.pressCorporationName"
+            :elevation="isHovering ? 12 : 2"
+          >
+            <template v-slot:prepend>
+            <img :src="news.thumbnail" style="width: 150px; height: 100px" />
+
+            </template>
+            <v-card-text>{{ news.summaryContent }}...</v-card-text>
+          </v-card>
+        </v-hover>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
