@@ -68,19 +68,15 @@ const viewNews = (articleId: string) => {
           :key="news.articleId"
           @click.prevent="viewNews(news.articleId)"
         >
-          <v-sheet height="100%">
-            <v-container>
-              <v-card class="card-fixed-size">
-                <v-card-item><img class="card-img" :src="news.thumbnail" /></v-card-item>
-                <v-card-title class="card-title">{{ news.title }}</v-card-title>
-                <v-card-subtitle
-                  >{{ news.pressCorporationName }} |
-                  {{ new Date(news.publishDateTime).toLocaleDateString() }}</v-card-subtitle
-                >
-                <v-card-text>{{ news.summaryContent }}...</v-card-text>
-              </v-card>
-            </v-container>
-          </v-sheet>
+          <v-card class="mx-auto" max-width="340">
+            <v-img :src="news.thumbnail" height="200px" cover></v-img>
+            <v-card-title>{{ news.title }}</v-card-title>
+            <v-card-subtitle
+              >{{ news.pressCorporationName }} |
+              {{ new Date(news.publishDateTime).toLocaleDateString() }}</v-card-subtitle
+            >
+            <v-card-text>{{ news.summaryContent }}...</v-card-text>
+          </v-card>
         </v-carousel-item>
       </v-carousel>
     </div>
