@@ -8,7 +8,7 @@ const userStore = useUserStore()
   <v-app class="all-app">
     <v-app-bar scroll-behavior="elevate" class="app-bar">
       <v-tabs background-color="primary" slider-color="#5995fd" class="app-bar-tab">
-        <v-tab class="app-tab" :to="{ name: 'home' }" style="font-family: 'NeoDunggeunmoPro'"
+        <v-tab class="app-tab" :to="{ name: 'home' }" style="font-family: 'NeoDunggeunmoPro'">
           >NewJibs</v-tab
         >
         <v-tab class="app-tab" :to="{ name: 'maps' }">지도</v-tab>
@@ -24,7 +24,11 @@ const userStore = useUserStore()
         <v-tab class="app-tab" v-if="userStore.accessToken" :to="{ name: 'user-mypage' }"
           >마이페이지</v-tab
         >
-        <v-tab class="app-tab" v-if="userStore.accessToken" @click.prevent="userStore.logout"
+        <v-tab
+          class="app-tab"
+          v-if="userStore.accessToken"
+          @click.prevent="userStore.logout"
+          :to="{ name: 'user-login' }"
           >로그아웃</v-tab
         >
       </v-tabs>
