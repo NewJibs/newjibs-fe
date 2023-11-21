@@ -348,21 +348,19 @@ const displayMarker = (place) => {
 <template>
   <div class="map_wrap">
     <div id="map"></div>
-    <div id="menu_wrap">
+    <div id="option_wrap">
       <div class="option">
-        <div class="">
-          <form>
-            키워드 :
-            <input
-              type="text"
-              v-model="keyword"
-              placeholder="검색어를 입력하세요"
-              id="keyword"
-              size="15"
-            />
-            <button type="submit" @click="searchKeyword">검색</button>
-          </form>
-        </div>
+        <form>
+          키워드 :
+          <input
+            type="text"
+            v-model="keyword"
+            placeholder="검색어를 입력하세요"
+            id="keyword"
+            size="15"
+          />
+          <button type="submit" @click="searchKeyword">검색</button>
+        </form>
       </div>
     </div>
     <ul id="category">
@@ -421,15 +419,27 @@ const displayMarker = (place) => {
   width: 100%;
   height: 350px;
 }
+/* id=category 부분 */
 #category {
   position: absolute;
   top: 10px;
-  left: 10px;
-  border-radius: 5px;
-  border: 1px solid #909090;
+  left: 300px;
+  border-radius: 10px;
+  border: 0.5px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
   background: #fff;
   overflow: hidden;
+  z-index: 2;
+}
+#option_wrap {
+  position: absolute;
+  top: 10px;
+  left: 7px; /* category의 너비에 따라 조정 */
+  border-radius: 10px;
+  border: 1px solid #909090;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  background: red;
+  padding: 10px;
   z-index: 2;
 }
 #category li {
