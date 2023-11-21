@@ -110,8 +110,17 @@ const addClustererClickEvent = () => {
     //현재 지도 레벨에서 1레벨 확대한 레벨
     let level = map.getLevel() - 1
 
-    //지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
-    map.setLevel(level, { anchor: cluster.getCenter() })
+    //클러스터의 중심 좌표를 얻어오기
+    const clusterCenter = cluster.getCenter()
+
+    //클러스터의 중심으로 지도를 부드럽게 이동
+    map.panTo(clusterCenter)
+
+    //일정 지연 시간 후에 확대
+    setTimeout(() => {
+      // 지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
+      map.setLevel(level, { anchor: clusterCenter })
+    }, 500) // 지연 시간을 500ms로 설정
   })
 }
 
