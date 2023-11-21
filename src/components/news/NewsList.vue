@@ -30,7 +30,13 @@ const fetchData = async () => {
 
 onBeforeMount(async () => {
   // console.log('before mount')
-  // await fetchData()
+  //전체 데이터
+  const articles = await fetchData()
+  data.value = reactive(articles.data)
+
+  //청크된 데이터
+  const chunkedData = chunkArray(articles.data, 3)
+  chunkData.value = reactive(chunkedData)
   // console.log('data fetched')
 })
 
@@ -41,15 +47,15 @@ onBeforeMount(async () => {
 //   // console.log('Mounted')
 // })
 
-onMounted(async () => {
-  //전체 데이터
-  const articles = await fetchData()
-  data.value = reactive(articles.data)
+// onMounted(async () => {
+//   //전체 데이터
+//   const articles = await fetchData()
+//   data.value = reactive(articles.data)
 
-  //청크된 데이터
-  const chunkedData = chunkArray(articles.data, 3)
-  chunkData.value = reactive(chunkedData)
-})
+//   //청크된 데이터
+//   const chunkedData = chunkArray(articles.data, 3)
+//   chunkData.value = reactive(chunkedData)
+// })
 
 //3개씩 자른 chunk array
 const chunkArray = (array: any[], chunkSize: number) => {
@@ -154,8 +160,7 @@ const viewNews = (articleId: string) => {
             :elevation="isHovering ? 12 : 2"
           >
             <template v-slot:prepend>
-            <img :src="news.thumbnail" style="width: 150px; height: 100px" />
-
+              <img :src="news.thumbnail" style="width: 150px; height: 100px" />
             </template>
             <v-card-text>{{ news.summaryContent }}...</v-card-text>
           </v-card>
