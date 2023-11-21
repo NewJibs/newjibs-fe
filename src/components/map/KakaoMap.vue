@@ -36,8 +36,8 @@ onMounted(async () => {
 const initMap = () => {
   mapContainer = document.getElementById('map')
   mapOption = {
-    center: new kakao.maps.LatLng(35.566826, 125.90786567),
-    level: 12
+    center: new kakao.maps.LatLng(36.2683, 127.6358),
+    level: 13
   }
   map = new kakao.maps.Map(mapContainer, mapOption)
   ps.value = new kakao.maps.services.Places(map)
