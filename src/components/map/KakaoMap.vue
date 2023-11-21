@@ -80,7 +80,7 @@ const markAllApt = () => {
 }
 
 //아파트 마커 생성하고 지도 위에 마커를 표시하는 함수 - markApt : []
-const markAptMarker = async (markApt) => {
+const markAptMarker = (markApt) => {
   const imageSrc = markerImageSrc
   const imageSize = new kakao.maps.Size(40, 40) //마커 이미지의 크기
 
@@ -98,10 +98,10 @@ const markAptMarker = async (markApt) => {
 
   console.log(map.getLevel())
   //then이 안먹는거 같음
-  if (map.getLevel() <= 8) {
-    clusterer.addMarkers(markers)
-    addCategoryClickEvent()
-  }
+  // if (map.getLevel() <= 8) {
+  clusterer.addMarkers(markers)
+  addClustererClickEvent()
+  // }
 }
 
 //마커 클러스터러에 클릭이벤트 등록
