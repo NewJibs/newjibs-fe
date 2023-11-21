@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { instance } from '@/util/http-common'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -39,6 +39,11 @@ onMounted(() => {
     router.push({ name: 'home' })
   }
 })
+
+//computed를 이용해서 개행을 <br> 태그로 변환
+const formatContent = computed(() => {
+  return data.value?.content.replace(/\n/g, '<br>') || ''
+})
 </script>
 
 <template>
@@ -53,14 +58,14 @@ onMounted(() => {
         <p>{{ data.writer }}</p>
         <img :src="data.imageUrl" alt="news-image" class="news-image" />
         <p>{{ data.imageDesc }}</p>
-        <div v-html="data.content" class="news-content"></div>
+        <div v-html="formatContent" class="news-content"></div>
       </div>
     </v-container>
   </div>
 </template>
 
 <style scoped lang="scss">
-.news-detail{
+.news-detail {
   display: flex;
   justify-content: center;
   align-items: flex-start;
