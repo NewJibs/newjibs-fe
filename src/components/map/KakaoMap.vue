@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
-import markerImageSrc from '@/assets/home-img/marker.png'
+import markerImageSrc from '@/assets/home-img/home.png'
 
 let placeOverlay,
   contentNode,
@@ -82,7 +82,7 @@ const markAllApt = () => {
 //아파트 마커 생성하고 지도 위에 마커를 표시하는 함수 - markApt : []
 const markAptMarker = async (markApt) => {
   const imageSrc = markerImageSrc
-  const imageSize = new kakao.maps.Size(40, 45) //마커 이미지의 크기
+  const imageSize = new kakao.maps.Size(40, 40) //마커 이미지의 크기
 
   const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 

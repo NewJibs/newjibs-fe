@@ -84,6 +84,11 @@ const router = createRouter({
           path: 'login',
           name: 'user-login',
           component: () => import('@/components/user/SignIn.vue')
+        },
+        {
+          path: 'mypage',
+          name: 'user-mypage',
+          component: () => import('@/components/user/MyPage.vue')
         }
       ]
     },
