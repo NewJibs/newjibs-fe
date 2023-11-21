@@ -28,16 +28,16 @@ const fetchData = async () => {
 }
 
 onBeforeMount(async () => {
-  console.log('before mount')
+  // console.log('before mount')
   // await fetchData()
-  console.log('data fetched')
+  // console.log('data fetched')
 })
 
 onMounted(async () => {
   const articles = await fetchData()
-  console.log(articles)
+  // console.log(articles)
   data.value = reactive(articles.data)
-  console.log('Mounted')
+  // console.log('Mounted')
 })
 
 const router = useRouter()
@@ -52,7 +52,7 @@ const viewNews = (articleId: string) => {
 
 <template>
   <div class="back">
-    <h1>부동산 뉴스</h1>
+    <h1 style="font-family: 'NeoDunggeunmoPro'">부동산 뉴스</h1>
     <div class="notice-detail-container">
       <v-carousel
         height="500"
@@ -87,37 +87,5 @@ const viewNews = (articleId: string) => {
 .back {
   background-image: url('@/assets/news-back.png');
   background-size: cover;
-}
-
-.card-fixed-size {
-  width: 300px;
-  height: 430px;
-}
-
-.card-img {
-  object-fit: cover;
-  width: 100%;
-  height: 200px;
-}
-
-/* .v-window__next {
-  display: none;
-}
-
-.v-window__prev {
-  display: none;
-}
-
-.v-window__container:hover {
-  .v-window__prev {
-    display: block;
-  }
-  .v-window__next {
-    display: block;
-  }
-} */
-
-.news-card:hover {
-  cursor: pointer;
 }
 </style>
