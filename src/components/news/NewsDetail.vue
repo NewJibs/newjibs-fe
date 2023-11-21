@@ -24,7 +24,6 @@ const loadNews = (articleId: string) => {
   instance
     .get(`/news/${articleId}`)
     .then((res) => {
-      console.log('axios get 성공')
       data.value = res.data
     })
     .catch((res) => {
@@ -43,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="news-detail-container">
+  <div class="news-detail">
     <v-container>
       <div class="news-details" v-if="data">
         <h1>{{ data.title }}</h1>
@@ -61,7 +60,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.news-detail-container {
+.news-detail{
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -92,6 +91,8 @@ onMounted(() => {
     max-width: 100%;
     height: auto;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
   }
 
   .news-content {
