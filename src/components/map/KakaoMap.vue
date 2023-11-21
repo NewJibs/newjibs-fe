@@ -7,18 +7,16 @@ let placeOverlay,
   contentNode,
   markers = []
 let currCategory = ''
-let mapContainer, mapOption, map
+let mapContainer, mapOption, map, clusterer
 const ps = ref()
 const infowindow = ref()
 const keyword = ref('') //키워드 검색
 
 //axios
 const isLoading = ref(false) //로딩 상태 관리하는 속성
-// const aptAllData = ref()
 const aptDetailData = ref()
 
 onMounted(async () => {
-  // markAllApt()
   if (window.kakao && window.kakao.maps) {
     await initMap()
     markAllApt()
@@ -37,7 +35,9 @@ const initMap = () => {
   mapContainer = document.getElementById('map')
   mapOption = {
     center: new kakao.maps.LatLng(36.2683, 127.6358),
-    level: 13
+    level: 13,
+    minLevel: 2,
+    maxLevel: 13
   }
   map = new kakao.maps.Map(mapContainer, mapOption)
   ps.value = new kakao.maps.services.Places(map)
@@ -48,11 +48,18 @@ const initMap = () => {
 
   placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1, content: contentNode })
 
+  clusterer = new kakao.maps.MarkerClusterer({
+    map: map, //마커들을 클러스터로 관리하고 표시할 지도 객체
+    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+    minLevel: 6, // 클러스터 할 최소 지도 레벨
+    maxLevel: 10,
+    disableClickZoom: true //// 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+  })
+
   kakao.maps.event.addListener(map, 'idle', searchPlaces)
 
   //각 카테고리에 클릭 이벤트 등록
   addCategoryClickEvent()
-  // markAllApt()
 }
 
 //=====================================
@@ -87,10 +94,25 @@ const markAptMarker = (markApt) => {
     })
 
     markers.push(marker) //배열에 생성된 마커 추가
-    marker.setMap(map) //지도 위에 마커 표시
+    // marker.setMap(map) //지도 위에 마커 표시
+    //클러스터러에 마커들을 추가
   })
 
-  return markers
+  //then이 안먹는거 같음
+  clusterer.addMarkers(markers).then(addCategoryClickEvent)
+
+  // return markers
+}
+
+//마커 클러스터러에 클릭이벤트 등록
+const addClustererClickEvent = () => {
+  kakao.maps.event.addListener(clusterer, 'clusterclick', (cluster) => {
+    //현재 지도 레벨에서 1레벨 확대한 레벨
+    let level = map.getLevel() - 1
+
+    //지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
+    map.setLevel(level, { anchor: cluster.getCenter() })
+  })
 }
 
 //loading을 한번에 줄지 생각
@@ -177,8 +199,6 @@ const addMarker = (position, order) => {
     position: position, //마커의 위치
     image: markerImage
   })
-
-  console.log(marker)
 
   marker.setMap(map) //지도 위에 마커 표시
   markers.push(marker) //배열에 생성된 마커 추가
