@@ -18,6 +18,7 @@ const isLoading = ref(false) //로딩 상태 관리하는 속성
 const aptDetailData = ref()
 
 onMounted(async () => {
+  // markAllApt()
   if (window.kakao && window.kakao.maps) {
     await initMap()
     markAllApt()
