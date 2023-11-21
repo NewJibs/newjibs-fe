@@ -21,14 +21,10 @@ const userStore = useUserStore()
         <v-tab class="app-tab" v-if="!userStore.accessToken" :to="{ name: 'user-login' }"
           >회원가입 / 로그인</v-tab
         >
-        <v-tab class="app-tab" v-if="userStore.accessToken" :to="{ name: 'user-login' }"
+        <v-tab class="app-tab" v-if="userStore.accessToken" :to="{ name: 'user-mypage' }"
           >마이페이지</v-tab
         >
-        <v-tab
-          class="app-tab"
-          v-if="userStore.accessToken"
-          :to="{ name: 'user-login' }"
-          @click.prevent="userStore.logout"
+        <v-tab class="app-tab" v-if="userStore.accessToken" @click.prevent="userStore.logout"
           >로그아웃</v-tab
         >
       </v-tabs>
