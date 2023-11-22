@@ -24,7 +24,12 @@ const aptDetailData = ref() //클릭된 아파트 정보
 //선택된 아파트 배열
 let selectedApt = ref([]) //선택된 아파트 배열
 let totalPrice = ref() //남은 금액
-const dialog = ref(false) //모달
+let dialog = ref(false) //모달
+let budget = ref(false)
+
+//예산
+let maxAmount = 1000000
+let usedAmount = ref(0) //사용한 금액
 
 onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
@@ -387,26 +392,34 @@ const markAptDetail = async (aptCode) => {
     })
 }
 
-//선택된 리스트에 아파트 정보 넣기
-const addSelectedApt = (no, aptCode) => {
-  if (selectedApt.value.includes(no)) {
-    dialog.value = true
+//선택된 리스트에 아파트 정보 넣기 - 객체 넣기
+const addSelectedApt = (apt) => {
+  console.log(apt)
+  if (selectedApt.value.find((item) => item.no === apt.no)) {
+    dialog = true
     return
   }
 
-  console.log(no)
-  selectedApt.value.push(no) //구매한 매물
+  if (usedAmount.value + apt.dealAmount > maxAmount) {
+    budget = true
+    return
+  }
 
+  usedAmount.value += apt.dealAmount
+  console.log(usedAmount.value)
+  selectedApt.value.push(apt)
   for (let i = 0; i < selectedApt.value.length; i++) {
-    console.log('배열' + selectedApt.value[i])
+    console.log('배열' + selectedApt.value[i].no)
   }
   //선택된 아파트의 마커 이미지 바꾸기
-  changeMarkerImg(aptCode, selectedHomeImageSrc)
+  changeMarkerImg(apt.aptCode, selectedHomeImageSrc)
 }
 
 //매물 선택 삭제
 const removeSelectedApt = (no) => {
-  selectedApt.value = selectedApt.value.filter((item) => item !== no)
+  const apt = selectedApt.value.find((item) => item.no === no)
+  usedAmount.value -= apt.dealAmount
+  selectedApt.value = selectedApt.value.filter((item) => item.no !== no)
 }
 
 //선택된 아파트의 마커 이미지 바꾸는 함수
@@ -424,6 +437,7 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
 //모달 닫기
 const closeDialog = (e) => {
   dialog.value = false
+  budget.value = false
 }
 </script>
 
@@ -432,6 +446,15 @@ const closeDialog = (e) => {
     <v-dialog v-model="dialog" width="auto" persistent>
       <v-card>
         <v-card-text> 이미 선택한 아파트입니다. </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="closeDialog">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="budget" width="auto" persistent>
+      <v-card>
+        <v-card-text> 예산을 초과했습니다. </v-card-text>
         <v-card-actions>
           <v-btn color="primary" block @click="closeDialog">확인</v-btn>
         </v-card-actions>
@@ -469,10 +492,7 @@ const closeDialog = (e) => {
                     </h3>
                   </div>
                 </div>
-                <v-btn
-                  variant="tonal"
-                  color="#5995fd"
-                  @click.prevent="addSelectedApt(apt.no, apt.aptCode)"
+                <v-btn variant="tonal" color="#5995fd" @click.prevent="addSelectedApt(apt)"
                   >구매</v-btn
                 >
               </v-list-item>
@@ -487,15 +507,15 @@ const closeDialog = (e) => {
               "
             >
               <v-list-item :prepend-avatar="selectedHomeImageSrc"
-                ><h3>부동산 거래 내역</h3></v-list-item
+                ><h3>부동산 거래 내역 : {{ formatPrice(usedAmount) }}</h3></v-list-item
               >
               <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
                 <v-list-item
-                  >{{ selected }}
+                  >`{{ selected.apartmentName }} - {{ selected.no }}`
                   <font-awesome-icon
                     class="icon"
                     icon="xmark"
-                    @click="removeSelectedApt(selected)"
+                    @click="removeSelectedApt(selected.no)"
                   ></font-awesome-icon>
                 </v-list-item>
               </v-list>
