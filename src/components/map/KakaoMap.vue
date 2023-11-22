@@ -389,7 +389,7 @@ const addSelectedApt = (no, aptCode) => {
   console.log(no)
   selectedApt.value.push(no) //구매한 매물
 
-  for (let i = 0; i < selectedApt.length; i++) {
+  for (let i = 0; i < selectedApt.value.length; i++) {
     console.log('배열' + selectedApt.value[i])
   }
   //선택된 아파트의 마커 이미지 바꾸기
@@ -453,7 +453,7 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
               style="z-index: 10"
             >
               <v-list-item
-                >{{ selected.no }}
+                >{{ selected }}
                 <font-awesome-icon class="icon" icon="xmark"></font-awesome-icon>
               </v-list-item>
             </v-list>
