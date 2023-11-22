@@ -2,6 +2,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
+import selectedHomeImageSrc from '@/assets/home-img/selected.png'
 
 let placeOverlay,
   contentNode,
@@ -56,7 +57,7 @@ const initMap = () => {
     averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
     minLevel: 6, // 클러스터 할 최소 지도 레벨
     disableClickZoom: true, //// 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
-    gridSize: 80
+    gridSize: 90
   })
 
   kakao.maps.event.addListener(map, 'idle', searchPlaces)
@@ -96,11 +97,16 @@ const markAptMarker = (markApt) => {
       image: markerImage
     })
 
+    //마커에 클릭 이벤트 리스너 추가
+    kakao.maps.event.addListener(marker, 'click', () => {
+      markAptDetail(value.aptCode) //클릭된 마커의 aptCode로 markAptDetail 함수 호출
+    })
+
     markers.push(marker) //배열에 생성된 마커 추가
     // marker.setMap(map) //지도 위에 마커 표시
   })
 
-  console.log(map.getLevel())
+  // console.log(map.getLevel())
   //then이 안먹는거 같음
   // if (map.getLevel() <= 8) {
   clusterer.addMarkers(markers)
@@ -351,12 +357,12 @@ const displayMarker = (place) => {
 
 <template>
   <div style="position: relative">
-    <div style="position: absolute; z-index: 10; height: 100vh;">
+    <div style="position: absolute; z-index: 10; height: 100vh">
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary>
             <v-list lines="two">
-              <v-list-item :prepend-avatar="selectedHome"></v-list-item>
+              <v-list-item :prepend-avatar="selectedHomeImageSrc"></v-list-item>
             </v-list>
             <v-divider></v-divider>
           </v-navigation-drawer>
@@ -372,7 +378,7 @@ const displayMarker = (place) => {
           transition: right 0.8s ease-in-out;
         "
         v-if="!drawer"
-        color="#5995fd"
+        color="primary"
         @click.stop="drawer = !drawer"
       >
         &gt;
@@ -388,7 +394,7 @@ const displayMarker = (place) => {
           transition: left 0.8s ease-in-out;
         "
         v-else
-        color="#5995fd"
+        color="primary"
         @click.stop="drawer = !drawer"
       >
         &lt;
