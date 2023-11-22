@@ -419,7 +419,7 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
             <v-list lines="two" v-for="apt in aptDetailData">
               <v-list-item
                 v-if="apt"
-                :prepend-avatar="selectedHomeImageSrc"
+                :prepend-avatar="markerImageSrc"
                 :title="`${apt.apartmentName}아파트`"
                 :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
               >
@@ -430,8 +430,9 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
                     <div>
                       거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}
                     </div>
+                    <div>매물번호 : {{ apt.no }}</div>
                   </div>
-                  <div style="display: flex; align-items: center; margin-left: 3rem">
+                  <div style="display: flex; align-items: center; margin-left: 0.5rem">
                     <h3 style="margin-top: 0.7rem; color: #5995fd">
                       {{ formatPrice(apt.dealAmount) }}
                     </h3>
@@ -446,17 +447,24 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list
-              lines="two"
-              v-for="selected in selectedApt"
-              :key="selected.no"
-              style="z-index: 10"
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+              "
             >
-              <v-list-item
-                >{{ selected }}
-                <font-awesome-icon class="icon" icon="xmark"></font-awesome-icon>
-              </v-list-item>
-            </v-list>
+              <v-list-item :prepend-avatar="selectedHomeImageSrc"
+                ><h3>부동산 거래 내역</h3></v-list-item
+              >
+              <v-list v-for="selected in selectedApt" :key="selected.no" style="z-index: 10">
+                <v-list-item
+                  >{{ selected }}
+                  <font-awesome-icon class="icon" icon="xmark"></font-awesome-icon>
+                </v-list-item>
+              </v-list>
+            </div>
           </v-navigation-drawer>
         </v-layout>
       </v-card>
