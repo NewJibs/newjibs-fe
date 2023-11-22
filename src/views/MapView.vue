@@ -23,7 +23,9 @@ const closeDialogAndNavigate = () => {
 
 <template>
   <div>
-    <router-view></router-view>
+    <div>
+      <router-view></router-view>
+    </div>
 
     <v-dialog v-model="dialog" width="auto">
       <v-card>
