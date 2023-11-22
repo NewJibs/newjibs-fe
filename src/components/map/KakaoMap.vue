@@ -8,7 +8,7 @@ let placeOverlay,
   contentNode,
   markers = []
 let currCategory = ''
-let mapContainer, mapOption, map, clusterer
+let mapContainer, mapOption, map, clusterer, roadviewContainer, roadview, roadviewClient
 const ps = ref()
 const infowindow = ref()
 const keyword = ref('') //키워드 검색
@@ -143,9 +143,11 @@ const markAptDetail = async (aptCode) => {
   await instance
     .get(`/houses/${aptCode}`)
     .then((res) => {
-      console.log(res)
       aptDetailData.value = res.data
-      console.log(aptDetailData.value)
+      if (aptDetailData.value && aptDetailData.value.length > 0) {
+        // 로드뷰 초기화
+        initRoadview(aptDetailData.value[0].lat, aptDetailData.value[0].lng)
+      }
     })
     .catch((res) => {
       console.error(res)
@@ -362,6 +364,21 @@ const displayMarker = (place) => {
     infowindow.value.open(map, marker)
   })
 }
+
+//로드뷰 초기화하는 함수
+const initRoadview = (lat, lng) => {
+  roadviewContainer = document.getElementById('roadView') // 로드뷰를 표시할 div
+  roadview = new kakao.maps.Roadview(roadviewContainer) // 로드뷰 객체
+  roadviewClient = new kakao.maps.RoadviewClient() // 좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper 객체
+
+  let position = new kakao.maps.LatLng(lat, lng)
+  console.log(position)
+
+  // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
+  roadviewClient.getNearestPanoId(position, 50, (panoId) => {
+    roadview.setPanoId(panoId, position) //panoId와 중심좌표를 통해 로드뷰 실행
+  })
+}
 </script>
 
 <template>
@@ -370,17 +387,24 @@ const displayMarker = (place) => {
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
-            <v-list lines="two">
+            <div id="roadView" style="width: 400px; height: 200px;"></div>
+            <v-list lines="two" v-for="apt in aptDetailData">
               <v-list-item
-                v-if="aptDetailData"
+                v-if="apt"
                 :prepend-avatar="selectedHomeImageSrc"
-                :title="aptDetailData.apartmentName"
-                :subtitle="`${aptDetailData.sidoName} ${aptDetailData.gugunName} ${aptDetailData.dongName} ${aptDetailData.jibun}`"
+                :title="`${apt.apartmentName}아파트`"
+                :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
               >
-                {{ aptDetailData[0].aptCode }}
+                <p>면적(m^2) : {{ apt.area }}</p>
+                <p>건축년도 : {{ apt.buildYear }}</p>
+                <p>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</p>
+                <h3>거래가격 : {{ apt.dealAmount }}</h3>
               </v-list-item>
             </v-list>
-            <!-- <v-divider></v-divider> -->
+            <v-divider></v-divider>
+            <v-list lines="two" v-for="selected in selectedApt">
+              <v-list-item> </v-list-item>
+            </v-list>
           </v-navigation-drawer>
         </v-layout>
       </v-card>
