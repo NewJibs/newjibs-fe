@@ -369,7 +369,7 @@ const displayMarker = (place) => {
         </v-layout>
       </v-card>
     </div> -->
-    <div style="position: relative; z-index: 10; height: 100vh; width: 500px">
+    <div style="position: absolute; z-index: 10; height: 100vh; width: 500px">
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary>
