@@ -18,7 +18,10 @@ const drawer = ref(false)
 
 //axios
 const isLoading = ref(false) //로딩 상태 관리하는 속성
-const aptDetailData = ref()
+const aptDetailData = ref() //클릭된 아파트 정보
+
+//선택된 아파트 배열
+let selectedApt = ref([])
 
 onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
@@ -146,6 +149,11 @@ const markAptDetail = (aptCode) => {
     .catch((res) => {
       console.error(res)
     })
+}
+
+//선택된 리스트에 아파트 정보 넣기
+const addSelectedApt = (aptCode) => {
+  selectedApt.value.push(aptCode)
 }
 
 //==============================
@@ -362,9 +370,13 @@ const displayMarker = (place) => {
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary>
             <v-list lines="two">
-              <v-list-item :prepend-avatar="selectedHomeImageSrc"></v-list-item>
+              <v-list-item :prepend-avatar="selectedHomeImageSrc">
+                <v-list-item-content>
+                  <v-list-item-title>{{ aptDetailData?.aptName }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
-            <v-divider></v-divider>
+            <!-- <v-divider></v-divider> -->
           </v-navigation-drawer>
         </v-layout>
       </v-card>
