@@ -396,11 +396,14 @@ const initRoadview = (lat, lng) => {
     roadview.setPanoId(panoId, position) //panoId와 중심좌표를 통해 로드뷰 실행
   })
 }
+
+//거래가격 format 함수
+
 </script>
 
 <template>
   <div style="position: relative">
-    <div style="position: absolute; z-index: 10; height: 100vh">
+    <div style="position: absolute; z-index: 10; height: 100%">
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
@@ -412,10 +415,10 @@ const initRoadview = (lat, lng) => {
                 :title="`${apt.apartmentName}아파트`"
                 :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
               >
-                <p>면적(m^2) : {{ apt.area }}</p>
-                <p>건축년도 : {{ apt.buildYear }}</p>
-                <p>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</p>
-                <h3>거래가격 : {{ apt.dealAmount }}</h3>
+                <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
+                <div>건축년도 : {{ apt.buildYear }}</div>
+                <div>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</div>
+                <h3 style="margin-top: 0.7rem">거래가격 : {{ apt.dealAmount }}</h3>
                 <v-btn
                   variant="tonal"
                   color="#5995fd"
