@@ -22,7 +22,9 @@ const isLoading = ref(false) //로딩 상태 관리하는 속성
 const aptDetailData = ref() //클릭된 아파트 정보
 
 //선택된 아파트 배열
-let selectedApt = ref([])
+let selectedApt = ref([]) //선택된 아파트 배열
+let totalPrice = ref() //남은 금액
+const dialog = ref(false) //모달
 
 onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
@@ -388,7 +390,7 @@ const markAptDetail = async (aptCode) => {
 //선택된 리스트에 아파트 정보 넣기
 const addSelectedApt = (no, aptCode) => {
   if (selectedApt.value.includes(no)) {
-    alert('이미 선택된 아파트입니다.')
+    dialog.value = true
     return
   }
 
@@ -418,14 +420,32 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
     }
   })
 }
+
+//모달 닫기
+const closeDialog = (e) => {
+  dialog.value = false
+}
 </script>
 
 <template>
   <div style="position: relative">
+    <v-dialog v-model="dialog" width="auto" persistent>
+      <v-card>
+        <v-card-text> 이미 선택한 아파트입니다. </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="closeDialog">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <div style="position: absolute; z-index: 10; height: 100%">
       <v-card>
         <v-layout>
-          <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
+          <v-navigation-drawer
+            v-model="drawer"
+            width="400"
+            temporary
+            style="top: 3.8rem; height: 100%"
+          >
             <div id="roadView" style="width: 400px; height: 200px"></div>
             <v-list lines="two" v-for="apt in aptDetailData">
               <v-list-item
@@ -441,7 +461,7 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
                     <div>
                       거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}
                     </div>
-                    <div>매물번호 : {{ apt.no }}</div>
+                    <div>매물 : {{ apt.no }}</div>
                   </div>
                   <div style="display: flex; align-items: center; margin-left: 0.5rem">
                     <h3 style="margin-top: 0.7rem; color: #5995fd">
