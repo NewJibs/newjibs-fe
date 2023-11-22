@@ -362,7 +362,8 @@ const displayMarker = (place) => {
           </v-navigation-drawer>
           <v-main style="height: 100vh">
             <div class="d-flex justify-center align-center h-100">
-              <v-btn color="primary" @click.stop="drawer = !drawer"> > </v-btn>
+              <v-btn v-if="!drawer" color="primary" @click.stop="drawer = !drawer"> > </v-btn>
+              <v-btn v-else color="primary" @click.stop="drawer = !drawer"> 들어가 </v-btn>
             </div>
           </v-main>
         </v-layout>
