@@ -100,6 +100,9 @@ const markAptMarker = (markApt) => {
       image: markerImage
     })
 
+    //마커에 aptCode 저장
+    marker.aptCode = value.aptCode
+
     //마커에 클릭 이벤트 리스너 추가
     kakao.maps.event.addListener(marker, 'click', () => {
       markAptDetail(value.aptCode) //클릭된 마커의 aptCode로 markAptDetail 함수 호출
@@ -155,8 +158,23 @@ const markAptDetail = async (aptCode) => {
 }
 
 //선택된 리스트에 아파트 정보 넣기
-const addSelectedApt = (aptCode) => {
-  selectedApt.value.push(aptCode)
+const addSelectedApt = (no, aptCode) => {
+  console.log(no)
+  selectedApt.value.push(no) //구매한 매물
+  //선택된 아파트의 마커 이미지 바꾸기
+  changeMarkerImg(aptCode, selectedHomeImageSrc)
+}
+
+//선택된 아파트의 마커 이미지 바꾸는 함수
+const changeMarkerImg = (aptCode, newImgSrc) => {
+  //markers 배열 순회하면서 해당 aptCode를 가진 마커 찾기
+  markers.forEach((marker) => {
+    if (marker.aptCode === aptCode) {
+      //찾은 마커의 이미지를 새 이미지로 바꾼다.
+      const markerImg = new kakao.maps.MarkerImage(newImgSrc, new kakao.maps.Size(40, 40))
+      marker.setImage(markerImg)
+    }
+  })
 }
 
 //==============================
@@ -372,7 +390,6 @@ const initRoadview = (lat, lng) => {
   roadviewClient = new kakao.maps.RoadviewClient() // 좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper 객체
 
   let position = new kakao.maps.LatLng(lat, lng)
-  console.log(position)
 
   // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
   roadviewClient.getNearestPanoId(position, 50, (panoId) => {
@@ -387,7 +404,7 @@ const initRoadview = (lat, lng) => {
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
-            <div id="roadView" style="width: 400px; height: 200px;"></div>
+            <div id="roadView" style="width: 400px; height: 200px"></div>
             <v-list lines="two" v-for="apt in aptDetailData">
               <v-list-item
                 v-if="apt"
@@ -399,11 +416,17 @@ const initRoadview = (lat, lng) => {
                 <p>건축년도 : {{ apt.buildYear }}</p>
                 <p>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</p>
                 <h3>거래가격 : {{ apt.dealAmount }}</h3>
+                <v-btn
+                  variant="tonal"
+                  color="#5995fd"
+                  @click.prevent="addSelectedApt(apt.no, apt.aptCode)"
+                  >구매</v-btn
+                >
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list lines="two" v-for="selected in selectedApt">
-              <v-list-item> </v-list-item>
+            <v-list lines="two" v-for="selected in selectedApt" style="z-index: 10">
+              <v-list-item>{{ selected.no }}</v-list-item>
             </v-list>
           </v-navigation-drawer>
         </v-layout>
