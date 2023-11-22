@@ -2,19 +2,26 @@
 import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
+import selectedHomeImageSrc from '@/assets/home-img/selected.png'
 
 let placeOverlay,
   contentNode,
   markers = []
 let currCategory = ''
-let mapContainer, mapOption, map, clusterer
+let mapContainer, mapOption, map, clusterer, roadviewContainer, roadview, roadviewClient
 const ps = ref()
 const infowindow = ref()
 const keyword = ref('') //키워드 검색
 
+//좌측 컴포넌트 열기
+const drawer = ref(false)
+
 //axios
 const isLoading = ref(false) //로딩 상태 관리하는 속성
-const aptDetailData = ref()
+const aptDetailData = ref() //클릭된 아파트 정보
+
+//선택된 아파트 배열
+let selectedApt = ref([])
 
 onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
@@ -52,7 +59,8 @@ const initMap = () => {
     map: map, //마커들을 클러스터로 관리하고 표시할 지도 객체
     averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
     minLevel: 6, // 클러스터 할 최소 지도 레벨
-    disableClickZoom: true //// 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+    disableClickZoom: true, //// 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+    gridSize: 90
   })
 
   kakao.maps.event.addListener(map, 'idle', searchPlaces)
@@ -92,11 +100,19 @@ const markAptMarker = (markApt) => {
       image: markerImage
     })
 
+    //마커에 aptCode 저장
+    marker.aptCode = value.aptCode
+
+    //마커에 클릭 이벤트 리스너 추가
+    kakao.maps.event.addListener(marker, 'click', () => {
+      markAptDetail(value.aptCode) //클릭된 마커의 aptCode로 markAptDetail 함수 호출
+    })
+
     markers.push(marker) //배열에 생성된 마커 추가
     // marker.setMap(map) //지도 위에 마커 표시
   })
 
-  console.log(map.getLevel())
+  // console.log(map.getLevel())
   //then이 안먹는거 같음
   // if (map.getLevel() <= 8) {
   clusterer.addMarkers(markers)
@@ -126,16 +142,39 @@ const addClustererClickEvent = () => {
 
 //loading을 한번에 줄지 생각
 //요청한 아파트 정보에 대한 상세정보 받아오기
-const markAptDetail = (aptCode) => {
-  instance
+const markAptDetail = async (aptCode) => {
+  await instance
     .get(`/houses/${aptCode}`)
     .then((res) => {
-      console.log(res)
       aptDetailData.value = res.data
+      if (aptDetailData.value && aptDetailData.value.length > 0) {
+        // 로드뷰 초기화
+        initRoadview(aptDetailData.value[0].lat, aptDetailData.value[0].lng)
+      }
     })
     .catch((res) => {
       console.error(res)
     })
+}
+
+//선택된 리스트에 아파트 정보 넣기
+const addSelectedApt = (no, aptCode) => {
+  console.log(no)
+  selectedApt.value.push(no) //구매한 매물
+  //선택된 아파트의 마커 이미지 바꾸기
+  changeMarkerImg(aptCode, selectedHomeImageSrc)
+}
+
+//선택된 아파트의 마커 이미지 바꾸는 함수
+const changeMarkerImg = (aptCode, newImgSrc) => {
+  //markers 배열 순회하면서 해당 aptCode를 가진 마커 찾기
+  markers.forEach((marker) => {
+    if (marker.aptCode === aptCode) {
+      //찾은 마커의 이미지를 새 이미지로 바꾼다.
+      const markerImg = new kakao.maps.MarkerImage(newImgSrc, new kakao.maps.Size(40, 40))
+      marker.setImage(markerImg)
+    }
+  })
 }
 
 //==============================
@@ -343,52 +382,133 @@ const displayMarker = (place) => {
     infowindow.value.open(map, marker)
   })
 }
+
+//로드뷰 초기화하는 함수
+const initRoadview = (lat, lng) => {
+  roadviewContainer = document.getElementById('roadView') // 로드뷰를 표시할 div
+  roadview = new kakao.maps.Roadview(roadviewContainer) // 로드뷰 객체
+  roadviewClient = new kakao.maps.RoadviewClient() // 좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper 객체
+
+  let position = new kakao.maps.LatLng(lat, lng)
+
+  // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
+  roadviewClient.getNearestPanoId(position, 50, (panoId) => {
+    roadview.setPanoId(panoId, position) //panoId와 중심좌표를 통해 로드뷰 실행
+  })
+}
 </script>
 
 <template>
-  <div class="map_wrap">
-    <div id="map"></div>
-    <div id="option_wrap">
-      <div class="option">
-        <form>
-          키워드 :
-          <input
-            type="text"
-            v-model="keyword"
-            placeholder="검색어를 입력하세요"
-            id="keyword"
-            size="15"
-          />
-          <button type="submit" @click="searchKeyword">검색</button>
-        </form>
-      </div>
+  <div style="position: relative">
+    <div style="position: absolute; z-index: 10; height: 100vh">
+      <v-card>
+        <v-layout>
+          <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
+            <div id="roadView" style="width: 400px; height: 200px"></div>
+            <v-list lines="two" v-for="apt in aptDetailData">
+              <v-list-item
+                v-if="apt"
+                :prepend-avatar="selectedHomeImageSrc"
+                :title="`${apt.apartmentName}아파트`"
+                :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
+              >
+                <p>면적(m^2) : {{ apt.area }}</p>
+                <p>건축년도 : {{ apt.buildYear }}</p>
+                <p>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</p>
+                <h3>거래가격 : {{ apt.dealAmount }}</h3>
+                <v-btn
+                  variant="tonal"
+                  color="#5995fd"
+                  @click.prevent="addSelectedApt(apt.no, apt.aptCode)"
+                  >구매</v-btn
+                >
+              </v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+            <v-list lines="two" v-for="selected in selectedApt" style="z-index: 10">
+              <v-list-item>{{ selected.no }}</v-list-item>
+            </v-list>
+          </v-navigation-drawer>
+        </v-layout>
+      </v-card>
+      <v-btn
+        style="
+          position: absolute;
+          top: 40%;
+          border-radius: 0 50% 50% 0;
+          width: 20px;
+          height: 50px;
+          transition: right 0.8s ease-in-out;
+        "
+        v-if="!drawer"
+        color="primary"
+        @click.stop="drawer = !drawer"
+      >
+        &gt;
+      </v-btn>
+      <v-btn
+        style="
+          position: absolute;
+          left: 399px;
+          top: 40%;
+          border-radius: 0 50% 50% 0;
+          width: 20px;
+          height: 50px;
+          transition: left 0.8s ease-in-out;
+        "
+        v-else
+        color="primary"
+        @click.stop="drawer = !drawer"
+      >
+        &lt;
+      </v-btn>
     </div>
-    <ul id="category">
-      <li id="BK9" data-order="0">
-        <span class="category_bg bank"></span>
-        은행
-      </li>
-      <li id="MT1" data-order="1">
-        <span class="category_bg mart"></span>
-        마트
-      </li>
-      <li id="PM9" data-order="2">
-        <span class="category_bg pharmacy"></span>
-        약국
-      </li>
-      <li id="OL7" data-order="3">
-        <span class="category_bg oil"></span>
-        주유소
-      </li>
-      <li id="CE7" data-order="4">
-        <span class="category_bg cafe"></span>
-        카페
-      </li>
-      <li id="CS2" data-order="5">
-        <span class="category_bg store"></span>
-        편의점
-      </li>
-    </ul>
+
+    <!-- 기본 map 컴포넌트 -->
+    <div class="map_wrap">
+      <div id="map"></div>
+      <div id="option_wrap">
+        <div class="option">
+          <form>
+            키워드 :
+            <input
+              type="text"
+              v-model="keyword"
+              placeholder="검색어를 입력하세요"
+              id="keyword"
+              size="18"
+            />
+            <button type="submit" @click="searchKeyword">검색</button>
+          </form>
+        </div>
+      </div>
+      <ul id="category">
+        <li id="BK9" data-order="0">
+          <span class="category_bg bank"></span>
+          은행
+        </li>
+        <li id="MT1" data-order="1">
+          <span class="category_bg mart"></span>
+          마트
+        </li>
+        <li id="PM9" data-order="2">
+          <span class="category_bg pharmacy"></span>
+          약국
+        </li>
+        <li id="OL7" data-order="3">
+          <span class="category_bg oil"></span>
+          주유소
+        </li>
+        <li id="CE7" data-order="4">
+          <span class="category_bg cafe"></span>
+          카페
+        </li>
+        <li id="CS2" data-order="5">
+          <span class="category_bg store"></span>
+          편의점
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -422,8 +542,8 @@ const displayMarker = (place) => {
 /* id=category 부분 */
 #category {
   position: absolute;
-  top: 10px;
-  left: 300px;
+  top: 15px;
+  right: 30px;
   border-radius: 10px;
   border: 0.5px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
@@ -431,14 +551,15 @@ const displayMarker = (place) => {
   overflow: hidden;
   z-index: 2;
 }
+/* 검색어 부분 */
 #option_wrap {
   position: absolute;
-  top: 10px;
-  left: 7px; /* category의 너비에 따라 조정 */
+  top: 25px;
+  right: 350px; /* category의 너비에 따라 조정 */
   border-radius: 10px;
   border: 1px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-  background: red;
+  background: #fff;
   padding: 10px;
   z-index: 2;
 }
