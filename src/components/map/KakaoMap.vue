@@ -369,7 +369,7 @@ const displayMarker = (place) => {
         </v-layout>
       </v-card>
     </div> -->
-    <div style="position: absolute; left: 0; z-index: 10">
+    <div style="position: relative; z-index: 10; height: 100vh; width: 500px">
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" width="400" temporary>
@@ -381,20 +381,35 @@ const displayMarker = (place) => {
         </v-layout>
       </v-card>
       <v-btn
-        style="position: absolute; left: 300px; top: 50%; transform: translateX(50%)"
+        style="
+          position: absolute;
+          top: 40%;
+          border-radius: 0 50% 50% 0;
+          width: 20px;
+          height: 50px;
+          transition: right 0.8s ease-in-out;
+        "
         v-if="!drawer"
-        color="primary"
+        color="#5995fd"
         @click.stop="drawer = !drawer"
       >
-        >
+        &gt;
       </v-btn>
       <v-btn
-        style="position: absolute; left: 300px; top: 50%; transform: translateX(50%)"
+        style="
+          position: absolute;
+          left: 399px;
+          top: 40%;
+          border-radius: 0 50% 50% 0;
+          width: 20px;
+          height: 50px;
+          transition: left 0.8s ease-in-out;
+        "
         v-else
-        color="primary"
+        color="#5995fd"
         @click.stop="drawer = !drawer"
       >
-        들어가
+        &lt;
       </v-btn>
     </div>
 
