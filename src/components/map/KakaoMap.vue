@@ -398,7 +398,9 @@ const initRoadview = (lat, lng) => {
 }
 
 //거래가격 format 함수
-
+const formatPrice = (price) => {
+  return (price / 10000).toFixed(2) + '억'
+}
 </script>
 
 <template>
@@ -418,7 +420,7 @@ const initRoadview = (lat, lng) => {
                 <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
                 <div>건축년도 : {{ apt.buildYear }}</div>
                 <div>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</div>
-                <h3 style="margin-top: 0.7rem">거래가격 : {{ apt.dealAmount }}</h3>
+                <h3 style="margin-top: 0.7rem">거래가격 : {{ formatPrice(apt.dealAmount) }}</h3>
                 <v-btn
                   variant="tonal"
                   color="#5995fd"
