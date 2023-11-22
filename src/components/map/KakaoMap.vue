@@ -351,7 +351,7 @@ const displayMarker = (place) => {
 <template>
   <div style="position: relative">
     <!-- 오버레이 컴포넌트 -->
-    <div style="position: absolute; left: 0; z-index: 10">
+    <!-- <div style="position: absolute; left: 0; z-index: 10">
       <v-card>
         <v-layout>
           <v-navigation-drawer v-model="drawer" temporary>
@@ -368,6 +368,34 @@ const displayMarker = (place) => {
           </v-main>
         </v-layout>
       </v-card>
+    </div> -->
+    <div style="position: absolute; left: 0; z-index: 10">
+      <v-card>
+        <v-layout>
+          <v-navigation-drawer v-model="drawer" temporary>
+            <v-list lines="two">
+              <v-list-item :prepend-avatar="selectedHome"></v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+          </v-navigation-drawer>
+        </v-layout>
+      </v-card>
+      <v-btn
+        style="position: absolute; left: 300px; top: 50%; transform: translateY(-50%)"
+        v-if="!drawer"
+        color="primary"
+        @click.stop="drawer = !drawer"
+      >
+        >
+      </v-btn>
+      <v-btn
+        style="position: absolute; left: 300px; top: 50%; transform: translateY(-50%)"
+        v-else
+        color="primary"
+        @click.stop="drawer = !drawer"
+      >
+        들어가
+      </v-btn>
     </div>
 
     <!-- 기본 map 컴포넌트 -->
