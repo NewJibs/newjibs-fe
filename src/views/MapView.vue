@@ -27,7 +27,7 @@ const closeDialogAndNavigate = () => {
       <router-view></router-view>
     </div>
 
-    <v-dialog v-model="dialog" width="auto">
+    <v-dialog v-model="dialog" width="auto" persistent>
       <v-card>
         <v-card-text> 로그인 후 접근해주세요. </v-card-text>
         <v-card-actions>
