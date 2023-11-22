@@ -12,6 +12,9 @@ const ps = ref()
 const infowindow = ref()
 const keyword = ref('') //키워드 검색
 
+//좌측 컴포넌트 열기
+const drawer = ref(false)
+
 //axios
 const isLoading = ref(false) //로딩 상태 관리하는 속성
 const aptDetailData = ref()
@@ -346,49 +349,71 @@ const displayMarker = (place) => {
 </script>
 
 <template>
-  <div class="map_wrap">
-    <div id="map"></div>
-    <div id="option_wrap">
-      <div class="option">
-        <form>
-          키워드 :
-          <input
-            type="text"
-            v-model="keyword"
-            placeholder="검색어를 입력하세요"
-            id="keyword"
-            size="15"
-          />
-          <button type="submit" @click="searchKeyword">검색</button>
-        </form>
-      </div>
+  <div style="position: relative">
+    <!-- 오버레이 컴포넌트 -->
+    <div style="position: absolute; left: 0; z-index: 10">
+      <v-card>
+        <v-layout>
+          <v-navigation-drawer v-model="drawer" temporary>
+            <v-list lines="two">
+              <v-list-item :prepend-avatar="selectedHome"></v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+          </v-navigation-drawer>
+          <v-main style="height: 100vh">
+            <div class="d-flex justify-center align-center h-100">
+              <v-btn color="primary" @click.stop="drawer = !drawer"> > </v-btn>
+            </div>
+          </v-main>
+        </v-layout>
+      </v-card>
     </div>
-    <ul id="category">
-      <li id="BK9" data-order="0">
-        <span class="category_bg bank"></span>
-        은행
-      </li>
-      <li id="MT1" data-order="1">
-        <span class="category_bg mart"></span>
-        마트
-      </li>
-      <li id="PM9" data-order="2">
-        <span class="category_bg pharmacy"></span>
-        약국
-      </li>
-      <li id="OL7" data-order="3">
-        <span class="category_bg oil"></span>
-        주유소
-      </li>
-      <li id="CE7" data-order="4">
-        <span class="category_bg cafe"></span>
-        카페
-      </li>
-      <li id="CS2" data-order="5">
-        <span class="category_bg store"></span>
-        편의점
-      </li>
-    </ul>
+
+    <!-- 기본 map 컴포넌트 -->
+    <div class="map_wrap">
+      <div id="map"></div>
+      <div id="option_wrap">
+        <div class="option">
+          <form>
+            키워드 :
+            <input
+              type="text"
+              v-model="keyword"
+              placeholder="검색어를 입력하세요"
+              id="keyword"
+              size="18"
+            />
+            <button type="submit" @click="searchKeyword">검색</button>
+          </form>
+        </div>
+      </div>
+      <ul id="category">
+        <li id="BK9" data-order="0">
+          <span class="category_bg bank"></span>
+          은행
+        </li>
+        <li id="MT1" data-order="1">
+          <span class="category_bg mart"></span>
+          마트
+        </li>
+        <li id="PM9" data-order="2">
+          <span class="category_bg pharmacy"></span>
+          약국
+        </li>
+        <li id="OL7" data-order="3">
+          <span class="category_bg oil"></span>
+          주유소
+        </li>
+        <li id="CE7" data-order="4">
+          <span class="category_bg cafe"></span>
+          카페
+        </li>
+        <li id="CS2" data-order="5">
+          <span class="category_bg store"></span>
+          편의점
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -431,14 +456,15 @@ const displayMarker = (place) => {
   overflow: hidden;
   z-index: 2;
 }
+/* 검색어 부분 */
 #option_wrap {
   position: absolute;
   top: 10px;
-  left: 7px; /* category의 너비에 따라 조정 */
+  left: 100px; /* category의 너비에 따라 조정 */
   border-radius: 10px;
   border: 1px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-  background: red;
+  background: #fff;
   padding: 10px;
   z-index: 2;
 }
