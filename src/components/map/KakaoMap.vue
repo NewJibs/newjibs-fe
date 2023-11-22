@@ -350,25 +350,6 @@ const displayMarker = (place) => {
 
 <template>
   <div style="position: relative">
-    <!-- 오버레이 컴포넌트 -->
-    <!-- <div style="position: absolute; left: 0; z-index: 10">
-      <v-card>
-        <v-layout>
-          <v-navigation-drawer v-model="drawer" temporary>
-            <v-list lines="two">
-              <v-list-item :prepend-avatar="selectedHome"></v-list-item>
-            </v-list>
-            <v-divider></v-divider>
-          </v-navigation-drawer>
-          <v-main style="height: 100vh">
-            <div class="d-flex justify-center align-center h-100">
-              <v-btn v-if="!drawer" color="primary" @click.stop="drawer = !drawer"> > </v-btn>
-              <v-btn v-else color="primary" @click.stop="drawer = !drawer"> 들어가 </v-btn>
-            </div>
-          </v-main>
-        </v-layout>
-      </v-card>
-    </div> -->
     <div style="position: absolute; z-index: 10; height: 100vh;">
       <v-card>
         <v-layout>
@@ -491,8 +472,8 @@ const displayMarker = (place) => {
 /* id=category 부분 */
 #category {
   position: absolute;
-  top: 10px;
-  left: 300px;
+  top: 15px;
+  right: 30px;
   border-radius: 10px;
   border: 0.5px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
@@ -503,8 +484,8 @@ const displayMarker = (place) => {
 /* 검색어 부분 */
 #option_wrap {
   position: absolute;
-  top: 10px;
-  left: 100px; /* category의 너비에 따라 조정 */
+  top: 25px;
+  right: 350px; /* category의 너비에 따라 조정 */
   border-radius: 10px;
   border: 1px solid #909090;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
