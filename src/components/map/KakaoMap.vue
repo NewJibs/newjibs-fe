@@ -417,10 +417,20 @@ const formatPrice = (price) => {
                 :title="`${apt.apartmentName}아파트`"
                 :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
               >
-                <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
-                <div>건축년도 : {{ apt.buildYear }}</div>
-                <div>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</div>
-                <h3 style="margin-top: 0.7rem">거래가격 : {{ formatPrice(apt.dealAmount) }}</h3>
+                <div style="display: flex; margin-bottom: 0.7rem;">
+                  <div style="display: flex; flex-direction: column">
+                    <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
+                    <div>건축년도 : {{ apt.buildYear }}</div>
+                    <div>
+                      거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}
+                    </div>
+                  </div>
+                  <div style="display: flex; align-items: center; margin-left: 3rem;">
+                    <h2 style="margin-top: 0.7rem; color: #5995fd">
+                      {{ formatPrice(apt.dealAmount) }}
+                    </h2>
+                  </div>
+                </div>
                 <v-btn
                   variant="tonal"
                   color="#5995fd"
