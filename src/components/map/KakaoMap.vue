@@ -140,43 +140,6 @@ const addClustererClickEvent = () => {
   })
 }
 
-//loading을 한번에 줄지 생각
-//요청한 아파트 정보에 대한 상세정보 받아오기
-const markAptDetail = async (aptCode) => {
-  await instance
-    .get(`/houses/${aptCode}`)
-    .then((res) => {
-      aptDetailData.value = res.data
-      if (aptDetailData.value && aptDetailData.value.length > 0) {
-        // 로드뷰 초기화
-        initRoadview(aptDetailData.value[0].lat, aptDetailData.value[0].lng)
-      }
-    })
-    .catch((res) => {
-      console.error(res)
-    })
-}
-
-//선택된 리스트에 아파트 정보 넣기
-const addSelectedApt = (no, aptCode) => {
-  console.log(no)
-  selectedApt.value.push(no) //구매한 매물
-  //선택된 아파트의 마커 이미지 바꾸기
-  changeMarkerImg(aptCode, selectedHomeImageSrc)
-}
-
-//선택된 아파트의 마커 이미지 바꾸는 함수
-const changeMarkerImg = (aptCode, newImgSrc) => {
-  //markers 배열 순회하면서 해당 aptCode를 가진 마커 찾기
-  markers.forEach((marker) => {
-    if (marker.aptCode === aptCode) {
-      //찾은 마커의 이미지를 새 이미지로 바꾼다.
-      const markerImg = new kakao.maps.MarkerImage(newImgSrc, new kakao.maps.Size(40, 40))
-      marker.setImage(markerImg)
-    }
-  })
-}
-
 //==============================
 //엘리먼트에 이벤트 핸들러 등록하는 함수
 const addEventHandle = (target, type, callback) => {
@@ -397,9 +360,52 @@ const initRoadview = (lat, lng) => {
   })
 }
 
+//============================
+//매물 사는 것과 관련된 함수
 //거래가격 format 함수
 const formatPrice = (price) => {
   return (price / 10000).toFixed(2) + '억'
+}
+
+//loading을 한번에 줄지 생각
+//요청한 아파트 정보에 대한 상세정보 받아오기
+const markAptDetail = async (aptCode) => {
+  await instance
+    .get(`/houses/${aptCode}`)
+    .then((res) => {
+      aptDetailData.value = res.data
+      if (aptDetailData.value && aptDetailData.value.length > 0) {
+        // 로드뷰 초기화
+        initRoadview(aptDetailData.value[0].lat, aptDetailData.value[0].lng)
+      }
+    })
+    .catch((res) => {
+      console.error(res)
+    })
+}
+
+//선택된 리스트에 아파트 정보 넣기
+const addSelectedApt = (no, aptCode) => {
+  console.log(no)
+  selectedApt.value.push(no) //구매한 매물
+
+  for (let i = 0; i < selectedApt.length; i++) {
+    console.log('배열' + selectedApt.value[i])
+  }
+  //선택된 아파트의 마커 이미지 바꾸기
+  changeMarkerImg(aptCode, selectedHomeImageSrc)
+}
+
+//선택된 아파트의 마커 이미지 바꾸는 함수
+const changeMarkerImg = (aptCode, newImgSrc) => {
+  //markers 배열 순회하면서 해당 aptCode를 가진 마커 찾기
+  markers.forEach((marker) => {
+    if (marker.aptCode === aptCode) {
+      //찾은 마커의 이미지를 새 이미지로 바꾼다.
+      const markerImg = new kakao.maps.MarkerImage(newImgSrc, new kakao.maps.Size(40, 40))
+      marker.setImage(markerImg)
+    }
+  })
 }
 </script>
 
@@ -417,7 +423,7 @@ const formatPrice = (price) => {
                 :title="`${apt.apartmentName}아파트`"
                 :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
               >
-                <div style="display: flex; margin-bottom: 0.7rem;">
+                <div style="display: flex; margin-bottom: 0.7rem">
                   <div style="display: flex; flex-direction: column">
                     <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
                     <div>건축년도 : {{ apt.buildYear }}</div>
@@ -425,10 +431,10 @@ const formatPrice = (price) => {
                       거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}
                     </div>
                   </div>
-                  <div style="display: flex; align-items: center; margin-left: 3rem;">
-                    <h2 style="margin-top: 0.7rem; color: #5995fd">
+                  <div style="display: flex; align-items: center; margin-left: 3rem">
+                    <h3 style="margin-top: 0.7rem; color: #5995fd">
                       {{ formatPrice(apt.dealAmount) }}
-                    </h2>
+                    </h3>
                   </div>
                 </div>
                 <v-btn
@@ -440,8 +446,16 @@ const formatPrice = (price) => {
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list lines="two" v-for="selected in selectedApt" style="z-index: 10">
-              <v-list-item>{{ selected.no }}</v-list-item>
+            <v-list
+              lines="two"
+              v-for="selected in selectedApt"
+              :key="selected.no"
+              style="z-index: 10"
+            >
+              <v-list-item
+                >{{ selected.no }}
+                <font-awesome-icon class="icon" icon="xmark"></font-awesome-icon>
+              </v-list-item>
             </v-list>
           </v-navigation-drawer>
         </v-layout>
