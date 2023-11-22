@@ -3,6 +3,7 @@ import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
 import selectedHomeImageSrc from '@/assets/home-img/selected.png'
+import { registerRuntimeHelpers } from '@vue/compiler-core'
 
 let placeOverlay,
   contentNode,
@@ -386,6 +387,11 @@ const markAptDetail = async (aptCode) => {
 
 //선택된 리스트에 아파트 정보 넣기
 const addSelectedApt = (no, aptCode) => {
+  if (selectedApt.value.includes(no)) {
+    alert('이미 선택된 아파트입니다.')
+    return
+  }
+
   console.log(no)
   selectedApt.value.push(no) //구매한 매물
 
@@ -394,6 +400,11 @@ const addSelectedApt = (no, aptCode) => {
   }
   //선택된 아파트의 마커 이미지 바꾸기
   changeMarkerImg(aptCode, selectedHomeImageSrc)
+}
+
+//매물 선택 삭제
+const removeSelectedApt = (no) => {
+  selectedApt.value = selectedApt.value.filter((item) => item !== no)
 }
 
 //선택된 아파트의 마커 이미지 바꾸는 함수
@@ -458,10 +469,14 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
               <v-list-item :prepend-avatar="selectedHomeImageSrc"
                 ><h3>부동산 거래 내역</h3></v-list-item
               >
-              <v-list v-for="selected in selectedApt" :key="selected.no" style="z-index: 10">
+              <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
                 <v-list-item
                   >{{ selected }}
-                  <font-awesome-icon class="icon" icon="xmark"></font-awesome-icon>
+                  <font-awesome-icon
+                    class="icon"
+                    icon="xmark"
+                    @click="removeSelectedApt(selected)"
+                  ></font-awesome-icon>
                 </v-list-item>
               </v-list>
             </div>
