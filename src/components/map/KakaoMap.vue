@@ -139,12 +139,13 @@ const addClustererClickEvent = () => {
 
 //loading을 한번에 줄지 생각
 //요청한 아파트 정보에 대한 상세정보 받아오기
-const markAptDetail = (aptCode) => {
-  instance
+const markAptDetail = async (aptCode) => {
+  await instance
     .get(`/houses/${aptCode}`)
     .then((res) => {
       console.log(res)
       aptDetailData.value = res.data
+      console.log(aptDetailData.value)
     })
     .catch((res) => {
       console.error(res)
@@ -368,12 +369,15 @@ const displayMarker = (place) => {
     <div style="position: absolute; z-index: 10; height: 100vh">
       <v-card>
         <v-layout>
-          <v-navigation-drawer v-model="drawer" width="400" temporary>
+          <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
             <v-list lines="two">
-              <v-list-item :prepend-avatar="selectedHomeImageSrc">
-                <v-list-item-content>
-                  <v-list-item-title>{{ aptDetailData?.aptName }}</v-list-item-title>
-                </v-list-item-content>
+              <v-list-item
+                v-if="aptDetailData"
+                :prepend-avatar="selectedHomeImageSrc"
+                :title="aptDetailData.apartmentName"
+                :subtitle="`${aptDetailData.sidoName} ${aptDetailData.gugunName} ${aptDetailData.dongName} ${aptDetailData.jibun}`"
+              >
+                {{ aptDetailData[0].aptCode }}
               </v-list-item>
             </v-list>
             <!-- <v-divider></v-divider> -->
