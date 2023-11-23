@@ -188,20 +188,52 @@ onMounted(() => {
         <div class="container">
           <v-list lines="three">
             <v-list-item v-for="result in finalData?.results" :key="result.houseInfo.no">
-              <v-list-item-content>
-                <v-list-item-title style="font-size: 1.2rem">
-                  {{ result.houseInfo.apartmentName }}
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  주소: {{ result.houseInfo.sidoName }} {{ result.houseInfo.dongName }}
-                  {{ result.houseInfo.jibun }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle>
-                  beforeDealAmount: {{ result.priceChange.beforeDealAmount }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle>
-                  afterDealAmount: {{ result.priceChange.afterDealAmount }}
-                </v-list-item-subtitle>
+              <v-list-item-content style="display: flex; justify-content: space-around; align-items: center; line-height: normal;">
+                <div style="display: flex; flex-direction: column">
+                  <v-list-item-title style="font-size: 1.2rem">
+                    {{ result.houseInfo.apartmentName }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ result.houseInfo.sidoName }} {{ result.houseInfo.dongName }}
+                    {{ result.houseInfo.jibun }}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle>
+                    {{ result.houseInfo.no }}
+                    <!-- beforeDealAmount: {{ result.priceChange.beforeDealAmount }} -->
+                  </v-list-item-subtitle>
+                </div>
+                <div style="display: flex">
+                  <div style="display: flex; flex-direction: column; align-items: center">
+                    <div style="font-size: 1.6rem">
+                      {{ formatPrice(result.priceChange.beforeDealAmount) }}
+                    </div>
+                    <div style="font-weight: 100; color: gray">
+                      {{ result.priceChange.beforeDealYear }}-{{
+                        result.priceChange.beforeDealMonth
+                      }}-{{ result.priceChange.afterDealDay }}
+                    </div>
+                  </div>
+                  <div style="font-size: 1rem">
+                    <font-awesome-icon
+                      style="margin: 1rem 0.5rem"
+                      icon="arrow-right"
+                    ></font-awesome-icon>
+                  </div>
+                  <div style="display: flex; flex-direction: column; align-items: center">
+                    <div style="font-size: 1.6rem">
+                      {{ formatPrice(result.priceChange.afterDealAmount) }}
+                    </div>
+                    <div style="font-weight: 100; color: gray">
+                      {{ result.priceChange.afterDealYear }}-{{
+                        result.priceChange.afterDealMonth
+                      }}-{{ result.priceChange.afterDealDay }}
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; font-size: 2.6rem; color:#5995fd">
+                  <div>{{ result.priceChange.percentageGap }}%</div>
+                </div>
               </v-list-item-content>
             </v-list-item>
           </v-list>
