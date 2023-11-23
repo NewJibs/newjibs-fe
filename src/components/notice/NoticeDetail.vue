@@ -101,6 +101,9 @@ notice-detail-container {
 .notice-details {
   max-width: 800px;
   margin: 3rem auto;
+  border: 1px solid;
+  padding: 2.5rem;
+  border-radius: 10px;
 
   h1 {
     font-size: 2.5rem;
