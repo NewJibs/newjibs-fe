@@ -4,7 +4,9 @@ import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
 import selectedHomeImageSrc from '@/assets/home-img/selected.png'
 import { useHomeStore } from '@/stores/home-store'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const homeStore = useHomeStore() //home 결과값 pinia에서 가져오기
 
 let placeOverlay,
