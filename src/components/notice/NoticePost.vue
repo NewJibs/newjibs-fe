@@ -5,7 +5,6 @@ import router from '@/router'
 
 //바인딩 변수
 const title = ref('')
-const author = ref('')
 const content = ref('')
 const imageUrl = ref('')
 
@@ -20,7 +19,7 @@ const formatDate = (date: Date) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
-console.log(formatDate(new Date()))
+// console.log(formatDate(new Date()))
 
 //포스트 올리기
 const submitPost = async (e: any) => {
@@ -31,7 +30,6 @@ const submitPost = async (e: any) => {
 
   const postData = {
     title: title.value,
-    author: author.value,
     content: content.value,
     image: imageUrl.value,
     date: formattedDate
@@ -48,7 +46,6 @@ const submitPost = async (e: any) => {
 
     // 입력 필드 초기화
     title.value = ''
-    author.value = ''
     content.value = ''
     imageUrl.value = ''
 
@@ -73,9 +70,6 @@ const submitPost = async (e: any) => {
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field v-model="author" label="작성자" required></v-text-field>
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
