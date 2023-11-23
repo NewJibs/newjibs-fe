@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
 import selectedHomeImageSrc from '@/assets/home-img/selected.png'
@@ -390,17 +390,19 @@ const markAptDetail = async (aptCode) => {
 }
 
 //선택된 리스트에 아파트 정보 넣기 - 객체 넣기
-const addSelectedApt = (apt) => {
+const addSelectedApt = async (apt) => {
   console.log(apt)
   if (selectedApt.value.find((item) => item.no === apt.no)) {
-    dialog = true
+    dialog.value = true
     return
   }
 
   if (usedAmount.value + apt.dealAmount > maxAmount) {
-    budget = true
+    budget.value = true
     return
   }
+
+
 
   usedAmount.value += apt.dealAmount
   console.log(usedAmount.value)

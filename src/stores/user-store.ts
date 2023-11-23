@@ -13,7 +13,7 @@ export const useUserStore = defineStore(
       //서버로 요청
       await instance.post('/members/login', userInfo).then((response) => {
         accessToken.value = response.data.accessToken //로그인 성공시 accessToken 업데이트
-
+        // instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`
         instance.defaults.headers.common['Authorization'] = response.data.accessToken
         console.log(instance.defaults.headers.common['Authorization'])
       })
