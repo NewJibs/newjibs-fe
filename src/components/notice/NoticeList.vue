@@ -44,7 +44,7 @@ const postNotice = () => {
 </script>
 
 <template>
-  <div>
+  <div class="back">
     <div class="container">
       <h1 class="title">공 지 사 항</h1>
       <v-btn class="post-btn" type="submit" @click="postNotice"> 게시글 작성 </v-btn>
@@ -78,8 +78,18 @@ const postNotice = () => {
 </template>
 
 <style scoped lang="scss">
+.back {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 3.9rem);
+  background-image: url('@/assets/news-back.png');
+  background-size: cover;
+}
+
 .container {
   display: flex;
+  max-width: 800px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
