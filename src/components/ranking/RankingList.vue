@@ -99,6 +99,11 @@ const fetchRanking = async () => {
   })
 }
 
+//숫자 포맷팅 함수
+const formatPrice = (price) => {
+  return (price / 10000).toFixed(2) + '억'
+}
+
 onMounted(() => {
   fetchRanking()
 })
@@ -120,7 +125,7 @@ onMounted(() => {
       > -->
 
       <!-- </div> -->
-      <v-card style="display: flex">
+      <v-card style="display: flex; font-family: 'NeoDunggeunmoPro'">
         <v-row>
           <v-col cols="11">
             <h1
@@ -130,6 +135,7 @@ onMounted(() => {
                 color: #5995fd;
                 text-align: center;
                 margin-top: 2rem;
+                margin-left: 2rem;
               "
             >
               부동산 거래 결과
@@ -149,30 +155,57 @@ onMounted(() => {
           </v-col>
         </v-row>
         <!-- 총 수익 -->
-        <div style="display: flex">
-          <div style="display: flex; flex-direction: column"></div>
-          <div style="display: flex; flex-direction: column"></div>
+        <div style="display: flex; justify-content: space-around; margin-top: 2.5rem">
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              font-size: 3rem;
+              margin-right: -10rem;
+            "
+          >
+            <h3 style="color: gray">총 투자수익금</h3>
+            <div>{{ formatPrice(finalData.sumPriceGap) }}</div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              font-size: 3rem;
+            "
+          >
+            <h3 style="color: gray">총 투자수익률</h3>
+            <div>{{ finalData.sumPercentageGap }}%</div>
+          </div>
         </div>
 
-        <v-list lines="two">
-          <v-list-item v-for="result in finalData?.results" :key="result.houseInfo.no">
-            <v-list-item-content>
-              <v-list-item-title class="overline">
-                아파트 이름: {{ result.houseInfo.apartmentName }}
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                주소: {{ result.houseInfo.sidoName }} {{ result.houseInfo.dongName }}
-                {{ result.houseInfo.jibun }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle>
-                beforeDealAmount: {{ result.priceChange.beforeDealAmount }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle>
-                afterDealAmount: {{ result.priceChange.afterDealAmount }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-divider></v-divider>
+
+        <div class="container">
+          <v-list lines="three">
+            <v-list-item v-for="result in finalData?.results" :key="result.houseInfo.no">
+              <v-list-item-content>
+                <v-list-item-title style="font-size: 1.2rem">
+                  {{ result.houseInfo.apartmentName }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  주소: {{ result.houseInfo.sidoName }} {{ result.houseInfo.dongName }}
+                  {{ result.houseInfo.jibun }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  beforeDealAmount: {{ result.priceChange.beforeDealAmount }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  afterDealAmount: {{ result.priceChange.afterDealAmount }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </div>
       </v-card>
     </v-dialog>
 
@@ -208,7 +241,7 @@ onMounted(() => {
                 </v-list-item-subtitle>
               </div>
               <div style="margin-left: 1.5rem; font-size: 2rem; color: #5995fd">
-                {{ user.point }}p
+                {{ formatPrice(user.point) }}
               </div>
             </div>
           </v-list-item-content>
@@ -222,7 +255,6 @@ onMounted(() => {
 .all_wrap {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 100%;
   height: calc(100vh - 3.9rem);
   background-image: url('@/assets/ranking-back.png');
