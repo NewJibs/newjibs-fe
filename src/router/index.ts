@@ -104,6 +104,19 @@ const router = createRouter({
           component: () => import('@/components/ranking/RankingList.vue')
         }
       ]
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: () => import('@/views/HomeResultView.vue'),
+      redirect: { name: 'home-result' },
+      children: [
+        {
+          path: '',
+          name: 'home-result',
+          component: () => import('@/components/HomeResult/HomeResult.vue')
+        }
+      ]
     }
   ]
 })
