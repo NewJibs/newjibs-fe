@@ -62,8 +62,8 @@ onMounted(() => {
 }
 
 .board_wrap {
-  width: 600px;
-  height: 90%;
+  width: 48rem;
+  height: 40rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
