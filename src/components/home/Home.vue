@@ -149,8 +149,8 @@ const gotoMap = () => {
   align-items: center;
   width: 31rem;
   position: absolute;
-  right: 10%;
-  bottom: 15%;
+  right: 5rem;
+  bottom: 3rem;
   padding: 1rem;
   background-color: rgba(10, 12, 35, 0.8);
   color: white;
