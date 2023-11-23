@@ -2,7 +2,9 @@
 import { ref, onMounted, reactive } from 'vue'
 import { instance } from '@/util/http-common'
 
+
 let data = reactive({})
+const dialog = ref(true) //결과 모달창
 
 //랭킹정보 가져오기
 const fetchRanking = async () => {
@@ -18,6 +20,21 @@ onMounted(() => {
 
 <template>
   <div class="all_wrap">
+    <!-- 모달창 -->
+    <!-- <v-row justify="center"> -->
+    <v-dialog v-model="dialog" width="800" transition="dialog-top-transition">
+      <h1 style="font-size: 3rem; font-family: 'NeoDunggeunmoPro'; color: yellow">
+        부동산 거래 결과
+      </h1>
+      <v-card>
+        <v-btn icon dark @click="!dialog">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-list lines="two"> </v-list>
+      </v-card>
+    </v-dialog>
+    <!-- </v-row> -->
+
     <div class="board_wrap">
       <h1 style="font-size: 4rem; font-family: 'NeoDunggeunmoPro'; color: yellow">Ranking</h1>
       <v-list lines="three" style="font-family: 'NeoDunggeunmoPro'">
