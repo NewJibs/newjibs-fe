@@ -3,7 +3,6 @@ import { ref, watch, onMounted } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
 import selectedHomeImageSrc from '@/assets/home-img/selected.png'
-import { registerRuntimeHelpers } from '@vue/compiler-core'
 
 let placeOverlay,
   contentNode,
@@ -23,7 +22,6 @@ const aptDetailData = ref() //클릭된 아파트 정보
 
 //선택된 아파트 배열
 let selectedApt = ref([]) //선택된 아파트 객체배열
-let selectedNo = ref([]) //선택된 아파트 no
 let dialog = ref(false) //모달
 let budget = ref(false)
 
@@ -204,7 +202,7 @@ const displayPlaces = (places) => {
   }
 }
 
-//마커 생성하고 지도 위에 마커를 표시하는 함수
+//카테고리 마커 생성하고 지도 위에 마커를 표시하는 함수
 const addMarker = (position, order) => {
   const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png'
   const imageSize = new kakao.maps.Size(40, 36.5) //마커 이미지의 크기
