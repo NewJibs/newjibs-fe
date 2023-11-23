@@ -23,7 +23,6 @@ const aptDetailData = ref() //클릭된 아파트 정보
 
 //선택된 아파트 배열
 let selectedApt = ref([]) //선택된 아파트 배열
-let totalPrice = ref() //남은 금액
 let dialog = ref(false) //모달
 let budget = ref(false)
 
@@ -516,7 +515,7 @@ const closeDialog = (e) => {
                 <v-list-item
                   >{{ selected.apartmentName }} - {{ selected.no }}
                   <font-awesome-icon
-                    style="margin-left: 1rem"
+                    style="margin-left: 0.5rem"
                     class="icon"
                     icon="xmark"
                     @click="removeSelectedApt(selected.no)"
