@@ -59,52 +59,40 @@ const submitPost = async (e: any) => {
 </script>
 
 <template>
-  <div>
-    <h1
-      style="
-        font-size: 3rem;
-        font-weight: 500;
-        margin-top: 3rem;
-        font-family: 'NeoDunggeunmoPro';
-        text-align: center;
-      "
-    >
-      포스트 페이지
-    </h1>
-    <form>
-      <v-container>
-        <v-form class="form-gradient">
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field v-model="title" label="제목" required></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row> </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-textarea v-model="content" label="내용" required></v-textarea>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field v-model="imageUrl" label="이미지 URL"></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-btn type="submit" @click="submitPost">게시</v-btn>
-            </v-col>
-          </v-row>
+  <div class="notice-post-container">
+    <v-container>
+      <div class="notice-post-form">
+        <h1 class="notice-post-title">게시글 작성</h1>
+        <v-form>
+          <v-text-field v-model="title" label="제목" required></v-text-field>
+          <v-textarea v-model="content" label="내용" required></v-textarea>
+          <v-text-field v-model="imageUrl" label="이미지 URL"></v-text-field>
+          <v-btn type="submit" @click="submitPost">게시</v-btn>
         </v-form>
-      </v-container>
-    </form>
+      </div>
+    </v-container>
   </div>
 </template>
 
 <style scoped>
-.form-gradient {
-  padding: 1.5rem;
-  border-radius: 1rem;
+.notice-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice-post-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.notice-post-title {
+  display: flex;
+  font-size: 3rem;
+  font-weight: 500;
+  margin-top: 3rem;
+  font-family: 'NeoDunggeunmoPro';
+  text-align: center;
 }
 </style>
 @/api/notice

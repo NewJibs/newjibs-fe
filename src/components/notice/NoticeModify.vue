@@ -6,7 +6,6 @@ import { useRoute, useRouter } from 'vue-router'
 interface Notice {
   noticeId: number
   title: string
-  author: string
   content: string
   date: string
 }
@@ -58,12 +57,11 @@ onMounted(() => {
   <div class="notice-modify-container">
     <v-container>
       <div class="notice-modify-form" v-if="data">
-        <h1>Edit Notice</h1>
+        <h1 class="notice-modify-title">게시글 수정</h1>
         <v-form @submit.prevent="updateNotice">
           <v-text-field v-model="data.title" label="Title" required></v-text-field>
-          <v-text-field v-model="data.author" label="Author" required></v-text-field>
           <v-textarea v-model="data.content" label="Content" required></v-textarea>
-          <v-btn type="submit" color="primary">Update</v-btn>
+          <v-btn type="submit" variant="tonal" color="primary">수정</v-btn>
         </v-form>
       </div>
       <v-alert v-else> Loading... </v-alert>
@@ -81,9 +79,14 @@ onMounted(() => {
 .notice-modify-form {
   max-width: 800px;
   margin: 0 auto;
-  /* h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  } */
+}
+
+.notice-modify-title {
+  display: flex;
+  font-size: 3rem;
+  font-weight: 500;
+  margin-top: 3rem;
+  font-family: 'NeoDunggeunmoPro';
+  text-align: center;
 }
 </style>
