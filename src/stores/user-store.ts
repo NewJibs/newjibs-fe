@@ -24,7 +24,7 @@ export const useUserStore = defineStore(
       await instance.post('/members/logout').then(() => {
         accessToken.value = '' //로그아웃시 accessToken 제거
 
-        // instance.defaults.headers.common['Authorization'] = ''
+        instance.defaults.headers.common['Authorization'] = ''
       })
     }
 

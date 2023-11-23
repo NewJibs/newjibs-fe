@@ -4,12 +4,14 @@ import TheNavBar from './components/common/TheNavBar.vue'
 </script>
 
 <template>
-  <header class="navbar">
-    <TheNavBar />
-  </header>
-  <div class="v-main">
-    <RouterView />
-  </div>
+  <v-layout>
+    <div class="v-main">
+    <header class="navbar">
+      <TheNavBar />
+    </header>
+      <RouterView />
+    </div>
+  </v-layout>
 </template>
 
 <style lang="scss">
@@ -20,6 +22,7 @@ import TheNavBar from './components/common/TheNavBar.vue'
 }
 
 .navbar {
+  /* position: sticky; */
   height: 3.9rem;
 }
 

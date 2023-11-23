@@ -478,72 +478,68 @@ const postSelectedAptNo = async () => {
     </v-dialog>
     <div style="position: absolute; z-index: 10; height: 100%">
       <v-card>
-        <v-layout>
-          <v-navigation-drawer
-            v-model="drawer"
-            width="400"
-            temporary
-            style="top: 3.8rem; height: 100%"
-          >
-            <div id="roadView" style="width: 400px; height: 200px"></div>
-            <v-list lines="two" v-for="apt in aptDetailData">
-              <v-list-item
-                v-if="apt"
-                :prepend-avatar="markerImageSrc"
-                :title="`${apt.apartmentName}아파트`"
-                :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
-              >
-                <div style="display: flex; margin-bottom: 0.7rem">
-                  <div style="display: flex; flex-direction: column">
-                    <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
-                    <div>건축년도 : {{ apt.buildYear }}</div>
-                    <div>
-                      거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}
-                    </div>
-                    <div>매물 : {{ apt.no }}</div>
-                  </div>
-                  <div style="display: flex; align-items: center; margin-left: 0.5rem">
-                    <h3 style="margin-top: 0.7rem; color: #5995fd">
-                      {{ formatPrice(apt.dealAmount) }}
-                    </h3>
-                  </div>
+        <v-navigation-drawer
+          v-model="drawer"
+          width="400"
+          temporary
+          style="top: 3.8rem; height: calc(100vh - 3.8rem)"
+        >
+          <div id="roadView" style="width: 400px; height: 200px"></div>
+          <v-list lines="two" v-for="apt in aptDetailData">
+            <v-list-item
+              v-if="apt"
+              :prepend-avatar="markerImageSrc"
+              :title="`${apt.apartmentName}아파트`"
+              :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
+            >
+              <div style="display: flex; margin-bottom: 0.7rem">
+                <div style="display: flex; flex-direction: column">
+                  <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
+                  <div>건축년도 : {{ apt.buildYear }}</div>
+                  <div>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</div>
+                  <div>매물 : {{ apt.no }}</div>
                 </div>
-                <v-btn variant="tonal" color="#5995fd" @click.prevent="addSelectedApt(apt)"
-                  >구매</v-btn
-                >
+                <div style="display: flex; align-items: center; margin-left: 0.5rem">
+                  <h3 style="margin-top: 0.7rem; color: #5995fd">
+                    {{ formatPrice(apt.dealAmount) }}
+                  </h3>
+                </div>
+              </div>
+              <v-btn variant="tonal" color="#5995fd" @click.prevent="addSelectedApt(apt)"
+                >구매</v-btn
+              >
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <v-list-item :prepend-avatar="selectedHomeImageSrc"
+              ><h3>부동산 거래 내역 : {{ formatPrice(usedAmount) }}</h3></v-list-item
+            >
+            <v-card-actions
+              ><v-btn variant="tonal" color="primary" @click="postSelectedAptNo"
+                >구매 완료</v-btn
+              ></v-card-actions
+            >
+            <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
+              <v-list-item
+                >{{ selected.apartmentName }} - {{ selected.no }}
+                <font-awesome-icon
+                  style="margin-left: 0.5rem"
+                  class="icon"
+                  icon="xmark"
+                  @click="removeSelectedApt(selected.no)"
+                ></font-awesome-icon>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <v-list-item :prepend-avatar="selectedHomeImageSrc"
-                ><h3>부동산 거래 내역 : {{ formatPrice(usedAmount) }}</h3></v-list-item
-              >
-              <v-card-actions
-                ><v-btn variant="tonal" color="primary" @click="postSelectedAptNo"
-                  >구매 완료</v-btn
-                ></v-card-actions
-              >
-              <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
-                <v-list-item
-                  >{{ selected.apartmentName }} - {{ selected.no }}
-                  <font-awesome-icon
-                    style="margin-left: 0.5rem"
-                    class="icon"
-                    icon="xmark"
-                    @click="removeSelectedApt(selected.no)"
-                  ></font-awesome-icon>
-                </v-list-item>
-              </v-list>
-            </div>
-          </v-navigation-drawer>
-        </v-layout>
+          </div>
+        </v-navigation-drawer>
       </v-card>
       <v-btn
         style="
@@ -579,6 +575,7 @@ const postSelectedAptNo = async () => {
     </div>
 
     <!-- 기본 map 컴포넌트 -->
+    <div class="map_section">
     <div class="map_wrap">
       <div id="map"></div>
       <div id="option_wrap">
@@ -623,10 +620,12 @@ const postSelectedAptNo = async () => {
         </li>
       </ul>
     </div>
+    </div>
   </div>
 </template>
 
 <style>
+
 .keywordInfo {
   display: flex;
   justify-content: center;
@@ -639,7 +638,7 @@ const postSelectedAptNo = async () => {
 
 #map {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 3.9rem);
 }
 .map_wrap,
 .map_wrap * {
@@ -651,7 +650,6 @@ const postSelectedAptNo = async () => {
 .map_wrap {
   position: relative;
   width: 100%;
-  height: 350px;
 }
 /* id=category 부분 */
 #category {
