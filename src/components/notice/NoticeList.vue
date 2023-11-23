@@ -46,7 +46,7 @@ const postNotice = () => {
 <template>
   <div>
     <div class="container">
-      <div class="title">공 지 사 항</div>
+      <h1 class="title">공 지 사 항</h1>
       <v-btn class="post-btn" type="submit" @click="postNotice"> 게시글 작성 </v-btn>
 
       <v-table class="notice-table">

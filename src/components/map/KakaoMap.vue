@@ -3,6 +3,11 @@ import { ref, watch, onMounted, nextTick } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
 import selectedHomeImageSrc from '@/assets/home-img/selected.png'
+import { useHomeStore } from '@/stores/home-store'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const homeStore = useHomeStore() //home 결과값 pinia에서 가져오기
 
 let placeOverlay,
   contentNode,
@@ -442,13 +447,13 @@ const getSelectedAptNo = () => {
   return selectedApt.value.map((apt) => apt.no)
 }
 
-//post로 no 배열에 대한 결과값을 받는 함수
+//post로 no 배열에 대한 결과값을 받고 페이지 이동하는 함수
 const postSelectedAptNo = async () => {
   const aptNos = getSelectedAptNo()
-  console.log(aptNos)
   try {
-    const response = await instance.post('/houses/results', aptNos)
-    console.log(response)
+    //pinia에 결과값 저장
+    await homeStore.postSelectedAptNo(aptNos)
+    await router.push({ name: 'ranking-list' })
   } catch (error) {
     console.log(error)
   }
