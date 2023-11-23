@@ -5,7 +5,6 @@ import router from '@/router'
 
 //바인딩 변수
 const title = ref('')
-const author = ref('')
 const content = ref('')
 const imageUrl = ref('')
 
@@ -20,7 +19,7 @@ const formatDate = (date: Date) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
-console.log(formatDate(new Date()))
+// console.log(formatDate(new Date()))
 
 //포스트 올리기
 const submitPost = async (e: any) => {
@@ -31,7 +30,6 @@ const submitPost = async (e: any) => {
 
   const postData = {
     title: title.value,
-    author: author.value,
     content: content.value,
     image: imageUrl.value,
     date: formattedDate
@@ -48,7 +46,6 @@ const submitPost = async (e: any) => {
 
     // 입력 필드 초기화
     title.value = ''
-    author.value = ''
     content.value = ''
     imageUrl.value = ''
 
@@ -63,7 +60,17 @@ const submitPost = async (e: any) => {
 
 <template>
   <div>
-    <h1>포스트 페이지</h1>
+    <h1
+      style="
+        font-size: 3rem;
+        font-weight: 500;
+        margin-top: 3rem;
+        font-family: 'NeoDunggeunmoPro';
+        text-align: center;
+      "
+    >
+      포스트 페이지
+    </h1>
     <form>
       <v-container>
         <v-form class="form-gradient">
@@ -72,11 +79,7 @@ const submitPost = async (e: any) => {
               <v-text-field v-model="title" label="제목" required></v-text-field>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field v-model="author" label="작성자" required></v-text-field>
-            </v-col>
-          </v-row>
+          <v-row> </v-row>
           <v-row>
             <v-col cols="12">
               <v-textarea v-model="content" label="내용" required></v-textarea>
@@ -100,9 +103,8 @@ const submitPost = async (e: any) => {
 
 <style scoped>
 .form-gradient {
-  background: linear-gradient(to right, pink, skyblue);
-  padding: 20px;
-  border-radius: 10px;
+  padding: 1.5rem;
+  border-radius: 1rem;
 }
 </style>
 @/api/notice

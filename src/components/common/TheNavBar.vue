@@ -18,9 +18,9 @@ const userStore = useUserStore()
       <v-tab class="app-tab" v-if="!userStore.accessToken" :to="{ name: 'user-login' }"
         >회원가입 / 로그인</v-tab
       >
-      <v-tab class="app-tab" v-if="userStore.accessToken" :to="{ name: 'user-mypage' }"
+      <!-- <v-tab class="app-tab" v-if="userStore.accessToken" :to="{ name: 'user-mypage' }"
         >마이페이지</v-tab
-      >
+      > -->
       <v-tab
         class="app-tab"
         v-if="userStore.accessToken"
