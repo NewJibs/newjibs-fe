@@ -7,9 +7,7 @@ const userStore = useUserStore()
 <template>
   <v-app-bar scroll-behavior="elevate" class="app-bar">
     <v-tabs background-color="primary" slider-color="#5995fd" class="app-bar-tab">
-      <v-tab class="app-tab" :to="{ name: 'home' }" style="font-family: 'NeoDunggeunmoPro'">
-        >NewJibs</v-tab
-      >
+      <v-tab class="app-tab" :to="{ name: 'home' }"> >NewJibs</v-tab>
       <v-tab class="app-tab" :to="{ name: 'maps' }">지도</v-tab>
       <v-tab class="app-tab" :to="{ name: 'ranking' }">랭킹</v-tab>
       <v-tab class="app-tab" :to="{ name: 'notices' }">공지사항</v-tab>
@@ -44,6 +42,7 @@ const userStore = useUserStore()
   display: flex;
   align-items: center;
   background-color: rgb(255, 255, 255, 1);
+  font-family: NeoDunggeunmoPro;
 }
 
 .app-bar-tab {
