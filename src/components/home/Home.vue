@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="all_wrap">
+  <div class="all_wrap" style="font-family: 'NeoDunggeunmoPro'">
     <div class="sliding-image-container">
       <div class="sliding-image">
         <img src="@/assets/home-img/Background.png" alt="Background Image 1" />
@@ -17,9 +17,22 @@
     </div>
     <div class="overlay">
       <h1>NewJibs</h1>
-      <v-btn>공지사항 보러가기</v-btn>
-      <v-btn>랭킹 보기</v-btn>
-      <v-btn>Start</v-btn>
+      <h3>최고의 시세차익을 내세요!</h3>
+      <div style="display: flex; margin-top: 1rem">
+        <v-btn variant="tonal" style="margin-right: 1rem">공지사항 보러가기</v-btn>
+        <v-btn variant="tonal">랭킹 보기</v-btn>
+      </div>
+      <div>
+        <v-btn
+          stacked
+          color="#5995fd"
+          variant="outlined"
+          style="margin-top: 1.5rem; font-size: 2rem;"
+        >
+          <font-awesome-icon class="icon" icon="bolt"></font-awesome-icon>
+          Start</v-btn
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -90,37 +103,43 @@
 }
 
 .character.b {
-  top: 330px;
-  left: 600px;
+  top: 20rem;
+  left: 35rem;
 }
 
 .character.c {
   top: 22rem;
-  left: 18rem;
+  left: 19rem;
 }
 
 .character.d {
-  top: 400px;
-  left: 800px;
+  top: 28rem;
+  left: 47rem;
 }
 
 .character.e {
-  top: 270px;
-  left: 1000px;
+  top: 17rem;
+  left: 60rem;
 }
 
 /* overlay */
 .overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 31rem;
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 10%;
+  bottom: 15%;
   padding: 1rem;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(10, 12, 35, 0.8);
   color: white;
+  border-radius: 20px;
 }
 
 .overlay h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 7rem;
 }
 </style>

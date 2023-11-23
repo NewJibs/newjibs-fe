@@ -31,7 +31,8 @@ let usedAmount = ref(0) //사용한 금액
 
 onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
-    await initMap().then(markAllApt()) //마커 정보를 불러오고 마커를 생성하는 과정이 완료될 때까지 기다림
+    await initMap()
+    await markAllApt() //마커 정보를 불러오고 마커를 생성하는 과정이 완료될 때까지 기다림
   } else {
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
