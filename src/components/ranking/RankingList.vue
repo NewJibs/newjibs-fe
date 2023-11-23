@@ -6,6 +6,7 @@ import { useHomeStore } from '@/stores/home-store'
 let data = reactive({})
 const dialog = ref(true) //결과 모달창
 const homeStore = useHomeStore() //pinia store 사용
+let finalData = homeStore.resultData //pinia store에서 데이터 가져오기
 
 //랭킹정보 가져오기
 const fetchRanking = async () => {
@@ -16,8 +17,7 @@ const fetchRanking = async () => {
 
 onMounted(() => {
   fetchRanking()
-  homeStore.results = data.results //pinia에 저장된 데이터 가져오기
-  console.log(data.results)
+  console.log(data)
 })
 </script>
 
@@ -36,7 +36,7 @@ onMounted(() => {
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-list lines="two">
-          <v-list-item v-for="result in homeStore.results" :key="result.houseInfo.no">
+          <v-list-item v-for="result in finalData?.results" :key="result.houseInfo.no">
             <v-list-item-content>
               <v-list-item-title class="overline">
                 아파트 이름: {{ result.houseInfo.apartmentName }}
