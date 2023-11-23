@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { instance } from '@/util/http-common'
 import markerImageSrc from '@/assets/home-img/home.png'
 import selectedHomeImageSrc from '@/assets/home-img/selected.png'
@@ -21,12 +21,18 @@ const isLoading = ref(false) //로딩 상태 관리하는 속성
 const aptDetailData = ref() //클릭된 아파트 정보
 
 //선택된 아파트 배열
-let selectedApt = ref([])
+let selectedApt = ref([]) //선택된 아파트 객체배열
+let dialog = ref(false) //모달
+let budget = ref(false)
+
+//예산
+let maxAmount = 1000000
+let usedAmount = ref(0) //사용한 금액
 
 onMounted(async () => {
   if (window.kakao && window.kakao.maps) {
     await initMap()
-    markAllApt()
+    await markAllApt() //마커 정보를 불러오고 마커를 생성하는 과정이 완료될 때까지 기다림
   } else {
     const script = document.createElement('script')
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
@@ -72,19 +78,18 @@ const initMap = () => {
 //=====================================
 //axios
 //지도에 뿌려줄 아파트 정보 받아오기
-const markAllApt = () => {
+const markAllApt = async () => {
   isLoading.value = true //데이터 불러올때
-  instance
-    .get('/houses/coordinates')
-    .then((res) => {
-      const aptAllData = res.data
-      isLoading.value = false
-      markAptMarker(aptAllData)
-    })
-    .catch((res) => {
-      console.error(res)
-      isLoading.value = false
-    })
+  try {
+    const res = await instance.get('/houses/coordinates')
+    const aptAllData = res.data
+    console.log(aptAllData)
+    markAptMarker(aptAllData)
+  } catch (error) {
+    console.error(error)
+  } finally {
+    isLoading.value = false
+  }
 }
 
 //아파트 마커 생성하고 지도 위에 마커를 표시하는 함수 - markApt : []
@@ -137,43 +142,6 @@ const addClustererClickEvent = () => {
       // 지도로 클릭된 클러스터의 마커의 위치를 기준으로 확대
       map.setLevel(level, { anchor: clusterCenter })
     }, 500) // 지연 시간을 500ms로 설정
-  })
-}
-
-//loading을 한번에 줄지 생각
-//요청한 아파트 정보에 대한 상세정보 받아오기
-const markAptDetail = async (aptCode) => {
-  await instance
-    .get(`/houses/${aptCode}`)
-    .then((res) => {
-      aptDetailData.value = res.data
-      if (aptDetailData.value && aptDetailData.value.length > 0) {
-        // 로드뷰 초기화
-        initRoadview(aptDetailData.value[0].lat, aptDetailData.value[0].lng)
-      }
-    })
-    .catch((res) => {
-      console.error(res)
-    })
-}
-
-//선택된 리스트에 아파트 정보 넣기
-const addSelectedApt = (no, aptCode) => {
-  console.log(no)
-  selectedApt.value.push(no) //구매한 매물
-  //선택된 아파트의 마커 이미지 바꾸기
-  changeMarkerImg(aptCode, selectedHomeImageSrc)
-}
-
-//선택된 아파트의 마커 이미지 바꾸는 함수
-const changeMarkerImg = (aptCode, newImgSrc) => {
-  //markers 배열 순회하면서 해당 aptCode를 가진 마커 찾기
-  markers.forEach((marker) => {
-    if (marker.aptCode === aptCode) {
-      //찾은 마커의 이미지를 새 이미지로 바꾼다.
-      const markerImg = new kakao.maps.MarkerImage(newImgSrc, new kakao.maps.Size(40, 40))
-      marker.setImage(markerImg)
-    }
   })
 }
 
@@ -233,7 +201,7 @@ const displayPlaces = (places) => {
   }
 }
 
-//마커 생성하고 지도 위에 마커를 표시하는 함수
+//카테고리 마커 생성하고 지도 위에 마커를 표시하는 함수
 const addMarker = (position, order) => {
   const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png'
   const imageSize = new kakao.maps.Size(40, 36.5) //마커 이미지의 크기
@@ -396,40 +364,181 @@ const initRoadview = (lat, lng) => {
     roadview.setPanoId(panoId, position) //panoId와 중심좌표를 통해 로드뷰 실행
   })
 }
+
+//============================
+//매물 사는 것과 관련된 함수
+//거래가격 format 함수
+const formatPrice = (price) => {
+  return (price / 10000).toFixed(2) + '억'
+}
+
+//loading을 한번에 줄지 생각
+//요청한 아파트 정보에 대한 상세정보 받아오기
+const markAptDetail = async (aptCode) => {
+  await instance
+    .get(`/houses/${aptCode}`)
+    .then((res) => {
+      aptDetailData.value = res.data
+      if (aptDetailData.value && aptDetailData.value.length > 0) {
+        // 로드뷰 초기화
+        initRoadview(aptDetailData.value[0].lat, aptDetailData.value[0].lng)
+      }
+    })
+    .catch((res) => {
+      console.error(res)
+    })
+}
+
+//선택된 리스트에 아파트 정보 넣기 - 객체 넣기
+const addSelectedApt = async (apt) => {
+  console.log(apt)
+  if (selectedApt.value.find((item) => item.no === apt.no)) {
+    dialog.value = true
+    return
+  }
+
+  if (usedAmount.value + apt.dealAmount > maxAmount) {
+    budget.value = true
+    return
+  }
+
+  usedAmount.value += apt.dealAmount
+  console.log(usedAmount.value)
+  selectedApt.value.push(apt)
+  for (let i = 0; i < selectedApt.value.length; i++) {
+    console.log('배열' + selectedApt.value[i].no)
+  }
+  //선택된 아파트의 마커 이미지 바꾸기
+  changeMarkerImg(apt.aptCode, selectedHomeImageSrc)
+}
+
+//매물 선택 삭제
+const removeSelectedApt = (no) => {
+  const apt = selectedApt.value.find((item) => item.no === no)
+  usedAmount.value -= apt.dealAmount
+  selectedApt.value = selectedApt.value.filter((item) => item.no !== no)
+}
+
+//선택된 아파트의 마커 이미지 바꾸는 함수
+const changeMarkerImg = (aptCode, newImgSrc) => {
+  //markers 배열 순회하면서 해당 aptCode를 가진 마커 찾기
+  markers.forEach((marker) => {
+    if (marker.aptCode === aptCode) {
+      //찾은 마커의 이미지를 새 이미지로 바꾼다.
+      const markerImg = new kakao.maps.MarkerImage(newImgSrc, new kakao.maps.Size(40, 40))
+      marker.setImage(markerImg)
+    }
+  })
+}
+
+//모달 닫기
+const closeDialog = () => {
+  dialog.value = false
+  budget.value = false
+}
+
+//아파트 번호(no)를 추출해서 새로운 배열을 만드는 함수
+const getSelectedAptNo = () => {
+  return selectedApt.value.map((apt) => apt.no)
+}
+
+//post로 no 배열에 대한 결과값을 받는 함수
+const postSelectedAptNo = async () => {
+  const aptNos = getSelectedAptNo()
+  console.log(aptNos)
+  try {
+    const response = await instance.post('/houses/results', aptNos)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
   <div style="position: relative">
-    <div style="position: absolute; z-index: 10; height: 100vh">
+    <v-dialog v-model="dialog" width="auto" persistent>
       <v-card>
-        <v-layout>
-          <v-navigation-drawer v-model="drawer" width="400" temporary style="top: 3.8rem">
-            <div id="roadView" style="width: 400px; height: 200px"></div>
-            <v-list lines="two" v-for="apt in aptDetailData">
-              <v-list-item
-                v-if="apt"
-                :prepend-avatar="selectedHomeImageSrc"
-                :title="`${apt.apartmentName}아파트`"
-                :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
+        <v-card-text> 이미 선택한 아파트입니다. </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="closeDialog">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="budget" width="auto" persistent>
+      <v-card>
+        <v-card-text> 예산을 초과했습니다. </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="closeDialog">확인</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <div style="position: absolute; z-index: 10; height: 100%">
+      <v-card>
+        <v-navigation-drawer
+          v-model="drawer"
+          width="400"
+          temporary
+          style="top: 3.8rem; height: calc(100vh - 3.8rem)"
+        >
+          <div id="roadView" style="width: 400px; height: 200px"></div>
+          <v-list lines="two" v-for="apt in aptDetailData">
+            <v-list-item
+              v-if="apt"
+              :prepend-avatar="markerImageSrc"
+              :title="`${apt.apartmentName}아파트`"
+              :subtitle="`${apt.sidoName} ${apt.gugunName} ${apt.dongName} ${apt.jibun}`"
+            >
+              <div style="display: flex; margin-bottom: 0.7rem">
+                <div style="display: flex; flex-direction: column">
+                  <div style="margin-top: 0.7rem">면적(m^2) : {{ apt.area }}</div>
+                  <div>건축년도 : {{ apt.buildYear }}</div>
+                  <div>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</div>
+                  <div>매물 : {{ apt.no }}</div>
+                </div>
+                <div style="display: flex; align-items: center; margin-left: 0.5rem">
+                  <h3 style="margin-top: 0.7rem; color: #5995fd">
+                    {{ formatPrice(apt.dealAmount) }}
+                  </h3>
+                </div>
+              </div>
+              <v-btn variant="tonal" color="#5995fd" @click.prevent="addSelectedApt(apt)"
+                >구매</v-btn
               >
-                <p>면적(m^2) : {{ apt.area }}</p>
-                <p>건축년도 : {{ apt.buildYear }}</p>
-                <p>거래일시 : {{ apt.dealYear }} / {{ apt.dealMonth }} / {{ apt.dealDay }}</p>
-                <h3>거래가격 : {{ apt.dealAmount }}</h3>
-                <v-btn
-                  variant="tonal"
-                  color="#5995fd"
-                  @click.prevent="addSelectedApt(apt.no, apt.aptCode)"
-                  >구매</v-btn
-                >
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <v-list-item :prepend-avatar="selectedHomeImageSrc"
+              ><h3>부동산 거래 내역 : {{ formatPrice(usedAmount) }}</h3></v-list-item
+            >
+            <v-card-actions
+              ><v-btn variant="tonal" color="primary" @click="postSelectedAptNo"
+                >구매 완료</v-btn
+              ></v-card-actions
+            >
+            <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
+              <v-list-item
+                >{{ selected.apartmentName }} - {{ selected.no }}
+                <font-awesome-icon
+                  style="margin-left: 0.5rem"
+                  class="icon"
+                  icon="xmark"
+                  @click="removeSelectedApt(selected.no)"
+                ></font-awesome-icon>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
-            <v-list lines="two" v-for="selected in selectedApt" style="z-index: 10">
-              <v-list-item>{{ selected.no }}</v-list-item>
-            </v-list>
-          </v-navigation-drawer>
-        </v-layout>
+          </div>
+        </v-navigation-drawer>
       </v-card>
       <v-btn
         style="
@@ -465,22 +574,50 @@ const initRoadview = (lat, lng) => {
     </div>
 
     <!-- 기본 map 컴포넌트 -->
-    <div class="map_wrap">
-      <div id="map"></div>
-      <div id="option_wrap">
-        <div class="option">
-          <form>
-            키워드 :
-            <input
-              type="text"
-              v-model="keyword"
-              placeholder="검색어를 입력하세요"
-              id="keyword"
-              size="18"
-            />
-            <button type="submit" @click="searchKeyword">검색</button>
-          </form>
+    <div class="map_section">
+      <div class="map_wrap">
+        <div id="map"></div>
+        <div id="option_wrap">
+          <div class="option">
+            <form>
+              키워드 :
+              <input
+                type="text"
+                v-model="keyword"
+                placeholder="검색어를 입력하세요"
+                id="keyword"
+                size="18"
+              />
+              <button type="submit" @click="searchKeyword">검색</button>
+            </form>
+          </div>
         </div>
+        <ul id="category">
+          <li id="BK9" data-order="0">
+            <span class="category_bg bank"></span>
+            은행
+          </li>
+          <li id="MT1" data-order="1">
+            <span class="category_bg mart"></span>
+            마트
+          </li>
+          <li id="PM9" data-order="2">
+            <span class="category_bg pharmacy"></span>
+            약국
+          </li>
+          <li id="OL7" data-order="3">
+            <span class="category_bg oil"></span>
+            주유소
+          </li>
+          <li id="CE7" data-order="4">
+            <span class="category_bg cafe"></span>
+            카페
+          </li>
+          <li id="CS2" data-order="5">
+            <span class="category_bg store"></span>
+            편의점
+          </li>
+        </ul>
       </div>
       <ul id="category">
         <li id="BK9" data-order="0">
@@ -525,7 +662,7 @@ const initRoadview = (lat, lng) => {
 
 #map {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 3.9rem);
 }
 .map_wrap,
 .map_wrap * {
@@ -537,7 +674,6 @@ const initRoadview = (lat, lng) => {
 .map_wrap {
   position: relative;
   width: 100%;
-  height: 350px;
 }
 /* id=category 부분 */
 #category {
