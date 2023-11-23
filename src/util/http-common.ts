@@ -16,6 +16,10 @@ instance.defaults.headers.common['Authorization'] = ''
 
 //인터셉터
 instance.interceptors.request.use((config: any) => {
+  const token = localStorage.getItem('accessToken') //토큰 가져오기
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}` // 헤더에 토큰 설정
+  }
   return config
 }),
   (error: any) => {

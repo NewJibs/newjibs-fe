@@ -19,7 +19,7 @@ const signupPassword = ref('')
 const signupBirth = ref('')
 
 //로그인 버튼 클릭 시 실행되는 함수
-const login = async (e) => {
+const login = async () => {
   //로그인 로직
   const userInfo = {
     email: loginEmail.value,
@@ -48,7 +48,7 @@ const signup = async (e) => {
   }
 
   try {
-    await instance.post('/members/register', userInfo).then((response) => {
+    await instance.post('/members/register', userInfo).then(() => {
       switchToLogin()
     })
   } catch (error) {
