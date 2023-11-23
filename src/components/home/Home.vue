@@ -32,7 +32,7 @@ const gotoMap = () => {
       <img class="character e" src="@/assets/home-img/character/e.png" alt="Character E" />
     </div>
     <div class="overlay">
-      <h1>NewJibs</h1>
+      <h1 style="color: yellow">NewJibs</h1>
       <h3>최고의 시세차익을 내세요!</h3>
       <div style="display: flex; margin-top: 1rem">
         <v-btn variant="tonal" style="margin-right: 1rem" @click.prevent="gotoNotice"
@@ -149,8 +149,8 @@ const gotoMap = () => {
   align-items: center;
   width: 31rem;
   position: absolute;
-  right: 10%;
-  bottom: 15%;
+  right: 5rem;
+  bottom: 3rem;
   padding: 1rem;
   background-color: rgba(10, 12, 35, 0.8);
   color: white;
