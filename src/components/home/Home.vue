@@ -1,14 +1,14 @@
 <script setup></script>
 
 <template>
-  <div class="jiwon"></div>
+  <div class="all_wrap"></div>
 </template>
 
 <style scoped>
-.jiwon {
+.all_wrap {
   width: 100%;
-  height: 100vh;
-  background-image: url('@/assets/home-img/7.png');
+  height: calc(100vh - 3.9rem);
+  background-image: url('@/assets/home-img/Background.png');
   background-size: cover;
 }
 </style>
