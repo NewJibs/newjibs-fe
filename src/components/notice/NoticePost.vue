@@ -103,7 +103,6 @@ const submitPost = async (e: any) => {
 
 <style scoped>
 .form-gradient {
-  /* background: linear-gradient(to right, pink, skyblue); */
   padding: 1.5rem;
   border-radius: 1rem;
 }

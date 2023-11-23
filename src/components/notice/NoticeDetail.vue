@@ -36,9 +36,7 @@ const loadNotice = (noticeId: number) => {
 //noticeId별 delete -> 홈화면으로 라우터 설정
 const deletePost = () => {
   instance
-    .delete(`/notices/${noticeId}`, {
-      // withCredentials: true
-    })
+    .delete(`/notices/${noticeId}`, {})
     .then(() => {
       router.push({ name: 'notices' })
     })
@@ -69,11 +67,24 @@ onMounted(() => {
       <!-- 로딩 중이 아닐 때만 내용 표시 -->
       <div class="notice-details" v-if="data && !isLoading">
         <h1>{{ data.title }}</h1>
-        <p class="author-date">{{ data.author }} - {{ data.date }}</p>
+        <p class="author-date">{{ data.author }} | {{ data.date }}</p>
+        <v-divider></v-divider>
         <div class="content" v-html="data.content"></div>
+        <v-divider></v-divider>
         <div class="actions">
-          <v-btn size="large" variant="tonal" rounded="lg" @click="deletePost" color="red" dark class="delete-btn">Delete</v-btn>
-          <v-btn size="large" variant="tonal" rounded="lg" @click="updatePost" color="primary">Edit</v-btn>
+          <v-btn
+            size="large"
+            variant="tonal"
+            rounded="lg"
+            @click="deletePost"
+            color="red"
+            dark
+            class="delete-btn"
+            >Delete</v-btn
+          >
+          <v-btn size="large" variant="tonal" rounded="lg" @click="updatePost" color="primary"
+            >Edit</v-btn
+          >
         </div>
       </div>
     </v-container>
@@ -88,8 +99,11 @@ notice-detail-container {
 }
 
 .notice-details {
-  max-width: 1000px;
+  max-width: 800px;
   margin: 3rem auto;
+  border: 1px solid;
+  padding: 2.5rem;
+  border-radius: 10px;
 
   h1 {
     font-size: 2.5rem;
