@@ -44,34 +44,36 @@ const postNotice = () => {
 </script>
 
 <template>
-  <div class="container">
-    <div class="title">공 지 사 항</div>
-    <v-btn class="post-btn" type="submit" @click="postNotice"> 게시글 작성 </v-btn>
+  <div>
+    <div class="container">
+      <div class="title">공 지 사 항</div>
+      <v-btn class="post-btn" type="submit" @click="postNotice"> 게시글 작성 </v-btn>
 
-    <v-table class="notice-table">
-      <thead>
-        <tr class="table-head">
-          <th class="text-center">No</th>
-          <th class="text-center">제목</th>
-          <th class="text-center">작성자</th>
-          <th class="text-center">작성일</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="notice in data"
-          :key="notice.noticeId"
-          class="table-body"
-          @click="viewNotice(notice.noticeId)"
-          style="cursor: pointer"
-        >
-          <td>{{ notice.noticeId }}</td>
-          <td>{{ notice.title }}</td>
-          <td>{{ notice.author }}</td>
-          <td>{{ notice.date }}</td>
-        </tr>
-      </tbody>
-    </v-table>
+      <v-table class="notice-table">
+        <thead>
+          <tr class="table-head">
+            <th class="text-center">No</th>
+            <th class="text-center">제목</th>
+            <th class="text-center">작성자</th>
+            <th class="text-center">작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="notice in data"
+            :key="notice.noticeId"
+            class="table-body"
+            @click="viewNotice(notice.noticeId)"
+            style="cursor: pointer"
+          >
+            <td>{{ notice.noticeId }}</td>
+            <td>{{ notice.title }}</td>
+            <td>{{ notice.author }}</td>
+            <td>{{ notice.date }}</td>
+          </tr>
+        </tbody>
+      </v-table>
+    </div>
   </div>
 </template>
 
@@ -87,6 +89,7 @@ const postNotice = () => {
   font-size: 3rem;
   font-weight: 500;
   margin-top: 3rem;
+  font-family: 'NeoDunggeunmoPro';
 }
 
 .post-btn {
