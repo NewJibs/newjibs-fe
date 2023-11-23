@@ -11,4 +11,6 @@
   background-image: url('@/assets/home-img/Background.png');
   background-size: cover;
 }
+
+
 </style>
