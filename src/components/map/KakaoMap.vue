@@ -511,8 +511,9 @@ const closeDialog = (e) => {
               >
               <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
                 <v-list-item
-                  >`{{ selected.apartmentName }} - {{ selected.no }}`
+                  >{{ selected.apartmentName }} - {{ selected.no }}
                   <font-awesome-icon
+                    style="margin-left: 1rem"
                     class="icon"
                     icon="xmark"
                     @click="removeSelectedApt(selected.no)"
