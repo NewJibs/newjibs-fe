@@ -14,7 +14,6 @@ export const useHomeStore = defineStore({
         const response = await instance.post('/houses/results', aptNos)
         // API 응답을 resultData에 할당
         this.resultData = response.data
-        console.log(response)
       } catch (error) {
         console.log(error)
       }
