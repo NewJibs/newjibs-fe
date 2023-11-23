@@ -509,6 +509,9 @@ const closeDialog = (e) => {
               <v-list-item :prepend-avatar="selectedHomeImageSrc"
                 ><h3>부동산 거래 내역 : {{ formatPrice(usedAmount) }}</h3></v-list-item
               >
+              <v-card-actions
+                ><v-btn variant="tonal" color="primary">구매 완료</v-btn></v-card-actions
+              >
               <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
                 <v-list-item
                   >{{ selected.apartmentName }} - {{ selected.no }}
