@@ -275,6 +275,7 @@ onMounted(async () => {
               </div>
               <div style="margin-left: 1.5rem; font-size: 2rem; color: #5995fd">
                 {{ formatPrice(user.point) }}
+
               </div>
             </div>
           </v-list-item-content>
