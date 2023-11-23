@@ -60,7 +60,17 @@ const submitPost = async (e: any) => {
 
 <template>
   <div>
-    <h1>포스트 페이지</h1>
+    <h1
+      style="
+        font-size: 3rem;
+        font-weight: 500;
+        margin-top: 3rem;
+        font-family: 'NeoDunggeunmoPro';
+        text-align: center;
+      "
+    >
+      포스트 페이지
+    </h1>
     <form>
       <v-container>
         <v-form class="form-gradient">
@@ -69,8 +79,7 @@ const submitPost = async (e: any) => {
               <v-text-field v-model="title" label="제목" required></v-text-field>
             </v-col>
           </v-row>
-          <v-row>
-          </v-row>
+          <v-row> </v-row>
           <v-row>
             <v-col cols="12">
               <v-textarea v-model="content" label="내용" required></v-textarea>
@@ -94,9 +103,9 @@ const submitPost = async (e: any) => {
 
 <style scoped>
 .form-gradient {
-  background: linear-gradient(to right, pink, skyblue);
-  padding: 20px;
-  border-radius: 10px;
+  /* background: linear-gradient(to right, pink, skyblue); */
+  padding: 1.5rem;
+  border-radius: 1rem;
 }
 </style>
 @/api/notice
