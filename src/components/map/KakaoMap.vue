@@ -445,11 +445,17 @@ const getSelectedAptNo = () => {
   return selectedApt.value.map((apt) => apt.no)
 }
 
-//post로 no 배열에 대한 결과값을 받는 함수
-const aptNos = getSelectedAptNo()
-//pinia에 결과값 저장
-homeStore.postSelectedAptNo(aptNos)
-
+//post로 no 배열에 대한 결과값을 받고 페이지 이동하는 함수
+const postSelectedAptNo = async () => {
+  const aptNos = getSelectedAptNo()
+  try {
+    //pinia에 결과값 저장
+    await homeStore.postSelectedAptNo(aptNos)
+    await router.push({ name: 'ranking-list' })
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
