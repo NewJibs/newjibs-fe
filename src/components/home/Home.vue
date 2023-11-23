@@ -15,6 +15,12 @@
       <img class="character d" src="@/assets/home-img/character/d.png" alt="Character D" />
       <img class="character e" src="@/assets/home-img/character/e.png" alt="Character E" />
     </div>
+    <div class="overlay">
+      <h1>NewJibs</h1>
+      <v-btn>공지사항 보러가기</v-btn>
+      <v-btn>랭킹 보기</v-btn>
+      <v-btn>Start</v-btn>
+    </div>
   </div>
 </template>
 
@@ -23,7 +29,8 @@
   width: 100%;
   height: calc(100vh - 3.9rem);
   background-image: url('@/assets/home-img/Background.png');
-  background-size: cover;
+  background-size: 100% auto;
+  position: relative;
 }
 
 @keyframes moveUpDown {
@@ -39,6 +46,7 @@
 
 .sliding-image-container {
   width: 100%;
+  height: calc(100vh - 3.9rem);
   overflow: hidden;
   position: relative;
 }
@@ -47,6 +55,7 @@
   display: flex;
   width: calc(100% * 3);
   /* 세 개의 이미지 너비로 설정 */
+  height: calc(100vh - 3.9rem);
   animation: slideImage 150s steps(200) infinite;
 }
 
@@ -98,5 +107,20 @@
 .character.e {
   top: 270px;
   left: 1000px;
+}
+
+/* overlay */
+.overlay {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+}
+
+.overlay h1 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 </style>
