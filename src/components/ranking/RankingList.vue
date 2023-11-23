@@ -118,16 +118,22 @@ onMounted(() => {
           background-color: red;
         "
       > -->
-      <h1
-        style="font-size: 3rem; font-family: 'NeoDunggeunmoPro'; color: yellow; text-align: center"
-      >
-        부동산 거래 결과
-      </h1>
+
       <!-- </div> -->
       <v-card style="display: flex">
         <v-row>
           <v-col cols="11">
-            <!-- ... -->
+            <h1
+              style="
+                font-size: 3rem;
+                font-family: 'NeoDunggeunmoPro';
+                color: #5995fd;
+                text-align: center;
+                margin-top: 2rem;
+              "
+            >
+              부동산 거래 결과
+            </h1>
             <v-list lines="two">
               <!-- ... -->
             </v-list>
