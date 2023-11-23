@@ -63,7 +63,7 @@ onMounted(() => {
 <template>
   <div class="notice-detail-container">
     <loading v-if="isLoading" />
-    <v-container>
+    <v-card class="mx-auto" max-width="700" style="margin-top: 2rem; padding: 2rem">
       <!-- 로딩 중이 아닐 때만 내용 표시 -->
       <div class="notice-details" v-if="data && !isLoading">
         <h1>{{ data.title }}</h1>
@@ -87,7 +87,7 @@ onMounted(() => {
           >
         </div>
       </div>
-    </v-container>
+    </v-card>
   </div>
 </template>
 
@@ -101,9 +101,6 @@ notice-detail-container {
 .notice-details {
   max-width: 800px;
   margin: 3rem auto;
-  border: 1px solid;
-  padding: 2.5rem;
-  border-radius: 10px;
 
   h1 {
     font-size: 2.5rem;
