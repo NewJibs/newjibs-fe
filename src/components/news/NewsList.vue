@@ -179,7 +179,7 @@ const viewNews = (articleId: string) => {
 .back {
   background-image: url('@/assets/news-back.png');
   background-size: 100% auto; /* 이미지가 컨테이너에 꽉 차도록 설정 */
-  background-position: center clac(center - 3.9rem); /* 이미지를 중앙에 위치시킴 */
+  background-position: center calc(center - 3.9rem); /* 이미지를 중앙에 위치시킴 */
   background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
   background-attachment: fixed;
   width: 100%; /* 너비를 화면 전체로 설정 */
