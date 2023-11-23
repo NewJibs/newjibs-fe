@@ -1,10 +1,11 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
 import { instance } from '@/util/http-common'
-
+import { useHomeStore } from '@/stores/home-store'
 
 let data = reactive({})
 const dialog = ref(true) //결과 모달창
+const homeStore = useHomeStore() //pinia store 사용
 
 //랭킹정보 가져오기
 const fetchRanking = async () => {
@@ -15,6 +16,7 @@ const fetchRanking = async () => {
 
 onMounted(() => {
   fetchRanking()
+  homeStore.results = data.results //pinia에 저장된 데이터 가져오기
 })
 </script>
 
@@ -23,7 +25,7 @@ onMounted(() => {
     <!-- 모달창 -->
     <!-- <v-row justify="center"> -->
     <v-dialog v-model="dialog" width="800" transition="dialog-top-transition">
-      <h1 style="font-size: 3rem; font-family: 'NeoDunggeunmoPro'; color: yellow">
+      <h1 style="font-size: 3rem; font-family: 'NeoDunggeunmoPro'; color: yellow; text-align: center;">
         부동산 거래 결과
       </h1>
       <v-card>
