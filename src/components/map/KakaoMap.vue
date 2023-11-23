@@ -401,9 +401,7 @@ const addSelectedApt = async (apt) => {
     budget.value = true
     return
   }
-
-
-
+  
   usedAmount.value += apt.dealAmount
   console.log(usedAmount.value)
   selectedApt.value.push(apt)
