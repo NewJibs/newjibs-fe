@@ -22,7 +22,8 @@ const isLoading = ref(false) //로딩 상태 관리하는 속성
 const aptDetailData = ref() //클릭된 아파트 정보
 
 //선택된 아파트 배열
-let selectedApt = ref([]) //선택된 아파트 배열
+let selectedApt = ref([]) //선택된 아파트 객체배열
+let selectedNo = ref([]) //선택된 아파트 no
 let dialog = ref(false) //모달
 let budget = ref(false)
 
@@ -434,9 +435,25 @@ const changeMarkerImg = (aptCode, newImgSrc) => {
 }
 
 //모달 닫기
-const closeDialog = (e) => {
+const closeDialog = () => {
   dialog.value = false
   budget.value = false
+}
+
+//아파트 번호(no)를 추출해서 새로운 배열을 만드는 함수
+const getSelectedAptNo = () => {
+  return selectedApt.value.map((apt) => apt.no)
+}
+
+//post로 no 배열에 대한 결과값을 받는 함수
+const postSelectedAptNo = async () => {
+  const aptNos = getSelectedAptNo()
+  try {
+    const response = await instance.post('/houses/results', aptNos)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 
@@ -509,7 +526,9 @@ const closeDialog = (e) => {
                 ><h3>부동산 거래 내역 : {{ formatPrice(usedAmount) }}</h3></v-list-item
               >
               <v-card-actions
-                ><v-btn variant="tonal" color="primary">구매 완료</v-btn></v-card-actions
+                ><v-btn variant="tonal" color="primary" @click="postSelectedAptNo"
+                  >구매 완료</v-btn
+                ></v-card-actions
               >
               <v-list v-for="selected in selectedApt" :key="selected" style="z-index: 10">
                 <v-list-item
