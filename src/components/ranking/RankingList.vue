@@ -17,6 +17,7 @@ const fetchRanking = async () => {
 onMounted(() => {
   fetchRanking()
   homeStore.results = data.results //pinia에 저장된 데이터 가져오기
+  console.log(data.results)
 })
 </script>
 
@@ -25,14 +26,34 @@ onMounted(() => {
     <!-- 모달창 -->
     <!-- <v-row justify="center"> -->
     <v-dialog v-model="dialog" width="800" transition="dialog-top-transition">
-      <h1 style="font-size: 3rem; font-family: 'NeoDunggeunmoPro'; color: yellow; text-align: center;">
+      <h1
+        style="font-size: 3rem; font-family: 'NeoDunggeunmoPro'; color: yellow; text-align: center"
+      >
         부동산 거래 결과
       </h1>
       <v-card>
-        <v-btn icon dark @click="!dialog">
+        <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-list lines="two"> </v-list>
+        <v-list lines="two">
+          <v-list-item v-for="result in homeStore.results" :key="result.houseInfo.no">
+            <v-list-item-content>
+              <v-list-item-title class="overline">
+                아파트 이름: {{ result.houseInfo.apartmentName }}
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                주소: {{ result.houseInfo.sidoName }} {{ result.houseInfo.dongName }}
+                {{ result.houseInfo.jibun }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                beforeDealAmount: {{ result.priceChange.beforeDealAmount }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                afterDealAmount: {{ result.priceChange.afterDealAmount }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-card>
     </v-dialog>
     <!-- </v-row> -->
