@@ -117,7 +117,7 @@ onMounted(async () => {
   <div class="all_wrap">
     <!-- 모달창 -->
     <v-dialog v-model="dialog" width="800" transition="dialog-expand-transition">
-      <v-card style="display: flex; font-family: 'NeoDunggeunmoPro'">
+      <v-card style="display: flex; font-family: 'NeoDunggeunmoPro'; border-radius: 2rem;">
         <v-row>
           <v-col cols="11">
             <h1
