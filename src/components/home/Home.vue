@@ -1,4 +1,20 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const gotoNotice = () => {
+  router.push({ name: 'notices' })
+}
+
+const gotoRanking = () => {
+  router.push({ name: 'ranking' })
+}
+
+const gotoMap = () => {
+  router.push({ name: 'maps' })
+}
+</script>
 
 <template>
   <div class="all_wrap" style="font-family: 'NeoDunggeunmoPro'">
@@ -19,15 +35,18 @@
       <h1>NewJibs</h1>
       <h3>최고의 시세차익을 내세요!</h3>
       <div style="display: flex; margin-top: 1rem">
-        <v-btn variant="tonal" style="margin-right: 1rem">공지사항 보러가기</v-btn>
-        <v-btn variant="tonal">랭킹 보기</v-btn>
+        <v-btn variant="tonal" style="margin-right: 1rem" @click.prevent="gotoNotice"
+          >공지사항 보러가기</v-btn
+        >
+        <v-btn variant="tonal" @click.prevent="gotoRanking">랭킹 보기</v-btn>
       </div>
       <div>
         <v-btn
           stacked
           color="#5995fd"
           variant="outlined"
-          style="margin-top: 1.5rem; font-size: 2rem;"
+          style="margin-top: 1.5rem; font-size: 2rem"
+          @click.prevent="gotoMap"
         >
           <font-awesome-icon class="icon" icon="bolt"></font-awesome-icon>
           Start</v-btn
