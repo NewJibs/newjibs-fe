@@ -71,7 +71,7 @@ onMounted(() => {
           </v-col>
         </v-row>
         <!-- 총 수익 -->
-        <div style="display: flex; justify-content: space-around; margin-top: 2.5rem">
+        <div style="display: flex; justify-content:flex-start; margin-top: 2.5rem">
           <div
             style="
               display: flex;
@@ -109,12 +109,12 @@ onMounted(() => {
               <v-list-item-content
                 style="
                   display: flex;
-                  justify-content: space-around;
+                  justify-content: space-between;
                   align-items: center;
                   line-height: normal;
                 "
               >
-                <div style="display: flex; flex-direction: column">
+                <div style="display: flex; flex-direction: column;">
                   <v-list-item-title style="font-size: 1.2rem">
                     {{ result.houseInfo.apartmentName }}
                   </v-list-item-title>
