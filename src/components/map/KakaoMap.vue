@@ -116,6 +116,7 @@ const markAptMarker = (markApt) => {
     //마커에 클릭 이벤트 리스너 추가
     kakao.maps.event.addListener(marker, 'click', () => {
       markAptDetail(value.aptCode) //클릭된 마커의 aptCode로 markAptDetail 함수 호출
+      if (drawer.value === false) drawer.value = true
     })
 
     markers.push(marker) //배열에 생성된 마커 추가

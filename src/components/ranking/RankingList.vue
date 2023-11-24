@@ -71,7 +71,7 @@ onMounted(() => {
           </v-col>
         </v-row>
         <!-- 총 수익 -->
-        <div style="display: flex; justify-content:flex-start; margin-top: 2.5rem">
+        <div style="display: flex; justify-content: space-around; margin-top: 2.5rem">
           <div
             style="
               display: flex;
@@ -114,7 +114,7 @@ onMounted(() => {
                   line-height: normal;
                 "
               >
-                <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; flex-direction: column; justify-content: flex-start">
                   <v-list-item-title style="font-size: 1.2rem">
                     {{ result.houseInfo.apartmentName }}
                   </v-list-item-title>
@@ -128,7 +128,14 @@ onMounted(() => {
                   </v-list-item-subtitle>
                 </div>
                 <div style="display: flex">
-                  <div style="display: flex; flex-direction: column; align-items: center">
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: flex-start;
+                    "
+                  >
                     <div style="font-size: 1.6rem">
                       {{ formatPrice(result.priceChange.beforeDealAmount) }}
                     </div>
