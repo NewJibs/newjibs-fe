@@ -1,98 +1,17 @@
 <script setup>
-import { ref, onMounted, reactive, watch } from 'vue'
+import { ref, onMounted, reactive, watchEffect } from 'vue'
 import { instance } from '@/util/http-common'
 import { useHomeStore } from '@/stores/home-store'
-import TheLoading from '../common/TheLoading.vue'
 
 let data = reactive({})
 const dialog = ref(true) //결과 모달창
 const homeStore = useHomeStore() //pinia store 사용
-let aptNos = ref([])
-// let finalData = reactive(null)
-let finalData = {
-  sumPriceGap: 47500,
-  sumPercentageGap: 4.75,
-  results: [
-    {
-      priceChange: {
-        beforeDealAmount: 66000,
-        beforeDealYear: 2020,
-        beforeDealMonth: 2,
-        beforeDealDay: 23,
-        afterDealAmount: 92000,
-        afterDealYear: 2022,
-        afterDealMonth: 4,
-        afterDealDay: 11,
-        priceGap: 26000,
-        percentageGap: 39.39
-      },
-      houseInfo: {
-        aptCode: 11110000000018,
-        no: 111102002000038,
-        area: '59.9426',
-        sidoName: '서울특별시',
-        gugunName: '종로구',
-        dongName: '숭인동',
-        buildYear: 2009,
-        roadName: '숭인동길',
-        roadNameBonBun: '00021',
-        roadNameBubun: '00000',
-        roadNameSeq: '01',
-        roadNameBasementCode: '0',
-        roadNameCode: '4100204',
-        dong: '숭인동',
-        bonbun: '0766',
-        bubun: '0000',
-        sigunguCode: '11110',
-        eubmyundongCode: '17500',
-        landCode: '1',
-        apartmentName: '종로청계힐스테이트',
-        jibun: '766',
-        lng: '127.020959405051',
-        lat: '37.5757847596495'
-      }
-    },
-    {
-      priceChange: {
-        beforeDealAmount: 100000,
-        beforeDealYear: 2020,
-        beforeDealMonth: 1,
-        beforeDealDay: 13,
-        afterDealAmount: 121500,
-        afterDealYear: 2022,
-        afterDealMonth: 4,
-        afterDealDay: 13,
-        priceGap: 21500,
-        percentageGap: 21.5
-      },
-      houseInfo: {
-        aptCode: 11110000000018,
-        no: 111102001000044,
-        area: '114.7153',
-        sidoName: '서울특별시',
-        gugunName: '종로구',
-        dongName: '숭인동',
-        buildYear: 2009,
-        roadName: '숭인동길',
-        roadNameBonBun: '00021',
-        roadNameBubun: '00000',
-        roadNameSeq: '01',
-        roadNameBasementCode: '0',
-        roadNameCode: '4100204',
-        dong: '숭인동',
-        bonbun: '0766',
-        bubun: '0000',
-        sigunguCode: '11110',
-        eubmyundongCode: '17500',
-        landCode: '1',
-        apartmentName: '종로청계힐스테이트',
-        jibun: '766',
-        lng: '127.020959405051',
-        lat: '37.5757847596495'
-      }
-    }
-  ]
-}
+let finalData = reactive({
+  //초기값 세팅 잘하기
+  sumPriceGap: 0,
+  sumPercentageGap: 0,
+  results: []
+})
 
 //랭킹정보 가져오기
 const fetchRanking = async () => {
@@ -106,10 +25,15 @@ const formatPrice = (price) => {
   return (price / 10000).toFixed(2) + '억'
 }
 
-onMounted(async () => {
-  // finalData.value = await homeStore.resultData
-  fetchRanking()
+watchEffect(() => {
+  finalData.value = homeStore.resultData
   console.log(finalData.value)
+})
+
+//postSelectedAptNo가 비동기 처리되고 있기 때문에 resultData의 값이 아직 설정되지 않은 상태여서 null이 반환
+//watchEffect로 homeStore.resultData값을 감시하고, 값이 변경되면 할당
+onMounted(() => {
+  fetchRanking()
 })
 </script>
 
@@ -117,7 +41,7 @@ onMounted(async () => {
   <div class="all_wrap">
     <!-- 모달창 -->
     <v-dialog v-model="dialog" width="800" transition="dialog-expand-transition">
-      <v-card style="display: flex; font-family: 'NeoDunggeunmoPro'; border-radius: 2rem;">
+      <v-card style="display: flex; font-family: 'NeoDunggeunmoPro'; border-radius: 2rem">
         <v-row>
           <v-col cols="11">
             <h1
@@ -159,7 +83,7 @@ onMounted(async () => {
             "
           >
             <h3 style="color: gray">총 투자수익금</h3>
-            <div>{{ formatPrice(finalData.sumPriceGap) }}</div>
+            <div>{{ formatPrice(finalData.value.sumPriceGap) }}</div>
             <!-- <div v-else><TheLoading /></div> -->
           </div>
           <div
@@ -172,7 +96,7 @@ onMounted(async () => {
             "
           >
             <h3 style="color: gray">총 투자수익률</h3>
-            <div>{{ finalData.sumPercentageGap }}%</div>
+            <div>{{ finalData.value.sumPercentageGap }}%</div>
             <!-- <div v-else><TheLoading /></div> -->
           </div>
         </div>
@@ -181,7 +105,7 @@ onMounted(async () => {
 
         <div class="container">
           <v-list lines="three">
-            <v-list-item v-for="result in finalData?.results" :key="result.houseInfo.no">
+            <v-list-item v-for="result in finalData.value.results" :key="result.houseInfo.no">
               <v-list-item-content
                 style="
                   display: flex;
